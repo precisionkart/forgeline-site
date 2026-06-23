@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Quote received — Forgeline</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- META PIXEL — fire Lead event on this page load -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'YOUR_PIXEL_ID');
+fbq('track', 'PageView');
+fbq('track', 'Lead');
+</script>
+
+<!-- GOOGLE TAG + Ads conversion -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+  gtag('event', 'conversion', { send_to: 'AW-XXXXXXXXX/YYYYYYY' });
+</script>
+
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:#FAFAF7;color:#0A0A0A;font-family:'Inter',sans-serif;
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:24px;-webkit-font-smoothing:antialiased;
+  }
+  .card{
+    max-width:520px;background:#fff;border:1px solid #EAEAE5;border-radius:28px;
+    padding:48px 40px;text-align:center;
+    box-shadow:0 4px 12px rgba(10,10,10,.05), 0 12px 32px rgba(10,10,10,.06);
+  }
+  .ico{
+    width:72px;height:72px;border-radius:50%;
+    background:linear-gradient(135deg,#FF5B2E,#FF8A5C);
+    color:#fff;font-size:36px;
+    display:flex;align-items:center;justify-content:center;margin:0 auto;
+  }
+  h1{margin-top:24px;font-size:32px;font-weight:600;letter-spacing:-0.025em;line-height:1.1;}
+  h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;color:#FF5B2E;font-weight:400;}
+  p.sub{margin-top:14px;font-size:16px;color:#52525B;line-height:1.55;}
+  .steps{
+    margin-top:32px;text-align:left;background:#FAFAF7;border-radius:20px;padding:20px;
+    border:1px solid #EAEAE5;
+  }
+  .steps h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:#52525B;margin-bottom:12px;font-weight:600;}
+  .steps ul{list-style:none;display:grid;gap:10px;}
+  .steps li{display:flex;gap:10px;font-size:14px;color:#0A0A0A;}
+  .steps li:before{content:"→";color:#FF5B2E;font-weight:700;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#0A0A0A;color:#fff;
+    padding:12px 22px;border-radius:999px;font-size:14px;font-weight:500;
+    margin-top:28px;text-decoration:none;
+    transition:transform .15s;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .wa{
+    margin-top:14px;font-size:13px;color:#52525B;
+  }
+  .wa a{color:#0A0A0A;text-decoration:underline;font-weight:500;}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="ico">✓</div>
+    <h1>Got it — quote <span class="serif">on the way.</span></h1>
+    <p class="sub">A real engineer will reply within one working day with a fixed-price quote, lead time and the name of the shop making your part.</p>
+
+    <div class="steps">
+      <h3>What happens next</h3>
+      <ul>
+        <li>Check your inbox for a confirmation email (under 2 minutes)</li>
+        <li>Our engineer reviews your part for DFM &amp; cost</li>
+        <li>You get a written quote with three lead-time options</li>
+      </ul>
+    </div>
+
+    <a href="/" class="btn">← Back to homepage</a>
+    <p class="wa">Need to speak to someone now? <a href="https://wa.me/447000000000" target="_blank" rel="noopener">Message us on WhatsApp</a></p>
+  </div>
+</body>
+</html>
