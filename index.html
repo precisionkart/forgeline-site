@@ -87,6 +87,9 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   /* HERO */
   .hero{padding:64px 0 32px;position:relative;}
   .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:start;}
+  .hero-single{max-width:760px;}
+  .hero-cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap;}
+  .hero-cta .btn{padding:14px 22px;font-size:15px;}
   .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);padding:6px 12px 6px 6px;border-radius:var(--radius-pill);font-size:13px;color:var(--ink-2);box-shadow:var(--shadow-sm);}
   .pill .tag{background:var(--brand-2);color:var(--brand);padding:3px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:600;letter-spacing:.02em;}
   h1.hero-h{font-size:clamp(40px,5.2vw,72px);font-weight:600;letter-spacing:-0.035em;line-height:1.02;margin-top:20px;}
@@ -169,7 +172,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 
   /* DARK PROCESS */
   .process-section{background:var(--ink);color:#fff;border-radius:32px;margin:0 24px;}
-  .process-inner{padding:80px 56px;}
+  .process-inner{padding:80px 88px;}
   .process-section .sec-eyebrow{background:rgba(255,91,46,.18);color:#FF8A5C;}
   .process-section h2.sec-h{color:#fff;}
   .process-section .sec-sub{color:#A1A1AA;}
@@ -207,6 +210,13 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   .stat-cell:last-child{border-right:none;}
   .stat-cell .v{font-size:42px;font-weight:600;letter-spacing:-0.04em;background:linear-gradient(135deg,var(--brand) 0%, #FF8A5C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
   .stat-cell .l{margin-top:6px;font-size:13.5px;color:var(--ink-2);}
+
+  /* QUOTE SECTION */
+  .quote-section{padding:32px 0 96px;}
+  .quote-head{text-align:center;max-width:600px;margin:0 auto 40px;}
+  .quote-head h2.sec-h{margin:18px auto 0;}
+  .quote-head .sec-sub{margin:18px auto 0;}
+  .quote-section .form-card{max-width:560px;margin:0 auto;}
 
   /* CTA */
   .endcta{margin:0 24px;background:linear-gradient(135deg, #FF5B2E 0%, #FF8A5C 100%);border-radius:32px;padding:80px 56px;text-align:center;color:#fff;position:relative;overflow:hidden;}
@@ -331,99 +341,17 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 
 <!-- HERO -->
 <section class="hero">
-  <div class="container hero-grid">
-    <div>
-      <span class="pill"><span class="tag">NEW</span> Quotes back in 24 hours, by a real engineer</span>
-      <h1 class="hero-h">CNC parts from China, <span class="serif">without</span> the headache.</h1>
-      <p class="hero-sub">Forgeline connects UK and European engineering teams to a network of vetted Chinese precision shops. One contract, one project manager in your timezone, DDP to your door.</p>
-      <div class="hero-trust">
-        <div class="avatars"><span>A</span><span>K</span><span>L</span><span>M</span></div>
-        <div><span class="stars">★★★★★</span> Built by engineers who've shipped from China for a decade</div>
-      </div>
+  <div class="container hero-single">
+    <span class="pill"><span class="tag">NEW</span> Quotes back in 24 hours, by a real engineer</span>
+    <h1 class="hero-h">CNC parts from China, <span class="serif">without</span> the headache.</h1>
+    <p class="hero-sub">Forgeline connects UK and European engineering teams to a network of vetted Chinese precision shops. One contract, one project manager in your timezone, DDP to your door.</p>
+    <div class="hero-cta">
+      <a href="#quote" class="btn btn-brand">Get my quote →</a>
+      <a href="mailto:hi@forgeline.app" class="btn btn-white">Talk to an engineer</a>
     </div>
-
-    <!-- QUOTE FORM -->
-    <div class="form-card" id="quote">
-      <div id="formView">
-        <h3>Get your quote in 24 hours</h3>
-        <p class="sub">Free, no account needed. A real engineer will review and reply.</p>
-
-        <form id="quoteForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
-          <!-- TODO: Replace with your Web3Forms access key from web3forms.com -->
-          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY">
-          <input type="hidden" name="subject" value="New quote request — Forgeline">
-          <input type="hidden" name="from_name" value="Forgeline website">
-          <input type="checkbox" name="botcheck" style="display:none;">
-
-          <div class="field">
-            <label for="name">Your name</label>
-            <input type="text" name="name" id="name" required placeholder="Anya Lindqvist">
-          </div>
-          <div class="field">
-            <label for="email">Work email</label>
-            <input type="email" name="email" id="email" required placeholder="anya@yourcompany.com">
-          </div>
-          <div class="field">
-            <label for="company">Company</label>
-            <input type="text" name="company" id="company" placeholder="Pellet Robotics">
-          </div>
-          <div class="field">
-            <label for="process">What do you need made?</label>
-            <select name="process" id="process" required>
-              <option value="">Select a process…</option>
-              <option>CNC milling</option>
-              <option>CNC turning</option>
-              <option>Sheet metal</option>
-              <option>3D printing</option>
-              <option>Finishing only</option>
-              <option>Not sure — help me</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="qty">Quantity needed</label>
-            <select name="qty" id="qty" required>
-              <option value="">Select quantity…</option>
-              <option>1 – 10 (prototype)</option>
-              <option>10 – 100</option>
-              <option>100 – 1,000</option>
-              <option>1,000 – 10,000</option>
-              <option>10,000+</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="notes">Anything else? (material, tolerance, deadline)</label>
-            <textarea name="notes" id="notes" placeholder="e.g. 6061-T6 aluminium, ±0.05 mm, need by 15 Aug"></textarea>
-          </div>
-          <div class="field">
-            <label>CAD file (optional)</label>
-            <label class="file-drop" for="cadfile">
-              <div class="ico">📐</div>
-              <div class="t">Click to upload STEP, IGES or PDF</div>
-              <div class="s">Max 10 MB · NDA-protected</div>
-              <input type="file" name="cadfile" id="cadfile" accept=".step,.stp,.iges,.igs,.pdf,.dwg,.dxf,.stl,.x_t,.zip">
-              <div class="file-name" id="fileName"></div>
-            </label>
-          </div>
-
-          <button type="submit" class="btn btn-brand" id="submitBtn">
-            <span id="btnText">Send quote request</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
-          <p class="consent">By submitting you agree to our <a href="/privacy.html">privacy policy</a>. We respond within one working day.</p>
-        </form>
-
-        <div class="form-trust">
-          <span>NDA-protected</span>
-          <span>UK contract</span>
-          <span>No spam</span>
-        </div>
-      </div>
-
-      <div class="form-success" id="successView">
-        <div class="ico">✓</div>
-        <h3>Got it — quote on the way</h3>
-        <p>A real engineer will reply within one working day. Check your inbox for confirmation.</p>
-      </div>
+    <div class="hero-trust">
+      <div class="avatars"><span>A</span><span>K</span><span>L</span><span>M</span></div>
+      <div><span class="stars">★★★★★</span> Built by engineers who've shipped from China for a decade</div>
     </div>
   </div>
 
@@ -535,6 +463,101 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
       <div class="stat-cell"><div class="v">±0.01mm</div><div class="l">5-axis machining tolerance</div></div>
       <div class="stat-cell"><div class="v">100%</div><div class="l">Orders CMM-inspected before shipping</div></div>
       <div class="stat-cell"><div class="v">DDP</div><div class="l">Duty &amp; VAT included to your door</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section" id="quote">
+  <div class="container">
+    <div class="quote-head">
+      <span class="sec-eyebrow">Get a quote</span>
+      <h2 class="sec-h" style="text-align:center;">Send us a part, <span class="serif">quote back tomorrow.</span></h2>
+      <p class="sec-sub">Free, no account needed. A real engineer will review and reply within one working day.</p>
+    </div>
+
+    <!-- QUOTE FORM -->
+    <div class="form-card">
+      <div id="formView">
+        <h3>Get your quote in 24 hours</h3>
+        <p class="sub">Free, no account needed. A real engineer will review and reply.</p>
+
+        <form id="quoteForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+          <!-- TODO: Replace with your Web3Forms access key from web3forms.com -->
+          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY">
+          <input type="hidden" name="subject" value="New quote request — Forgeline">
+          <input type="hidden" name="from_name" value="Forgeline website">
+          <input type="checkbox" name="botcheck" style="display:none;">
+
+          <div class="field">
+            <label for="name">Your name</label>
+            <input type="text" name="name" id="name" required placeholder="Anya Lindqvist">
+          </div>
+          <div class="field">
+            <label for="email">Work email</label>
+            <input type="email" name="email" id="email" required placeholder="anya@yourcompany.com">
+          </div>
+          <div class="field">
+            <label for="company">Company</label>
+            <input type="text" name="company" id="company" placeholder="Pellet Robotics">
+          </div>
+          <div class="field">
+            <label for="process">What do you need made?</label>
+            <select name="process" id="process" required>
+              <option value="">Select a process…</option>
+              <option>CNC milling</option>
+              <option>CNC turning</option>
+              <option>Sheet metal</option>
+              <option>3D printing</option>
+              <option>Finishing only</option>
+              <option>Not sure — help me</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="qty">Quantity needed</label>
+            <select name="qty" id="qty" required>
+              <option value="">Select quantity…</option>
+              <option>1 – 10 (prototype)</option>
+              <option>10 – 100</option>
+              <option>100 – 1,000</option>
+              <option>1,000 – 10,000</option>
+              <option>10,000+</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="notes">Anything else? (material, tolerance, deadline)</label>
+            <textarea name="notes" id="notes" placeholder="e.g. 6061-T6 aluminium, ±0.05 mm, need by 15 Aug"></textarea>
+          </div>
+          <div class="field">
+            <label>CAD file (optional)</label>
+            <label class="file-drop" for="cadfile">
+              <div class="ico">📐</div>
+              <div class="t">Click to upload STEP, IGES or PDF</div>
+              <div class="s">Max 10 MB · NDA-protected</div>
+              <input type="file" name="cadfile" id="cadfile" accept=".step,.stp,.iges,.igs,.pdf,.dwg,.dxf,.stl,.x_t,.zip">
+              <div class="file-name" id="fileName"></div>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-brand" id="submitBtn">
+            <span id="btnText">Send quote request</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <p class="consent">By submitting you agree to our <a href="/privacy.html">privacy policy</a>. We respond within one working day.</p>
+        </form>
+
+        <div class="form-trust">
+          <span>NDA-protected</span>
+          <span>UK contract</span>
+          <span>No spam</span>
+        </div>
+      </div>
+
+      <div class="form-success" id="successView">
+        <div class="ico">✓</div>
+        <h3>Got it — quote on the way</h3>
+        <p>A real engineer will reply within one working day. Check your inbox for confirmation.</p>
+      </div>
     </div>
   </div>
 </section>
