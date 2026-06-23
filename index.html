@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Forgeline — CNC manufacturing from China, delivered with confidence</title>
-<meta name="description" content="Forgeline connects UK and European engineering teams to vetted Chinese precision CNC shops. One contract, one project manager, quotes in 24 hours.">
-<meta property="og:title" content="Forgeline — CNC manufacturing, on autopilot">
-<meta property="og:description" content="China-built parts, delivered with the certainty of a shop down the road. UK contract, EU servers, DDP to your door.">
+<title>Forgeline — British-managed product development and manufacturing</title>
+<meta name="description" content="Forgeline is a British-managed product development and manufacturing company. From CAD to packaging, our UK engineering team handles every step — built through trusted, vetted partner factories. UK contract, significant savings.">
+<meta property="og:title" content="Forgeline — the product you'd build in Britain, for a fraction of the price">
+<meta property="og:description" content="British engineering, factory-built. Design, prototype, manufacture, finish and package — under one roof, at a fraction of UK cost.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://forgeline.app">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,10 +86,47 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 
   /* HERO */
   .hero{padding:64px 0 32px;position:relative;}
-  .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:start;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;}
   .hero-single{max-width:760px;}
+  .hero-copy{align-self:center;}
   .hero-cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap;}
   .hero-cta .btn{padding:14px 22px;font-size:15px;}
+
+  /* HERO VISUAL */
+  .hero-visual{position:relative;}
+  .hero-visual-grid{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:14px;}
+  .hero-photo{border-radius:var(--radius-md);background-size:cover;background-position:center;box-shadow:var(--shadow-md);}
+  .hero-photo.tall{grid-row:span 2;min-height:360px;}
+  .hero-photo.short{min-height:173px;}
+  .hero-float{position:absolute;display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:var(--shadow-md);padding:13px 16px;}
+  .hero-float .hf-ico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .hero-float .hf-ico.brand{background:var(--brand-2);color:var(--brand);}
+  .hero-float .hf-ico.green{background:rgba(34,197,94,.14);color:#16A34A;}
+  .hero-float .hf-ico svg{width:18px;height:18px;}
+  .hero-float .hf-v{font-size:18px;font-weight:700;letter-spacing:-0.02em;line-height:1.1;}
+  .hero-float .hf-l{font-size:11.5px;color:var(--ink-2);margin-top:2px;}
+  .hero-float.savings{
+    top:-24px;left:-26px;padding:18px 22px;gap:14px;
+    background:var(--ink);border-color:var(--ink);overflow:hidden;
+    animation:floatY 4.5s ease-in-out infinite, glowPulse 3s ease-in-out infinite;
+  }
+  .hero-float.savings:after{
+    content:"";position:absolute;top:0;left:-60%;width:45%;height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.14),transparent);
+    transform:skewX(-18deg);animation:sheen 4.5s ease-in-out infinite;
+  }
+  .hero-float.savings .hf-ico{width:46px;height:46px;background:var(--brand);color:#fff;animation:icoPulse 3s ease-in-out infinite;}
+  .hero-float.savings .hf-ico svg{width:22px;height:22px;}
+  .hero-float.savings .hf-v{font-size:28px;color:#fff;}
+  .hero-float.savings .hf-l{font-size:13px;color:#A1A1AA;}
+  @keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+  @keyframes glowPulse{
+    0%,100%{box-shadow:0 10px 30px rgba(10,10,10,.18), 0 0 0 rgba(255,91,46,0);}
+    50%{box-shadow:0 16px 40px rgba(10,10,10,.22), 0 0 26px rgba(255,91,46,.34);}
+  }
+  @keyframes icoPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+  @keyframes sheen{0%{left:-60%;}35%,100%{left:130%;}}
+  .hero-float.qc{bottom:-18px;right:-18px;}
   .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);padding:6px 12px 6px 6px;border-radius:var(--radius-pill);font-size:13px;color:var(--ink-2);box-shadow:var(--shadow-sm);}
   .pill .tag{background:var(--brand-2);color:var(--brand);padding:3px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:600;letter-spacing:.02em;}
   h1.hero-h{font-size:clamp(40px,5.2vw,72px);font-weight:600;letter-spacing:-0.035em;line-height:1.02;margin-top:20px;}
@@ -149,7 +186,8 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   .logos{margin-top:72px;padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
   .logos-row{display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
   .logos-row .label{font-size:13px;color:var(--ink-3);}
-  .logos-row .brand{font-weight:600;color:var(--ink-2);font-size:15px;letter-spacing:-0.01em;opacity:.7;}
+  .logos-row .brand{display:inline-flex;align-items:center;gap:9px;font-weight:600;color:var(--ink-2);font-size:14px;letter-spacing:-0.01em;}
+  .logos-row .brand svg{width:19px;height:19px;color:var(--brand);}
 
   /* SECTIONS */
   .section{padding:96px 0;}
@@ -171,8 +209,8 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   .cap-foot b{color:var(--ink);font-weight:600;}
 
   /* DARK PROCESS */
-  .process-section{background:var(--ink);color:#fff;border-radius:32px;margin:0 24px;}
-  .process-inner{padding:80px 88px;}
+  .process-section{background:var(--ink);color:#fff;border-radius:32px;}
+  .process-inner{padding:80px 72px;}
   .process-section .sec-eyebrow{background:rgba(255,91,46,.18);color:#FF8A5C;}
   .process-section h2.sec-h{color:#fff;}
   .process-section .sec-sub{color:#A1A1AA;}
@@ -293,7 +331,9 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   @media (max-width:980px){
     .nav-links{display:none;}
     .hero{padding:40px 0 24px;}
-    .hero-grid{grid-template-columns:1fr;gap:32px;}
+    .hero-grid{grid-template-columns:1fr;gap:48px;}
+    .hero-float.savings{left:0;top:-14px;}
+    .hero-float.qc{right:0;bottom:-14px;}
     .cap-grid{grid-template-columns:1fr;gap:16px;}
     .process-inner{padding:56px 24px;}
     .dash-grid{grid-template-columns:1fr 1fr;}
@@ -302,7 +342,6 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     .stat-cell:nth-child(2){border-right:none;}
     .stat-cell:nth-child(1),.stat-cell:nth-child(2){border-bottom:1px solid var(--line);}
     .endcta{padding:56px 24px;margin:0 16px;}
-    .process-section{margin:0 16px;}
     .foot-grid{grid-template-columns:1fr 1fr;}
     .mobile-cta{display:flex;}
     .wa-float{display:none;}
@@ -334,36 +373,50 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
       <a href="#why">Why us</a>
     </nav>
     <div class="nav-cta-desktop">
-      <a href="#quote" class="btn btn-dark">Get my quote →</a>
+      <a href="#quote" class="btn btn-dark">Request Quote →</a>
     </div>
   </div>
 </div>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="container hero-single">
-    <span class="pill"><span class="tag">NEW</span> Quotes back in 24 hours, by a real engineer</span>
-    <h1 class="hero-h">CNC parts from China, <span class="serif">without</span> the headache.</h1>
-    <p class="hero-sub">Forgeline connects UK and European engineering teams to a network of vetted Chinese precision shops. One contract, one project manager in your timezone, DDP to your door.</p>
-    <div class="hero-cta">
-      <a href="#quote" class="btn btn-brand">Get my quote →</a>
-      <a href="mailto:hi@forgeline.app" class="btn btn-white">Talk to an engineer</a>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="pill"><span class="tag">NEW</span> Quotes back in 24 hours, by a real engineer (not AI)</span>
+      <h1 class="hero-h">British engineering quality, <span class="serif">without the British price.</span></h1>
+      <p class="hero-sub"><b style="color:var(--ink);font-weight:600;">Your manufacturing partner at every stage.</b><br>From initial prototypes and sample runs to full production and packaging, we help bring products to market through our trusted engineering and manufacturing network.</p>
+      <div class="hero-cta">
+        <a href="#quote" class="btn btn-brand">Request Quote →</a>
+        <a href="#process" class="btn btn-white">See how it works →</a>
+      </div>
     </div>
-    <div class="hero-trust">
-      <div class="avatars"><span>A</span><span>K</span><span>L</span><span>M</span></div>
-      <div><span class="stars">★★★★★</span> Built by engineers who've shipped from China for a decade</div>
+
+    <div class="hero-visual">
+      <div class="hero-visual-grid">
+        <div class="hero-photo tall" style="background-image:url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=900&q=80');"></div>
+        <div class="hero-photo short" style="background-image:url('https://images.unsplash.com/photo-1581092335397-9583eb92d232?w=900&q=80');"></div>
+        <div class="hero-photo short" style="background-image:url('https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=900&q=80');"></div>
+      </div>
+      <div class="hero-float savings">
+        <div class="hf-ico brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <div><div class="hf-v">40–60% saved</div><div class="hf-l">vs UK manufacturing</div></div>
+      </div>
+      <div class="hero-float qc">
+        <div class="hf-ico green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <div><div class="hf-v">QC passed</div><div class="hf-l">Enclosure batch · inspected</div></div>
+      </div>
     </div>
   </div>
 
   <div class="container">
     <div class="logos">
       <div class="logos-row">
-        <span class="label">Built for hardware teams like</span>
-        <span class="brand">ROBOTICS</span>
-        <span class="brand">LIGHTING</span>
-        <span class="brand">EV / MOBILITY</span>
-        <span class="brand">CONSUMER ELECTRONICS</span>
-        <span class="brand">INDUSTRIAL</span>
+        <span class="label">Trusted by teams building in</span>
+        <span class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 21V4M5 4c3-1.5 5 1.5 8 0s5-1.5 5-1.5v9s-2 1.5-5 0-5 1.5-8 0"/></svg> MOTORSPORT</span>
+        <span class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17h14M6 17l-1-5 2-5h10l2 5-1 5M7.5 12h9"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg> EV / MOBILITY</span>
+        <span class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V8l7 4V8l7 4V6l4 2v13z"/></svg> INDUSTRIAL</span>
+        <span class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4M9 4h6M9 14h.01M15 14h.01"/></svg> ROBOTICS</span>
+        <span class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 01-8 0"/></svg> eCOMMERCE</span>
       </div>
     </div>
   </div>
@@ -373,44 +426,46 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 <section class="section" id="capabilities">
   <div class="container">
     <span class="sec-eyebrow">Capabilities</span>
-    <h2 class="sec-h">Every process you need, <span class="serif">under one roof.</span></h2>
-    <p class="sec-sub">From rapid prototypes to production runs of 5,000+. Aluminium, steel, titanium, brass, engineering plastics — quoted in 24 hours, made in days.</p>
+    <h2 class="sec-h">From prototype to production, <span class="serif">under one roof.</span></h2>
+    <p class="sec-sub">Design, prototype, manufacture, finish, assemble, package. We don't hand you off to five suppliers, one British team manages the whole journey.</p>
 
     <div class="cap-grid">
       <article class="cap">
-        <div class="cap-img" style="background-image:url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=900&q=80');"><span class="badge">5-axis</span></div>
-        <div class="cap-body"><h3>CNC Milling</h3><p>3, 4 and 5-axis milling. Complex geometries, tight tolerances, smooth surface finishes on DMG Mori, Mazak and Haas.</p><div class="cap-foot"><span>Tolerance</span><b>±0.01 mm</b></div></div>
+        <div class="cap-img" style="background-image:url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=900&q=80');"><span class="badge">In-house, UK</span></div>
+        <div class="cap-body"><h3>Design &amp; DFM</h3><p>Bring us a sketch, a brief, or a CAD file. Our British engineers turn it into a manufacturable design — or refine yours to save you money on the build.</p><div class="cap-foot"><span>Engineers based in</span><b>Manchester, UK</b></div></div>
       </article>
       <article class="cap">
-        <div class="cap-img" style="background-image:url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&q=80');"><span class="badge">Mill-turn</span></div>
-        <div class="cap-body"><h3>CNC Turning</h3><p>Shafts, bushings, threaded components with live tooling. Bar feed up to Ø80 mm, chuck up to Ø320 mm.</p><div class="cap-foot"><span>Max diameter</span><b>Ø320 mm</b></div></div>
+        <div class="cap-img" style="background-image:url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&q=80');"><span class="badge">5-axis · ±0.01mm</span></div>
+        <div class="cap-body"><h3>CNC Milling &amp; Turning</h3><p>3, 4 and 5-axis milling and live-tool turning. Aluminium, steel, titanium, brass, engineering plastics. Production runs from 10 to 10,000+.</p><div class="cap-foot"><span>Tolerance</span><b>±0.01 mm</b></div></div>
       </article>
       <article class="cap">
         <div class="cap-img" style="background-image:url('https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=900&q=80');"><span class="badge">Fibre laser</span></div>
-        <div class="cap-body"><h3>Sheet Metal</h3><p>Laser cutting, press-brake bending, MIG/TIG welding. Mild steel, stainless and aluminium up to 12 mm thick.</p><div class="cap-foot"><span>Thickness</span><b>0.5 – 12 mm</b></div></div>
+        <div class="cap-body"><h3>Sheet Metal &amp; Fabrication</h3><p>Laser cutting, press-brake bending, welding. Mild steel, stainless, aluminium up to 12mm. Powder coat and finishing in-line.</p><div class="cap-foot"><span>Thickness</span><b>0.5 – 12 mm</b></div></div>
       </article>
       <article class="cap">
-        <div class="cap-img" style="background-image:url('https://images.unsplash.com/photo-1635348729602-1c6f23d7ed9b?w=900&q=80');"><span class="badge">Type II / III</span></div>
-        <div class="cap-body"><h3>Surface Finishing</h3><p>Anodising, zinc and nickel plating, bead blast, brushed, electropolish. Custom RAL and Pantone matching.</p><div class="cap-foot"><span>Adds</span><b>+2 days</b></div></div>
+        <div class="cap-img" style="background-image:url('https://images.unsplash.com/photo-1635348729602-1c6f23d7ed9b?w=900&q=80');"><span class="badge">SLA · SLS · FDM</span></div>
+        <div class="cap-body"><h3>3D Printing &amp; Prototyping</h3><p>Industrial-grade additive for functional prototypes and short runs. First parts in hand within days — ideal for design validation before tooling up.</p><div class="cap-foot"><span>Min. lead</span><b>48 hours</b></div></div>
       </article>
       <article class="cap">
-        <div class="cap-img" style="background-image:url('https://images.unsplash.com/photo-1567789884554-0b844b597180?w=900&q=80');"><span class="badge">SLA / SLS / FDM</span></div>
-        <div class="cap-body"><h3>3D Printing</h3><p>Industrial-grade additive for functional prototypes and low-volume runs. 24-hour turnaround available.</p><div class="cap-foot"><span>Min. lead</span><b>24 hours</b></div></div>
+        <div class="cap-img" style="background-image:url('https://images.unsplash.com/photo-1567789884554-0b844b597180?w=900&q=80');"><span class="badge">QC verified</span></div>
+        <div class="cap-body"><h3>Finishing &amp; Assembly</h3><p>Anodising, plating, painting, bead blast, sub-assembly, wire harnessing, sourcing of off-the-shelf components. The finished product, not just the parts.</p><div class="cap-foot"><span>Inspection</span><b>100% pre-ship</b></div></div>
       </article>
       <article class="cap">
-        <div class="cap-img" style="background-image:url('https://images.unsplash.com/photo-1581092335397-9583eb92d232?w=900&q=80');"><span class="badge">CMM verified</span></div>
-        <div class="cap-body"><h3>Assembly &amp; QC</h3><p>Sub-assembly, kitting and packaging. Zeiss CMM inspection with full dimensional report on every order.</p><div class="cap-foot"><span>Inspection</span><b>100% FAI</b></div></div>
+        <div class="cap-img" style="background-image:url('https://images.unsplash.com/photo-1581092335397-9583eb92d232?w=900&q=80');"><span class="badge">Retail-ready</span></div>
+        <div class="cap-body"><h3>Packaging &amp; Presentation</h3><p>Custom boxes, inserts, branded inserts, retail-ready packaging. We can ship sellable units to your warehouse or fulfil direct from the factory.</p><div class="cap-foot"><span>MOQ</span><b>From 100 units</b></div></div>
       </article>
     </div>
   </div>
 </section>
 
 <!-- PROCESS -->
-<section class="process-section" id="process">
-  <div class="process-inner">
+<section id="process">
+  <div class="container">
+   <div class="process-section">
+    <div class="process-inner">
     <span class="sec-eyebrow">How it works</span>
-    <h2 class="sec-h">From CAD upload to your bench, <span class="serif">in days, not weeks.</span></h2>
-    <p class="sec-sub">A real engineer reviews every part. A real project manager handles every order. Real-time updates from the factory floor in your dashboard.</p>
+    <h2 class="sec-h">One project manager. <span class="serif">One invoice.</span> One number to call.</h2>
+    <p class="sec-sub">Whether you need a single sample or a full production run, every project gets a UK-based engineer who runs it end to end. You don't deal with the factory, chase suppliers, or manage QC. We do.</p>
 
     <div class="dash">
       <div class="dash-top">
@@ -419,12 +474,14 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
         <div style="font-size:12px;color:#737373;">Anya · Project Manager</div>
       </div>
       <div class="dash-grid">
-        <div class="dash-card"><div class="step-n">Step 01</div><h4>Upload &amp; quote</h4><p>Drop a STEP, IGES or PDF. DFM analysis and a fixed-price quote back in 24 hours.</p><span class="status s-done">✓ Completed</span></div>
-        <div class="dash-card"><div class="step-n">Step 02</div><h4>DFM review</h4><p>A UK-based engineer reviews the part, flags risks, suggests cost savings only if real.</p><span class="status s-done">✓ Completed</span></div>
-        <div class="dash-card"><div class="step-n">Step 03</div><h4>Manufacture</h4><p>You see the shop, the machine, the operator. Daily photos as your part comes off the bed.</p><span class="status s-active">● In progress</span></div>
-        <div class="dash-card"><div class="step-n">Step 04</div><h4>Inspect &amp; ship</h4><p>CMM report on every order. DDP through Rotterdam or Felixstowe — duty &amp; VAT handled.</p><span class="status s-next">○ Upcoming</span></div>
+        <div class="dash-card"><div class="step-n">Step 01</div><h4>Send it over &amp; quote</h4><p>Send a CAD, a sketch, a sample, or just describe the product and quantity. A British engineer replies within one working day with a fixed-price quote.</p><span class="status s-done">✓ Completed</span></div>
+        <div class="dash-card"><div class="step-n">Step 02</div><h4>Sample or prototype</h4><p>Approve a first article, prototype or sample before you commit to volume. Need design help? Our engineers can refine or build it from scratch.</p><span class="status s-done">✓ Optional</span></div>
+        <div class="dash-card"><div class="step-n">Step 03</div><h4>Manufacture &amp; QC</h4><p>Production at our vetted partner factories. Inspected before it ships, never sent on hope. You see photos at every stage.</p><span class="status s-active">● In progress</span></div>
+        <div class="dash-card"><div class="step-n">Step 04</div><h4>Finish, package, ship</h4><p>Assembly, finishing, packaging, DDP shipping to your door or warehouse. Duty and VAT handled. One invoice, in GBP or EUR.</p><span class="status s-next">○ Upcoming</span></div>
       </div>
     </div>
+    </div>
+   </div>
   </div>
 </section>
 
@@ -432,37 +489,37 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 <section class="section" id="why">
   <div class="container">
     <span class="sec-eyebrow">Why Forgeline</span>
-    <h2 class="sec-h">China-quality risk, <span class="serif">finally</span> off your desk.</h2>
-    <p class="sec-sub">Most teams who try direct sourcing eventually get burned. Forgeline holds the contracts, the relationships, the QC, and the liability — so you don't have to.</p>
+    <h2 class="sec-h">Same quality. <span class="serif">Half the price.</span> British accountability on every order.</h2>
+    <p class="sec-sub">You shouldn't have to choose between affordable manufacturing and peace of mind. Forgeline is the British company in the middle — we hold the contracts, the relationships, the quality control, and the liability. You get the savings.</p>
 
     <div class="why-grid">
       <div class="why-card feature">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/></svg></div>
-        <h3>UK-law contract, EU servers</h3>
-        <p>Your agreement is with Forgeline Ltd. Drawings live on EU-hosted servers. Factories only see what they need to make the part — never your full assembly.</p>
+        <h3>A fraction of UK manufacturing cost</h3>
+        <p>Our partner factory network typically saves customers 40–60% versus the same part made in Britain. That's the difference between hiring an extra engineer or not.</p>
       </div>
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-        <h3>One project manager, your timezone</h3>
-        <p>Every account gets a named engineer working GMT/CET hours. Replies within working hours, no chasing factories on WeChat at midnight.</p>
+        <h3>British engineering, every step</h3>
+        <p>Every quote, every design review, every QC report passes a UK-based mechanical engineer. We catch issues before parts are cut, not after they ship.</p>
       </div>
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-        <h3>If it fails, we eat it</h3>
-        <p>Every shipment is CMM-inspected before it leaves Dongguan. If a part fails inspection at your end, we re-make it at our cost, on our timeline.</p>
+        <h3>Vetted partners, not random shops</h3>
+        <p>We don't use Alibaba. Our factories are partners we've worked with for years, audited, ISO-certified, and on the hook for quality. We don't add new ones lightly.</p>
       </div>
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
-        <h3>DDP to your door</h3>
-        <p>We handle customs, duty, VAT and IOSS. You pay one invoice in EUR or GBP and a courier rings your bell. No surprise paperwork.</p>
+        <h3>If it fails, it's our problem</h3>
+        <p>Your contract is with Forgeline Ltd in the UK. If a part fails inspection at your end, we remake it — at our cost, on our timeline. Your business isn't the risk-taker.</p>
       </div>
     </div>
 
     <div class="stats">
-      <div class="stat-cell"><div class="v">Days</div><div class="l">Lead times, not weeks</div></div>
-      <div class="stat-cell"><div class="v">±0.01mm</div><div class="l">5-axis machining tolerance</div></div>
-      <div class="stat-cell"><div class="v">100%</div><div class="l">Orders CMM-inspected before shipping</div></div>
-      <div class="stat-cell"><div class="v">DDP</div><div class="l">Duty &amp; VAT included to your door</div></div>
+      <div class="stat-cell"><div class="v">40–60%</div><div class="l">Typical saving vs UK manufacturing</div></div>
+      <div class="stat-cell"><div class="v">±0.01mm</div><div class="l">Standard tolerance on 5-axis CNC</div></div>
+      <div class="stat-cell"><div class="v">100%</div><div class="l">Orders inspected before they ship</div></div>
+      <div class="stat-cell"><div class="v">1</div><div class="l">British project manager per account</div></div>
     </div>
   </div>
 </section>
@@ -471,16 +528,16 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 <section class="quote-section" id="quote">
   <div class="container">
     <div class="quote-head">
-      <span class="sec-eyebrow">Get a quote</span>
-      <h2 class="sec-h" style="text-align:center;">Send us a part, <span class="serif">quote back tomorrow.</span></h2>
-      <p class="sec-sub">Free, no account needed. A real engineer will review and reply within one working day.</p>
+      <span class="sec-eyebrow">Get your quote</span>
+      <h2 class="sec-h" style="text-align:center;">Send us a brief. <span class="serif">Get a real quote</span> in 24 hours.</h2>
+      <p class="sec-sub">No chatbots, no instant-quote algorithms, no spam. A British mechanical engineer reviews every request and replies within one working day with a fixed-price quote and a realistic timeline.</p>
     </div>
 
     <!-- QUOTE FORM -->
     <div class="form-card">
       <div id="formView">
-        <h3>Get your quote in 24 hours</h3>
-        <p class="sub">Free, no account needed. A real engineer will review and reply.</p>
+        <h3>Tell us what you're building</h3>
+        <p class="sub">Takes 60 seconds. Any stage — sketch to CAD.</p>
 
         <form id="quoteForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
           <!-- TODO: Replace with your Web3Forms access key from web3forms.com -->
@@ -510,6 +567,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
               <option>Sheet metal</option>
               <option>3D printing</option>
               <option>Finishing only</option>
+              <option>End-to-end product build</option>
               <option>Not sure — help me</option>
             </select>
           </div>
@@ -566,11 +624,11 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 <section style="padding-bottom:80px;">
   <div class="endcta">
     <div class="endcta-inner">
-      <h2>Send us a part. <span class="serif">Quote back tomorrow.</span></h2>
-      <p>No account needed for your first quote. Drop a STEP file and a quantity — a real engineer writes back with a number, a lead time, and the name of the shop making it.</p>
+      <h2>Stop juggling suppliers. <span class="serif">Build it once,</span> with one team.</h2>
+      <p>From your first sketch to a packaged product on the shelf — managed in Britain, built through our trusted network. Send us a brief and find out what you'd save.</p>
       <div class="row">
-        <a href="#quote" class="btn btn-white">Get my quote →</a>
-        <a href="mailto:hi@forgeline.app" class="btn btn-ghost-w">Talk to an engineer</a>
+        <a href="#quote" class="btn btn-white">Request Quote →</a>
+        <a href="mailto:hi@forgeline.app" class="btn btn-ghost-w">Talk to a British engineer</a>
       </div>
     </div>
   </div>
@@ -582,11 +640,11 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     <div class="foot-grid">
       <div>
         <div class="logo"><span class="logo-dot"></span> Forgeline</div>
-        <p>The manufacturing bridge connecting European engineering teams to vetted Chinese precision shops.</p>
+        <p>British-managed product development and manufacturing. Design, build, finish and package — under one roof, at a fraction of UK cost.</p>
       </div>
       <div>
         <h4>Capabilities</h4>
-        <ul><li><a href="#capabilities">CNC milling</a></li><li><a href="#capabilities">CNC turning</a></li><li><a href="#capabilities">Sheet metal</a></li><li><a href="#capabilities">3D printing</a></li></ul>
+        <ul><li><a href="#capabilities">Design &amp; DFM</a></li><li><a href="#capabilities">CNC Machining</a></li><li><a href="#capabilities">Sheet Metal</a></li><li><a href="#capabilities">3D Printing</a></li><li><a href="#capabilities">Finishing &amp; Assembly</a></li><li><a href="#capabilities">Packaging</a></li></ul>
       </div>
       <div>
         <h4>Company</h4>
@@ -606,7 +664,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 
 <!-- STICKY MOBILE CTA -->
 <div class="mobile-cta">
-  <a href="#quote" class="btn btn-brand">Get my quote →</a>
+  <a href="#quote" class="btn btn-brand">Request Quote →</a>
   <a href="https://wa.me/447000000000?text=Hi%20Forgeline%2C%20I%27d%20like%20a%20CNC%20quote" target="_blank" rel="noopener" class="btn btn-wa" aria-label="WhatsApp us">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.2 3.3 5.3 4.6 2.6 1 3.1.8 3.7.8.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4 0-.1-.3-.2-.6-.4M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2"/></svg>
   </a>
