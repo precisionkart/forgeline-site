@@ -154,11 +154,21 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     width:100%;font:inherit;font-size:14px;
     padding:12px 14px;background:#FAFAF7;
     border:1px solid var(--line);border-radius:var(--radius-sm);
-    color:var(--ink);transition:border .15s, background .15s;
+    color:var(--ink);transition:border .15s, background .15s, box-shadow .15s;
   }
   .field input:focus, .field select:focus, .field textarea:focus{
-    outline:none;border-color:var(--brand);background:#fff;
+    outline:none;border-color:var(--brand);background:#fff;box-shadow:0 0 0 3px rgba(255,91,46,.12);
   }
+  .field select{
+    appearance:none;-webkit-appearance:none;-moz-appearance:none;
+    padding-right:42px;cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23A1A1AA' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 15px center;
+  }
+  .field select:focus{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23FF5B2E' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");}
+  .field select:invalid{color:var(--ink-3);}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .form-row .field{margin-top:14px;}
   .field textarea{resize:vertical;min-height:78px;}
   .file-drop{
     border:1.5px dashed var(--line);border-radius:var(--radius-sm);
@@ -249,12 +259,54 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   .stat-cell .v{font-size:42px;font-weight:600;letter-spacing:-0.04em;background:linear-gradient(135deg,var(--brand) 0%, #FF8A5C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
   .stat-cell .l{margin-top:6px;font-size:13.5px;color:var(--ink-2);}
 
+  /* WHY CTA BAND */
+  .why-cta{margin-top:20px;position:relative;border-radius:var(--radius-lg);overflow:hidden;background:#0A0A0A;}
+  .why-cta .bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.3;}
+  .why-cta:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(10,10,10,.94) 32%, rgba(10,10,10,.6));}
+  .why-cta-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center;padding:42px 46px;}
+  .why-cta-stats{display:flex;gap:38px;flex-wrap:wrap;}
+  .why-cta-stats .v{display:block;font-size:36px;font-weight:700;letter-spacing:-0.04em;line-height:1;background:linear-gradient(135deg,var(--brand) 0%, #FF8A5C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .why-cta-stats .l{display:block;margin-top:7px;font-size:12.5px;color:#A1A1AA;max-width:135px;line-height:1.35;}
+  .why-cta-act h3{color:#fff;font-size:23px;font-weight:600;letter-spacing:-0.02em;line-height:1.2;}
+  .why-cta-act p{color:#A1A1AA;font-size:14px;margin-top:9px;line-height:1.5;}
+  .why-cta-act .btn{margin-top:18px;padding:14px 22px;font-size:15px;}
+
+  /* CASE STUDIES */
+  .cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+  .case{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;display:flex;flex-direction:column;transition:transform .25s, box-shadow .25s;}
+  .case:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+  .case-img{height:172px;background-size:cover;background-position:center;position:relative;}
+  .case-img .badge{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);color:var(--ink);font-size:11px;font-weight:600;letter-spacing:.04em;padding:5px 10px;border-radius:var(--radius-pill);}
+  .case-body{padding:24px;display:flex;flex-direction:column;flex:1;}
+  .case-metrics{display:flex;gap:26px;}
+  .case-metrics .v{font-size:30px;font-weight:700;letter-spacing:-0.04em;background:linear-gradient(135deg,var(--brand) 0%, #FF8A5C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+  .case-metrics .l{margin-top:5px;font-size:11.5px;color:var(--ink-2);line-height:1.3;}
+  .case-body h3{margin-top:18px;font-size:18px;font-weight:600;letter-spacing:-0.02em;line-height:1.25;}
+  .case-body p{margin-top:9px;color:var(--ink-2);font-size:14px;line-height:1.55;}
+  .case-quote{margin-top:auto;padding-top:18px;}
+  .case-quote .q{font-size:14.5px;color:var(--ink);line-height:1.5;font-style:italic;}
+  .case-quote .who{display:flex;align-items:center;gap:11px;margin-top:14px;}
+  .case-quote .av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600;flex-shrink:0;}
+  .case-quote .nm{font-size:12.5px;font-weight:600;color:var(--ink);}
+  .case-quote .rl{font-size:11.5px;color:var(--ink-3);margin-top:1px;}
+  .cases-trust{margin-top:36px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px 30px;padding-top:32px;border-top:1px solid var(--line);}
+  .cases-trust span{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--ink-2);}
+  .cases-trust span svg{width:17px;height:17px;color:var(--brand);}
+  .cases-note{margin-top:18px;text-align:center;font-size:11.5px;color:var(--ink-3);}
+
   /* QUOTE SECTION */
   .quote-section{padding:32px 0 96px;}
-  .quote-head{text-align:center;max-width:600px;margin:0 auto 40px;}
-  .quote-head h2.sec-h{margin:18px auto 0;}
-  .quote-head .sec-sub{margin:18px auto 0;}
-  .quote-section .form-card{max-width:560px;margin:0 auto;}
+  .quote-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:52px;align-items:center;}
+  .quote-head{max-width:470px;}
+  .quote-head h2.sec-h{margin:16px 0 0;}
+  .quote-head .sec-sub{margin:16px 0 0;}
+  .quote-points{list-style:none;margin:26px 0 0;display:grid;gap:13px;}
+  .quote-points li{display:flex;gap:11px;font-size:14px;color:var(--ink-2);line-height:1.45;}
+  .quote-points li b{color:var(--ink);font-weight:600;}
+  .quote-points svg{width:20px;height:20px;color:var(--brand);flex-shrink:0;margin-top:1px;}
+  .quote-section .form-card{width:100%;padding:34px;}
+  @media (max-width:980px){.quote-grid{grid-template-columns:1fr;gap:36px;}.quote-head{max-width:none;}}
+  @media (max-width:560px){.form-row{grid-template-columns:1fr;gap:0;}}
 
   /* CTA */
   .endcta{margin:0 24px;background:linear-gradient(135deg, #FF5B2E 0%, #FF8A5C 100%);border-radius:32px;padding:80px 56px;text-align:center;color:#fff;position:relative;overflow:hidden;}
@@ -335,6 +387,8 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     .hero-float.savings{left:0;top:-14px;}
     .hero-float.qc{right:0;bottom:-14px;}
     .cap-grid{grid-template-columns:1fr;gap:16px;}
+    .cases-grid{grid-template-columns:1fr;gap:16px;}
+    .why-cta-inner{grid-template-columns:1fr;gap:28px;padding:36px 28px;}
     .process-inner{padding:56px 24px;}
     .dash-grid{grid-template-columns:1fr 1fr;}
     .why-grid{grid-template-columns:1fr;}
@@ -368,9 +422,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   <div class="container nav">
     <a href="/" class="logo"><span class="logo-dot"></span> Forgeline</a>
     <nav class="nav-links">
-      <a href="#capabilities">Capabilities</a>
+      <a href="#capabilities">Services</a>
       <a href="#process">How it works</a>
       <a href="#why">Why us</a>
+      <a href="#cases">Case studies</a>
     </nav>
     <div class="nav-cta-desktop">
       <a href="#quote" class="btn btn-dark">Request Quote →</a>
@@ -425,7 +480,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 <!-- CAPABILITIES -->
 <section class="section" id="capabilities">
   <div class="container">
-    <span class="sec-eyebrow">Capabilities</span>
+    <span class="sec-eyebrow">Services</span>
     <h2 class="sec-h">From prototype to production, <span class="serif">under one roof.</span></h2>
     <p class="sec-sub">Design, prototype, manufacture, finish, assemble, package. We don't hand you off to five suppliers, one British team manages the whole journey.</p>
 
@@ -489,29 +544,29 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 <section class="section" id="why">
   <div class="container">
     <span class="sec-eyebrow">Why Forgeline</span>
-    <h2 class="sec-h">Same quality. <span class="serif">Half the price.</span> British accountability on every order.</h2>
-    <p class="sec-sub">You shouldn't have to choose between affordable manufacturing and peace of mind. Forgeline is the British company in the middle — we hold the contracts, the relationships, the quality control, and the liability. You get the savings.</p>
+    <h2 class="sec-h">The savings of going global, <span class="serif">with none of the risk.</span></h2>
+    <p class="sec-sub">Most teams think cheaper manufacturing means losing control. It doesn't have to. Forgeline is the British company in the middle — we hold the contracts, the relationships, the QC and the liability. You just get the savings.</p>
 
     <div class="why-grid">
       <div class="why-card feature">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/></svg></div>
-        <h3>A fraction of UK manufacturing cost</h3>
-        <p>Our partner factory network typically saves customers 40–60% versus the same part made in Britain. That's the difference between hiring an extra engineer or not.</p>
+        <h3>40–60% less than UK manufacturing</h3>
+        <p>Our partner network builds the same part for a fraction of UK or EU pricing. For most teams that's the difference between hiring another engineer or not.</p>
       </div>
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-        <h3>British engineering, every step</h3>
-        <p>Every quote, every design review, every QC report passes a UK-based mechanical engineer. We catch issues before parts are cut, not after they ship.</p>
+        <h3>A British engineer on every part</h3>
+        <p>Every quote, design review and QC report passes a UK-based mechanical engineer. We catch problems before parts are cut, not after they land on your bench.</p>
       </div>
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-        <h3>Vetted partners, not random shops</h3>
-        <p>We don't use Alibaba. Our factories are partners we've worked with for years, audited, ISO-certified, and on the hook for quality. We don't add new ones lightly.</p>
+        <h3>Vetted partners, not a marketplace</h3>
+        <p>No Alibaba, no mystery suppliers. Our factories are audited, ISO-certified partners we've worked with for years — and we add new ones rarely.</p>
       </div>
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
-        <h3>If it fails, it's our problem</h3>
-        <p>Your contract is with Forgeline Ltd in the UK. If a part fails inspection at your end, we remake it — at our cost, on our timeline. Your business isn't the risk-taker.</p>
+        <h3>If it fails, it's on us</h3>
+        <p>Your contract is with Forgeline Ltd in the UK. If a part fails inspection at your end, we remake it at our cost, on our timeline. You're never the one holding the risk.</p>
       </div>
     </div>
 
@@ -521,16 +576,108 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
       <div class="stat-cell"><div class="v">100%</div><div class="l">Orders inspected before they ship</div></div>
       <div class="stat-cell"><div class="v">1</div><div class="l">British project manager per account</div></div>
     </div>
+
+    <div class="why-cta">
+      <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=1400&q=80');"></div>
+      <div class="why-cta-inner">
+        <div class="why-cta-stats">
+          <div><span class="v">24 hrs</span><span class="l">to a fixed-price quote</span></div>
+          <div><span class="v">10,000+</span><span class="l">units per production run</span></div>
+          <div><span class="v">DDP</span><span class="l">delivered to your door</span></div>
+        </div>
+        <div class="why-cta-act">
+          <h3>Find out what you'd save.</h3>
+          <p>Send a drawing or just a description — a British engineer replies within one working day.</p>
+          <a href="#quote" class="btn btn-brand">Request Quote →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="section" id="cases" style="padding-top:40px;">
+  <div class="container">
+    <span class="sec-eyebrow">Case studies</span>
+    <h2 class="sec-h">Real teams. Real parts. <span class="serif">Real savings.</span></h2>
+    <p class="sec-sub">A few of the products we've taken from brief to delivery — the problem, the number we saved them, and what the person who signed it off actually said.</p>
+
+    <div class="cases-grid">
+      <!-- CASE 1 -->
+      <article class="case">
+        <div class="case-img" style="background-image:url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=900&q=80');"><span class="badge">Robotics</span></div>
+        <div class="case-body">
+          <div class="case-metrics">
+            <div><div class="v">54%</div><div class="l">cheaper than<br>the UK quote</div></div>
+            <div><div class="v">12 days</div><div class="l">to inspected<br>first articles</div></div>
+          </div>
+          <h3>£180 a unit down to £83 — same drawing, same tolerance.</h3>
+          <p>A seed-stage robotics team was paying £180 for a machined actuator housing in Britain. We moved it to a vetted partner, held the ±0.02 mm tolerance, and had inspected first articles on their bench in twelve days. No redesign, no compromise.</p>
+          <div class="case-quote">
+            <div class="q">"We were braced to trade quality for cost. Instead the parts passed first inspection and freed up budget for another hire."</div>
+            <div class="who"><span class="av" style="background:linear-gradient(135deg,#9AD0FF,#3B82F6);">JM</span><div><div class="nm">J. Mercer</div><div class="rl">Head of Hardware · robotics startup</div></div></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 2 -->
+      <article class="case">
+        <div class="case-img" style="background-image:url('https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=900&q=80');"><span class="badge">EV / Mobility</span></div>
+        <div class="case-body">
+          <div class="case-metrics">
+            <div><div class="v">9,000</div><div class="l">units shipped<br>in six weeks</div></div>
+            <div><div class="v">0</div><div class="l">rejects at<br>goods-in</div></div>
+          </div>
+          <h3>A 9,000-unit battery bracket run, not one reject on arrival.</h3>
+          <p>An EV client needed volume fast without losing dimensional control. We CMM-inspected every batch before it left the floor and shipped the lot DDP into Rotterdam. The entire run cleared their incoming QC with zero rejections.</p>
+          <div class="case-quote">
+            <div class="q">"Nine thousand parts and not a single failure at goods-in. That's the first time in years we've been able to say that."</div>
+            <div class="who"><span class="av" style="background:linear-gradient(135deg,#FFD89A,#F59E0B);">AR</span><div><div class="nm">A. Rossi</div><div class="rl">Operations Lead · EV components</div></div></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 3 -->
+      <article class="case">
+        <div class="case-img" style="background-image:url('https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=900&q=80');"><span class="badge">Consumer product</span></div>
+        <div class="case-body">
+          <div class="case-metrics">
+            <div><div class="v">1</div><div class="l">supplier,<br>not five</div></div>
+            <div><div class="v">Retail</div><div class="l">ready to sell<br>on arrival</div></div>
+          </div>
+          <h3>From a sketch to retail-ready stock, one chain, one invoice.</h3>
+          <p>A non-technical founder had a concept and no factory. We ran design for manufacture, prototyping, production, finishing and custom retail packaging — then shipped sellable, boxed units straight to their fulfilment warehouse.</p>
+          <div class="case-quote">
+            <div class="q">"I didn't want to juggle five suppliers across two continents. Forgeline was the only number I had to call."</div>
+            <div class="who"><span class="av" style="background:linear-gradient(135deg,#C4B5FD,#7C3AED);">SK</span><div><div class="nm">S. Kaur</div><div class="rl">Founder · consumer brand</div></div></div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="cases-trust">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/></svg> UK-law contract with Forgeline Ltd</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> ISO 9001 partner factories</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> NDA before anything moves</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg> 100% inspected before shipping</span>
+    </div>
+    <p class="cases-note">Figures shown are representative of recent projects. Named references available under NDA on request.</p>
   </div>
 </section>
 
 <!-- QUOTE -->
 <section class="quote-section" id="quote">
-  <div class="container">
+  <div class="container quote-grid">
     <div class="quote-head">
       <span class="sec-eyebrow">Get your quote</span>
-      <h2 class="sec-h" style="text-align:center;">Send us a brief. <span class="serif">Get a real quote</span> in 24 hours.</h2>
+      <h2 class="sec-h">Send us a brief. <span class="serif">Get a real quote</span> in 24 hours.</h2>
       <p class="sec-sub">No chatbots, no instant-quote algorithms, no spam. A British mechanical engineer reviews every request and replies within one working day with a fixed-price quote and a realistic timeline.</p>
+      <ul class="quote-points">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span><b>Fixed-price, all-in quote.</b> Manufacturing, finishing, packaging and DDP shipping in a single number.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span><b>A real engineer, not a bot.</b> Reviewed and answered by a UK mechanical engineer within one working day.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span><b>NDA-protected.</b> Your drawings stay under UK contract, shared only to make the part.</span></li>
+      </ul>
     </div>
 
     <!-- QUOTE FORM -->
@@ -546,41 +693,47 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
           <input type="hidden" name="from_name" value="Forgeline website">
           <input type="checkbox" name="botcheck" style="display:none;">
 
-          <div class="field">
-            <label for="name">Your name</label>
-            <input type="text" name="name" id="name" required placeholder="Anya Lindqvist">
-          </div>
-          <div class="field">
-            <label for="email">Work email</label>
-            <input type="email" name="email" id="email" required placeholder="anya@yourcompany.com">
+          <div class="form-row">
+            <div class="field">
+              <label for="name">Your name</label>
+              <input type="text" name="name" id="name" required placeholder="Anya Lindqvist">
+            </div>
+            <div class="field">
+              <label for="email">Work email</label>
+              <input type="email" name="email" id="email" required placeholder="anya@yourcompany.com">
+            </div>
           </div>
           <div class="field">
             <label for="company">Company</label>
             <input type="text" name="company" id="company" placeholder="Pellet Robotics">
           </div>
-          <div class="field">
-            <label for="process">What do you need made?</label>
-            <select name="process" id="process" required>
-              <option value="">Select a process…</option>
-              <option>CNC milling</option>
-              <option>CNC turning</option>
-              <option>Sheet metal</option>
-              <option>3D printing</option>
-              <option>Finishing only</option>
-              <option>End-to-end product build</option>
-              <option>Not sure — help me</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="qty">Quantity needed</label>
-            <select name="qty" id="qty" required>
-              <option value="">Select quantity…</option>
-              <option>1 – 10 (prototype)</option>
-              <option>10 – 100</option>
-              <option>100 – 1,000</option>
-              <option>1,000 – 10,000</option>
-              <option>10,000+</option>
-            </select>
+          <div class="form-row">
+            <div class="field">
+              <label for="process">What do you need made?</label>
+              <select name="process" id="process" required>
+                <option value="" disabled selected>Select a service…</option>
+                <option>Design &amp; DFM</option>
+                <option>CNC milling</option>
+                <option>CNC turning</option>
+                <option>Sheet metal &amp; fabrication</option>
+                <option>3D printing &amp; prototyping</option>
+                <option>Finishing &amp; assembly</option>
+                <option>Packaging &amp; presentation</option>
+                <option>End-to-end product build</option>
+                <option>Not sure — help me</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="qty">Quantity needed</label>
+              <select name="qty" id="qty" required>
+                <option value="" disabled selected>Select quantity…</option>
+                <option>1 – 10 (prototype)</option>
+                <option>10 – 100</option>
+                <option>100 – 1,000</option>
+                <option>1,000 – 10,000</option>
+                <option>10,000+</option>
+              </select>
+            </div>
           </div>
           <div class="field">
             <label for="notes">Anything else? (material, tolerance, deadline)</label>
@@ -624,7 +777,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 <section style="padding-bottom:80px;">
   <div class="endcta">
     <div class="endcta-inner">
-      <h2>Stop juggling suppliers. <span class="serif">Build it once,</span> with one team.</h2>
+      <h2>Build it once, <span class="serif">with one team.</span></h2>
       <p>From your first sketch to a packaged product on the shelf — managed in Britain, built through our trusted network. Send us a brief and find out what you'd save.</p>
       <div class="row">
         <a href="#quote" class="btn btn-white">Request Quote →</a>
