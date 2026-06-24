@@ -251,6 +251,11 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   .why-ico svg{width:20px;height:20px;}
   .why-card h3{margin-top:18px;font-size:20px;font-weight:600;letter-spacing:-0.02em;}
   .why-card p{margin-top:10px;color:var(--ink-2);font-size:14.5px;line-height:1.55;}
+  .why-card{display:flex;flex-direction:column;}
+  .why-proof{margin-top:auto;padding-top:18px;}
+  .why-proof span{padding-top:15px;border-top:1px solid var(--line);width:100%;display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--ink);}
+  .why-card.feature .why-proof span{border-top-color:#FFD5C2;}
+  .why-proof svg{width:16px;height:16px;color:var(--brand);flex-shrink:0;}
 
   /* STATS */
   .stats{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;margin-top:48px;}
@@ -286,7 +291,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   .case-quote{margin-top:auto;padding-top:18px;}
   .case-quote .q{font-size:14.5px;color:var(--ink);line-height:1.5;font-style:italic;}
   .case-quote .who{display:flex;align-items:center;gap:11px;margin-top:14px;}
-  .case-quote .av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600;flex-shrink:0;}
+  .case-quote .av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600;flex-shrink:0;background-size:cover;background-position:center;}
   .case-quote .nm{font-size:12.5px;font-weight:600;color:var(--ink);}
   .case-quote .rl{font-size:11.5px;color:var(--ink-3);margin-top:1px;}
   .cases-trust{margin-top:36px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px 30px;padding-top:32px;border-top:1px solid var(--line);}
@@ -544,29 +549,33 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 <section class="section" id="why">
   <div class="container">
     <span class="sec-eyebrow">Why Forgeline</span>
-    <h2 class="sec-h">The savings of going global, <span class="serif">with none of the risk.</span></h2>
-    <p class="sec-sub">Most teams think cheaper manufacturing means losing control. It doesn't have to. Forgeline is the British company in the middle — we hold the contracts, the relationships, the QC and the liability. You just get the savings.</p>
+    <h2 class="sec-h">Global pricing. British standards. <span class="serif">Zero risk to you.</span></h2>
+    <p class="sec-sub">Cheaper manufacturing usually means giving up control. Not here. Forgeline sits in the middle as your British partner — we hold the contracts, the relationships, the QC and the liability. You keep the savings and the accountability.</p>
 
     <div class="why-grid">
       <div class="why-card feature">
-        <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/></svg></div>
-        <h3>40–60% less than UK manufacturing</h3>
-        <p>Our partner network builds the same part for a fraction of UK or EU pricing. For most teams that's the difference between hiring another engineer or not.</p>
+        <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <h3>40–60% below UK pricing</h3>
+        <p>The same part, to the same drawing, built through our partner network for a fraction of UK or EU cost. For most teams that's a whole extra hire freed up.</p>
+        <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Fixed-price quote in 24 hours</span></div>
       </div>
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
         <h3>A British engineer on every part</h3>
-        <p>Every quote, design review and QC report passes a UK-based mechanical engineer. We catch problems before parts are cut, not after they land on your bench.</p>
+        <p>Every quote, design review and QC report passes a UK-based mechanical engineer. We catch problems before metal is cut — not after parts land on your bench.</p>
+        <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Named engineer, GMT/CET hours</span></div>
       </div>
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-        <h3>Vetted partners, not a marketplace</h3>
-        <p>No Alibaba, no mystery suppliers. Our factories are audited, ISO-certified partners we've worked with for years — and we add new ones rarely.</p>
+        <h3>Vetted partners, never a marketplace</h3>
+        <p>No Alibaba, no mystery suppliers. Our factories are audited, ISO-certified partners we've worked with for years — and we take on new ones rarely.</p>
+        <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> ISO 9001 audited factories</span></div>
       </div>
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
         <h3>If it fails, it's on us</h3>
-        <p>Your contract is with Forgeline Ltd in the UK. If a part fails inspection at your end, we remake it at our cost, on our timeline. You're never the one holding the risk.</p>
+        <p>Your contract is with Forgeline Ltd in the UK. If a part fails inspection at your end, we remake it at our cost, on our timeline. You're never the one carrying the risk.</p>
+        <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> UK-law contract, we hold the liability</span></div>
       </div>
     </div>
 
@@ -605,17 +614,17 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     <div class="cases-grid">
       <!-- CASE 1 -->
       <article class="case">
-        <div class="case-img" style="background-image:url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=900&q=80');"><span class="badge">Robotics</span></div>
+        <div class="case-img" style="background-image:url('_DSC7197.JPG');background-position:center 50%;"><span class="badge">Motorsport</span></div>
         <div class="case-body">
           <div class="case-metrics">
-            <div><div class="v">54%</div><div class="l">cheaper than<br>the UK quote</div></div>
-            <div><div class="v">12 days</div><div class="l">to inspected<br>first articles</div></div>
+            <div><div class="v">£13</div><div class="l">per unit,<br>down from £117</div></div>
+            <div><div class="v">±0.02mm</div><div class="l">tolerance<br>held</div></div>
           </div>
-          <h3>£180 a unit down to £83 — same drawing, same tolerance.</h3>
-          <p>A seed-stage robotics team was paying £180 for a machined actuator housing in Britain. We moved it to a vetted partner, held the ±0.02 mm tolerance, and had inspected first articles on their bench in twelve days. No redesign, no compromise.</p>
+          <h3>£117 a unit down to £13, same drawing, same tolerance.</h3>
+          <p>Precision Kart was paying £117 a unit for a machined sprocket in Britain. We moved it to a vetted partner and held the ±0.02 mm tolerance. The inspected first articles came in at £13 a unit, with no redesign and no compromise on quality.</p>
           <div class="case-quote">
-            <div class="q">"We were braced to trade quality for cost. Instead the parts passed first inspection and freed up budget for another hire."</div>
-            <div class="who"><span class="av" style="background:linear-gradient(135deg,#9AD0FF,#3B82F6);">JM</span><div><div class="nm">J. Mercer</div><div class="rl">Head of Hardware · robotics startup</div></div></div>
+            <div class="q">"We didn't have to trade quality for price. Freeing up that cashflow let us stock a far wider range of products."</div>
+            <div class="who"><span class="av" style="background-image:url('p.png');"></span><div><div class="nm">P. Cooper</div><div class="rl">Head of Operations · Precision Kart</div></div></div>
           </div>
         </div>
       </article>
@@ -650,6 +659,23 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
           <div class="case-quote">
             <div class="q">"I didn't want to juggle five suppliers across two continents. Forgeline was the only number I had to call."</div>
             <div class="who"><span class="av" style="background:linear-gradient(135deg,#C4B5FD,#7C3AED);">SK</span><div><div class="nm">S. Kaur</div><div class="rl">Founder · consumer brand</div></div></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 4 -->
+      <article class="case">
+        <div class="case-img" style="background-image:url('cnc+part+3.jpg');"><span class="badge">Industrial</span></div>
+        <div class="case-body">
+          <div class="case-metrics">
+            <div><div class="v">Concept</div><div class="l">to finished<br>machine parts</div></div>
+            <div><div class="v">Large</div><div class="l">format CNC<br>components</div></div>
+          </div>
+          <h3>End to end on custom large-format CNC parts for a new printing machine.</h3>
+          <p>Forest Digital were developing a new printing machine and needed bespoke large CNC components. We took it from concept through to manufacturing — design for manufacture, machining the large-format parts and delivering finished, inspected components ready to build into the machine.</p>
+          <div class="case-quote">
+            <div class="q">"They took us from concept all the way to finished, manufactured parts for our new printing machines. One team handled the whole thing."</div>
+            <div class="who"><span class="av" style="background-image:url('FD.png');"></span><div><div class="nm">S. Thomas</div><div class="rl">Founder · Forest Digital</div></div></div>
           </div>
         </div>
       </article>
@@ -819,13 +845,13 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 <div class="mobile-cta">
   <a href="#quote" class="btn btn-brand">Request Quote →</a>
   <a href="https://wa.me/447000000000?text=Hi%20Forgeline%2C%20I%27d%20like%20a%20CNC%20quote" target="_blank" rel="noopener" class="btn btn-wa" aria-label="WhatsApp us">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.2 3.3 5.3 4.6 2.6 1 3.1.8 3.7.8.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4 0-.1-.3-.2-.6-.4M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2"/></svg>
+    <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 0C7.2 0 0 7.2 0 16c0 2.8.8 5.5 2.2 7.9L0 32l8.3-2.2C10.6 31.2 13.3 32 16 32c8.8 0 16-7.2 16-16S24.8 0 16 0zm0 29.3c-2.5 0-5-.7-7.1-1.9l-.5-.3-4.9 1.3 1.3-4.8-.3-.5C3.4 21 2.7 18.5 2.7 16 2.7 8.7 8.7 2.7 16 2.7S29.3 8.7 29.3 16 23.3 29.3 16 29.3zm7.3-9.9c-.4-.2-2.4-1.2-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.6-.2.2-.5.3-.9.1-.4-.2-1.7-.6-3.2-2-1.2-1.1-2-2.4-2.2-2.8-.2-.4 0-.6.2-.8.2-.2.4-.5.6-.7.2-.2.3-.4.4-.7.1-.3.1-.5 0-.7-.1-.2-.9-2.2-1.3-3-.3-.8-.7-.7-.9-.7h-.8c-.3 0-.7.1-1.1.5-.4.4-1.5 1.4-1.5 3.5s1.5 4.1 1.7 4.4c.2.3 3 4.6 7.3 6.4 1 .4 1.8.7 2.4.9 1 .3 1.9.3 2.7.2.8-.1 2.4-1 2.8-2 .3-1 .3-1.8.2-2-.1-.2-.4-.3-.8-.5z"/></svg>
   </a>
 </div>
 
 <!-- WHATSAPP FLOAT (desktop) -->
 <a href="https://wa.me/447000000000?text=Hi%20Forgeline%2C%20I%27d%20like%20a%20CNC%20quote" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp us">
-  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.2 3.3 5.3 4.6 2.6 1 3.1.8 3.7.8.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4 0-.1-.3-.2-.6-.4M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2"/></svg>
+  <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 0C7.2 0 0 7.2 0 16c0 2.8.8 5.5 2.2 7.9L0 32l8.3-2.2C10.6 31.2 13.3 32 16 32c8.8 0 16-7.2 16-16S24.8 0 16 0zm0 29.3c-2.5 0-5-.7-7.1-1.9l-.5-.3-4.9 1.3 1.3-4.8-.3-.5C3.4 21 2.7 18.5 2.7 16 2.7 8.7 8.7 2.7 16 2.7S29.3 8.7 29.3 16 23.3 29.3 16 29.3zm7.3-9.9c-.4-.2-2.4-1.2-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.6-.2.2-.5.3-.9.1-.4-.2-1.7-.6-3.2-2-1.2-1.1-2-2.4-2.2-2.8-.2-.4 0-.6.2-.8.2-.2.4-.5.6-.7.2-.2.3-.4.4-.7.1-.3.1-.5 0-.7-.1-.2-.9-2.2-1.3-3-.3-.8-.7-.7-.9-.7h-.8c-.3 0-.7.1-1.1.5-.4.4-1.5 1.4-1.5 3.5s1.5 4.1 1.7 4.4c.2.3 3 4.6 7.3 6.4 1 .4 1.8.7 2.4.9 1 .3 1.9.3 2.7.2.8-.1 2.4-1 2.8-2 .3-1 .3-1.8.2-2-.1-.2-.4-.3-.8-.5z"/></svg>
 </a>
 
 <!-- COOKIE BANNER -->
