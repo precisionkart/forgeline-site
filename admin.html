@@ -86,6 +86,10 @@
   .chip.sub.active .n{background:rgba(255,255,255,.25);color:#fff;}
 
   /* Lead cards */
+  /* Faint column headers — same grid as .lead-main so they line up */
+  .leads-head{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1.4fr) minmax(0,1.1fr) 104px 150px 64px;gap:18px;padding:2px 18px 9px;}
+  .leads-head span{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);opacity:.75;}
+  .leads-head .whencol{text-align:right;}
   .leads{display:grid;gap:12px;}
   .lead{background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);overflow:hidden;transition:box-shadow .2s;}
   .lead:hover{box-shadow:var(--shadow-md);}
@@ -153,6 +157,7 @@
   .hidden{display:none!important;}
 
   @media (max-width:760px){
+    .leads-head{display:none;}
     .lead-main{grid-template-columns:1fr auto;gap:8px 14px;}
     .lead .who{order:1;}
     .lead .statuscol{order:2;align-items:flex-end;}
@@ -219,6 +224,9 @@
 
     <div class="filters" id="filters"></div>
     <div class="subfilters hidden" id="subfilters"></div>
+    <div class="leads-head hidden" id="leadsHead">
+      <span>Customer</span><span>Contact</span><span>Service</span><span>Ref</span><span>Status</span><span class="whencol">Age</span>
+    </div>
     <div class="leads" id="leads"></div>
     <div class="empty hidden" id="empty"><div class="big">📭</div><div>No leads here yet.</div></div>
   </div>
@@ -390,6 +398,7 @@
     }
 
     $('empty').classList.toggle('hidden', list.length > 0);
+    $('leadsHead').classList.toggle('hidden', list.length === 0);
     $('leads').innerHTML = list.map(rowHtml).join('');
     Array.prototype.forEach.call(document.querySelectorAll('.lead'), wireRow);
   }
