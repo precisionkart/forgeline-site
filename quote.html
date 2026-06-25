@@ -65,18 +65,19 @@
   .line .rm:hover{color:var(--brand);}
   .line .computed{font-size:11px;color:var(--ink-3);text-align:right;grid-column:1/-1;margin:-3px 0 4px;font-variant-numeric:tabular-nums;}
 
-  /* Internal profit box */
-  .profit{background:#0A0A0A;color:#fff;border-radius:var(--radius-md);padding:16px 18px;}
-  .profit h3{color:#8A8A8A;}
-  .profit .row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;color:#D4D4D4;}
-  .profit .row b{color:#fff;font-variant-numeric:tabular-nums;}
-  .profit .big{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;padding-top:10px;border-top:1px solid #262626;}
-  .profit .big .l{font-size:12px;color:#8A8A8A;}
-  .profit .big .v{font-size:24px;font-weight:700;letter-spacing:-0.02em;color:#4ADE80;font-variant-numeric:tabular-nums;}
-  .profit .m4{font-size:11px;color:#8A8A8A;margin-top:3px;}
+  /* Internal profit box — sits under the quote, same width */
+  .profit{background:#0A0A0A;color:#fff;border-radius:var(--radius-md);padding:20px 24px;width:100%;max-width:794px;box-shadow:var(--shadow-md);}
+  .profit h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#8A8A8A;font-weight:600;margin-bottom:14px;}
+  .profit .prow{display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:14px;}
+  .profit .pcell{background:#141414;border:1px solid #262626;border-radius:var(--radius-sm);padding:14px 16px;}
+  .profit .pcell.profit-cell{background:#15211a;border-color:#1f3a2c;}
+  .profit .pl{font-size:11.5px;color:#8A8A8A;}
+  .profit .pv{font-size:24px;font-weight:700;letter-spacing:-0.02em;margin-top:4px;font-variant-numeric:tabular-nums;}
+  .profit .pv.green{color:#4ADE80;}
+  .profit .m4{font-size:11.5px;color:#8A8A8A;margin-top:3px;}
 
-  /* PREVIEW = the quote document */
-  .preview{display:flex;justify-content:center;}
+  /* PREVIEW = the quote document (stacked: doc, then margin box) */
+  .preview{display:flex;flex-direction:column;align-items:center;gap:16px;}
   .doc{background:#fff;width:100%;max-width:794px;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow-md);padding:48px 52px;font-size:13.5px;color:var(--ink);}
   .doc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding-bottom:26px;border-bottom:2px solid var(--ink);}
   .doc .logo{font-size:22px;}
@@ -143,6 +144,13 @@
   <div class="builder no-print">
 
     <div class="card">
+      <h3>Prefill customer</h3>
+      <div class="f"><label>Pick a lead or past customer (or just type below)</label>
+        <select id="prefill"><option value="">— Manual entry —</option></select></div>
+      <div id="prefillNote" style="font-size:11.5px;color:var(--ink-3)">Loading contacts…</div>
+    </div>
+
+    <div class="card">
       <h3>Quote details</h3>
       <div class="grid2">
         <div class="f"><label>Quote no.</label><input id="q_no"></div>
@@ -199,21 +207,30 @@ hello@forgeline.app · forgeline.app
 VAT GB000000000</textarea></div>
     </div>
 
-    <div class="profit">
-      <h3>Your margin (internal only)</h3>
-      <div class="row"><span>Total cost</span><b id="p_cost">£0</b></div>
-      <div class="row"><span>Customer price (ex VAT)</span><b id="p_sell">£0</b></div>
-      <div class="big"><div><div class="l">Profit</div><div class="m4" id="p_marginpct">0% margin</div></div><div class="v" id="p_profit">£0</div></div>
-    </div>
   </div>
 
   <!-- ============ PREVIEW / DOCUMENT ============ -->
   <div class="preview">
     <div class="doc" id="doc"></div>
+
+    <div class="profit no-print" id="profitBox">
+      <h3>Your margin <span style="text-transform:none;font-weight:400">— internal only, not shown to the customer</span></h3>
+      <div class="prow">
+        <div class="pcell"><div class="pl">Total cost</div><div class="pv" id="p_cost">£0</div></div>
+        <div class="pcell"><div class="pl">Customer price (ex VAT)</div><div class="pv" id="p_sell">£0</div></div>
+        <div class="pcell profit-cell"><div class="pl">Profit</div><div class="pv green" id="p_profit">£0</div><div class="m4" id="p_marginpct">0% margin</div></div>
+      </div>
+    </div>
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
+  // Same Supabase keys as the other pages (lets the dropdown read your leads/orders)
+  const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+  const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+  const configured = SUPABASE_URL.indexOf('http') === 0 && SUPABASE_ANON_KEY.indexOf('YOUR_') !== 0;
+
   const $ = function(id){ return document.getElementById(id); };
   const LS = 'fg_quote_v1';
 
@@ -355,12 +372,74 @@ VAT GB000000000</textarea></div>
   // live update on any input
   document.addEventListener('input', function(e){ if (e.target.closest('.builder')) render(); });
 
+  // ---- Customer prefill from leads / orders ----
+  let CONTACTS = [];
+  function demoContacts(){
+    return [
+      { name:'Anya Lindqvist', company:'Pellet Robotics', email:'anya@pelletrobotics.com', phone:'+44 7700 900111' },
+      { name:'Tom Whitfield', company:'Kestrel EV', email:'tom@kestrel-ev.co.uk', phone:'+44 7700 900222' },
+      { name:'Marcus Reed', company:'Apex Motorsport', email:'marcus@apexmotors.com', phone:'+44 7700 900444' },
+      { name:'Priya Nair', company:'Northforge', email:'priya@northforge.io', phone:'+44 7700 900333' }
+    ];
+  }
+  function dedupe(list){
+    var seen = {}, out = [];
+    list.forEach(function(c){
+      if (!c || (!c.name && !c.company)) return;
+      var k = (c.email||'').toLowerCase() || ((c.name||'')+'|'+(c.company||'')).toLowerCase();
+      if (seen[k]) return; seen[k] = 1; out.push(c);
+    });
+    return out;
+  }
+  function populateContacts(){
+    var sel = $('prefill');
+    sel.innerHTML = '<option value="">— Manual entry —</option>' + CONTACTS.map(function(c, i){
+      var label = c.company ? (c.company + (c.name? ' — '+c.name : '')) : (c.name||'Unknown');
+      return '<option value="'+i+'">'+esc(label)+'</option>';
+    }).join('');
+  }
+  async function loadContacts(){
+    try {
+      if (configured && window.supabase){
+        var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        var s = await sb.auth.getSession();
+        if (s.data.session){
+          var res = await Promise.all([
+            sb.from('leads').select('name,company,email,phone').order('created_at',{ ascending:false }),
+            sb.from('orders').select('customer,company,email,phone').order('created_at',{ ascending:false })
+          ]);
+          var leads = (res[0].data||[]).map(function(l){ return { name:l.name, company:l.company, email:l.email, phone:l.phone }; });
+          var orders = (res[1].data||[]).map(function(o){ return { name:o.customer, company:o.company, email:o.email, phone:o.phone }; });
+          CONTACTS = dedupe(leads.concat(orders));
+          $('prefillNote').textContent = CONTACTS.length + ' contacts from your leads & orders';
+          populateContacts(); return;
+        }
+        CONTACTS = demoContacts();
+        $('prefillNote').textContent = 'Sign in on Leads or Orders to load your real contacts. Showing samples.';
+        populateContacts(); return;
+      }
+    } catch(e){}
+    CONTACTS = demoContacts();
+    $('prefillNote').textContent = 'Sample contacts (connect Supabase to pull your real leads).';
+    populateContacts();
+  }
+  $('prefill').addEventListener('change', function(e){
+    var c = CONTACTS[parseInt(e.target.value,10)];
+    if (!c) return;
+    $('c_name').value = c.name || '';
+    $('c_company').value = c.company || '';
+    $('c_email').value = c.email || '';
+    $('c_phone').value = c.phone || '';
+    render();
+  });
+
   // init
   load();
   $('q_date').value = todayISO();
   $('q_no').value = 'FG-Q' + new Date().toISOString().slice(2,10).replace(/-/g,'');
   addLine('', 1, '', $('defMargin').value);
   render();
+  loadContacts();
 </script>
 </body>
 </html>
