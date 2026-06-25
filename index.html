@@ -948,23 +948,42 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 
     const formData = new FormData(form);
 
-    // ----- 1) Insert the lead into our own database (fire-and-forget) -----
-    // Appears live in /admin.html. We never block the user on this call.
+    // ----- 1) Insert the lead into our own database -----
+    // Appears live in /admin.html. Uploads the CAD file to storage first so the
+    // dashboard has a download link. Runs alongside the email relay below.
     if (SUPABASE_URL.indexOf('http') === 0) {
-      const lead = Object.fromEntries(formData.entries());
-      delete lead.cadfile; delete lead.botcheck; delete lead.access_key;
-      delete lead.subject; delete lead.from_name;
-      lead.status = 'New';
-      fetch(SUPABASE_URL.replace(/\/$/, '') + '/rest/v1/leads', {
-        method: 'POST',
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify(lead)
-      }).catch(function(){ /* never block the user on the DB call */ });
+      (async function(){
+        const base = SUPABASE_URL.replace(/\/$/, '');
+        const auth = { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY };
+        const lead = Object.fromEntries(formData.entries());
+        delete lead.cadfile; delete lead.botcheck; delete lead.access_key;
+        delete lead.subject; delete lead.from_name;
+        lead.status = 'New';
+
+        // Upload the file (if any) to the cad-files bucket.
+        const file = formData.get('cadfile');
+        if (file && file.size) {
+          const safe = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+          const path = Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '-' + safe;
+          try {
+            const up = await fetch(base + '/storage/v1/object/cad-files/' + encodeURIComponent(path), {
+              method: 'POST',
+              headers: Object.assign({ 'Content-Type': file.type || 'application/octet-stream' }, auth),
+              body: file
+            });
+            if (up.ok) {
+              lead.file_url = base + '/storage/v1/object/public/cad-files/' + encodeURIComponent(path);
+              lead.file_name = file.name;
+            }
+          } catch(e){ /* file optional — carry on without it */ }
+        }
+
+        fetch(base + '/rest/v1/leads', {
+          method: 'POST',
+          headers: Object.assign({ 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, auth),
+          body: JSON.stringify(lead)
+        }).catch(function(){});
+      })();
     }
 
     // ----- 2) Send file + email via the relay (this drives success/redirect) -----

@@ -13,6 +13,11 @@ create table if not exists public.leads (
   process       text,
   qty           text,
   notes         text,
+  -- quote / job reference (also acts as the job number)
+  quote_ref     text,
+  -- uploaded CAD/PDF file (stored in the cad-files bucket)
+  file_url      text,
+  file_name     text,
   -- your team's private working notes (not collected from the customer)
   internal_notes text,
   -- attribution / where the lead came from
@@ -63,3 +68,27 @@ create policy "admins can delete leads"
 
 -- Let the dashboard receive live inserts over Realtime.
 alter publication supabase_realtime add table public.leads;
+
+
+-- ============================================================
+-- File storage for uploaded CAD / PDF files
+-- ============================================================
+-- Create a public bucket named "cad-files".
+insert into storage.buckets (id, name, public)
+values ('cad-files', 'cad-files', true)
+on conflict (id) do nothing;
+
+-- The public website (anon) may upload files into this bucket only.
+drop policy if exists "public can upload cad files" on storage.objects;
+create policy "public can upload cad files"
+  on storage.objects for insert
+  to anon
+  with check (bucket_id = 'cad-files');
+
+-- Anyone with the (unguessable) link can download — required for the
+-- Download button. Filenames are randomised so they can't be enumerated.
+drop policy if exists "anyone can read cad files" on storage.objects;
+create policy "anyone can read cad files"
+  on storage.objects for select
+  to anon, authenticated
+  using (bucket_id = 'cad-files');

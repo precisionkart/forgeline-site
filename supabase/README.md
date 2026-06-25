@@ -19,11 +19,12 @@ backend that gives us a database + login.
    - Sign up at <https://supabase.com> (free). Create a new project; pick a
      region close to the UK (e.g. London / `eu-west-2`). Wait for it to finish.
 
-2. **Create the table**
+2. **Create the table + file storage**
    - Left sidebar → **SQL Editor** → **New query**.
    - Paste the contents of [`schema.sql`](./schema.sql) → **Run**.
-   - This creates the `leads` table, locks it down with security rules, and
-     turns on live updates.
+   - This creates the `leads` table, locks it down with security rules, turns
+     on live updates, and creates the **`cad-files`** storage bucket that holds
+     uploaded CAD/PDF files (so the dashboard can offer a Download button).
 
 3. **Get your keys**
    - **Project Settings → API**. Copy two values:
@@ -58,10 +59,15 @@ backend that gives us a database + login.
 ## What you can do in the dashboard
 
 - See every lead with contact details, what they need, and how long ago.
-- Filter by pipeline stage, search by name/company/email.
-- Open a lead to read their message, see the **source** (which ad/campaign),
-  add **private notes**, change **status**, or delete.
+- **Download the uploaded CAD/PDF** to forward to your manufacturers.
+- Give each lead a **Quote / Job number** (the **Auto** button assigns the next
+  `FG-####` in sequence) — it shows on the row so files and jobs stay traceable.
+- Move leads through your pipeline:
+  **New → Waiting for Quote → Quoted → Follow-up → Follow-up 2 → Follow-up 3 → Won → Lost.**
+- Filter by stage, search by name/company/email, add **private notes**, delete.
 - New leads arrive **live** with a flash + chime while you've got it open.
+- Rows show a 📎 when a file is attached and the quote ref once set, so the
+  dashboard doubles as your file / job register.
 
 ## Optional next steps
 
