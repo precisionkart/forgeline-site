@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Forgeline — Quote maker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAF7; --surface:#FFFFFF; --ink:#0A0A0A; --ink-2:#52525B; --ink-3:#A1A1AA;
+    --line:#EAEAE5; --line-2:#F0F0EB; --brand:#FF5B2E; --brand-2:#FFE4DA;
+    --radius-md:14px; --radius-sm:10px; --radius-pill:999px;
+    --shadow-sm:0 1px 2px rgba(10,10,10,.04),0 2px 8px rgba(10,10,10,.04);
+    --shadow-md:0 4px 12px rgba(10,10,10,.05),0 12px 32px rgba(10,10,10,.06);
+    --green:#16A34A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;}
+  a{color:inherit;}
+  button,input,select,textarea{font:inherit;}
+  .serif{font-family:'Instrument Serif',serif;font-style:italic;}
+  .hidden{display:none!important;}
+
+  /* Topbar */
+  .topbar{position:sticky;top:0;z-index:20;background:rgba(250,250,247,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+  .topbar-in{display:flex;align-items:center;justify-content:space-between;height:62px;padding:0 22px;gap:16px;}
+  .brand{display:flex;align-items:center;gap:14px;}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:18px;letter-spacing:-0.02em;}
+  .logo-dot{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--brand),#FF8A5C);}
+  .topnav{display:flex;gap:4px;background:var(--line-2);padding:3px;border-radius:var(--radius-pill);}
+  .topnav a{font-size:13px;font-weight:500;color:var(--ink-2);padding:6px 14px;border-radius:var(--radius-pill);}
+  .topnav a.active{background:#fff;color:var(--ink);box-shadow:var(--shadow-sm);}
+  .topbar .right{display:flex;gap:9px;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px 15px;border-radius:var(--radius-pill);font-size:13.5px;font-weight:500;cursor:pointer;border:1px solid transparent;transition:background .15s,transform .12s,box-shadow .15s;}
+  .btn:active{transform:translateY(1px);}
+  .btn-dark{background:var(--ink);color:#fff;} .btn-dark:hover{background:#2a2a2a;}
+  .btn-brand{background:var(--brand);color:#fff;} .btn-brand:hover{background:#e74e23;}
+  .btn-ghost{background:transparent;color:var(--ink-2);border-color:var(--line);} .btn-ghost:hover{background:var(--line-2);color:var(--ink);}
+  .btn-sm{padding:6px 11px;font-size:12.5px;}
+
+  /* Layout */
+  .work{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:24px;max-width:1340px;margin:0 auto;padding:24px 22px 90px;align-items:start;}
+  .builder{display:grid;gap:16px;position:sticky;top:86px;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);padding:18px;}
+  .card h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);font-weight:600;margin-bottom:14px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .f{margin-bottom:10px;}
+  .f:last-child{margin-bottom:0;}
+  .f label{display:block;font-size:11.5px;font-weight:500;color:var(--ink-2);margin-bottom:5px;}
+  input,select,textarea{width:100%;background:#FAFAF7;border:1px solid var(--line);border-radius:var(--radius-sm);padding:9px 11px;font-size:13px;transition:border .15s,box-shadow .15s,background .15s;}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand);background:#fff;box-shadow:0 0 0 3px rgba(255,91,46,.1);}
+  textarea{resize:vertical;min-height:60px;}
+  .money{position:relative;}
+  .money:before{content:attr(data-cur);position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:12.5px;}
+  .money input{padding-left:20px;font-variant-numeric:tabular-nums;}
+
+  /* Line items editor */
+  .line{display:grid;grid-template-columns:1fr 56px 78px 64px 26px;gap:7px;align-items:center;margin-bottom:8px;}
+  .line .lh{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);font-weight:600;}
+  .line input{padding:8px 9px;font-size:12.5px;}
+  .line .rm{background:transparent;border:none;color:var(--ink-3);cursor:pointer;font-size:16px;line-height:1;padding:4px;}
+  .line .rm:hover{color:var(--brand);}
+  .line .computed{font-size:11px;color:var(--ink-3);text-align:right;grid-column:1/-1;margin:-3px 0 4px;font-variant-numeric:tabular-nums;}
+
+  /* Internal profit box */
+  .profit{background:#0A0A0A;color:#fff;border-radius:var(--radius-md);padding:16px 18px;}
+  .profit h3{color:#8A8A8A;}
+  .profit .row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;color:#D4D4D4;}
+  .profit .row b{color:#fff;font-variant-numeric:tabular-nums;}
+  .profit .big{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;padding-top:10px;border-top:1px solid #262626;}
+  .profit .big .l{font-size:12px;color:#8A8A8A;}
+  .profit .big .v{font-size:24px;font-weight:700;letter-spacing:-0.02em;color:#4ADE80;font-variant-numeric:tabular-nums;}
+  .profit .m4{font-size:11px;color:#8A8A8A;margin-top:3px;}
+
+  /* PREVIEW = the quote document */
+  .preview{display:flex;justify-content:center;}
+  .doc{background:#fff;width:100%;max-width:794px;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow-md);padding:48px 52px;font-size:13.5px;color:var(--ink);}
+  .doc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding-bottom:26px;border-bottom:2px solid var(--ink);}
+  .doc .logo{font-size:22px;}
+  .doc .from{font-size:12px;color:var(--ink-2);margin-top:12px;line-height:1.7;white-space:pre-line;}
+  .doc .qbox{text-align:right;flex-shrink:0;}
+  .doc .qbox .qt{font-family:'Instrument Serif',serif;font-style:italic;font-size:34px;color:var(--brand);line-height:1;}
+  .doc .qbox .meta{margin-top:14px;font-size:12px;color:var(--ink-2);line-height:1.8;}
+  .doc .qbox .meta b{color:var(--ink);font-weight:600;}
+  .doc .billto{margin:26px 0 6px;}
+  .doc .billto .h{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);font-weight:600;margin-bottom:6px;}
+  .doc .billto .who{font-size:15px;font-weight:600;}
+  .doc .billto .det{font-size:12.5px;color:var(--ink-2);line-height:1.7;white-space:pre-line;margin-top:2px;}
+  table{width:100%;border-collapse:collapse;margin-top:22px;}
+  thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);font-weight:600;text-align:left;padding:0 10px 9px;border-bottom:1px solid var(--line);}
+  thead th.r{text-align:right;}
+  tbody td{padding:11px 10px;border-bottom:1px solid var(--line-2);font-size:13px;vertical-align:top;font-variant-numeric:tabular-nums;}
+  tbody td.r{text-align:right;}
+  tbody td .d{font-weight:500;}
+  .totals{margin-top:18px;display:flex;justify-content:flex-end;}
+  .totals .tt{width:280px;}
+  .totals .tr{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums;}
+  .totals .tr.grand{margin-top:8px;padding-top:12px;border-top:2px solid var(--ink);font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;}
+  .doc .notes{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-2);line-height:1.7;white-space:pre-line;}
+  .doc .foot{margin-top:24px;text-align:center;font-size:11.5px;color:var(--ink-3);}
+
+  @media (max-width:1040px){
+    .work{grid-template-columns:1fr;}
+    .builder{position:static;}
+    .doc{padding:32px 26px;}
+  }
+
+  /* PRINT — only the document */
+  @media print{
+    .topbar,.builder,.no-print{display:none!important;}
+    body{background:#fff;}
+    .work{display:block;padding:0;max-width:none;}
+    .preview{display:block;}
+    .doc{border:none;box-shadow:none;border-radius:0;max-width:none;width:100%;padding:0;}
+    @page{margin:16mm;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar no-print">
+  <div class="topbar-in">
+    <div class="brand">
+      <div class="logo"><span class="logo-dot"></span> Forgeline</div>
+      <nav class="topnav">
+        <a href="admin.html">Leads</a>
+        <a href="orders.html">Orders</a>
+        <a href="quote.html" class="active">Quote</a>
+      </nav>
+    </div>
+    <div class="right">
+      <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+      <button class="btn btn-brand btn-sm" id="printBtn">Print / Save PDF ⌘P</button>
+    </div>
+  </div>
+</div>
+
+<div class="work">
+  <!-- ============ BUILDER ============ -->
+  <div class="builder no-print">
+
+    <div class="card">
+      <h3>Quote details</h3>
+      <div class="grid2">
+        <div class="f"><label>Quote no.</label><input id="q_no"></div>
+        <div class="f"><label>Date</label><input id="q_date" type="date"></div>
+        <div class="f"><label>Valid for (days)</label><input id="q_valid" type="number" min="0" value="30"></div>
+        <div class="f"><label>Currency</label><select id="q_cur"><option value="£">£ GBP</option><option value="€">€ EUR</option><option value="$">$ USD</option></select></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Customer</h3>
+      <div class="f"><label>Contact name</label><input id="c_name" placeholder="Anya Lindqvist"></div>
+      <div class="f"><label>Company</label><input id="c_company" placeholder="Pellet Robotics"></div>
+      <div class="grid2">
+        <div class="f"><label>Email</label><input id="c_email" placeholder="anya@company.com"></div>
+        <div class="f"><label>Phone</label><input id="c_phone" placeholder="+44 …"></div>
+      </div>
+      <div class="f"><label>Address (optional)</label><textarea id="c_addr" placeholder="Street, City, Postcode"></textarea></div>
+    </div>
+
+    <div class="card">
+      <h3>Line items</h3>
+      <div class="line"><span class="lh">Description</span><span class="lh">Qty</span><span class="lh">Cost</span><span class="lh">Marg %</span><span></span></div>
+      <div id="lines"></div>
+      <button class="btn btn-ghost btn-sm" id="addLine" style="margin-top:4px">+ Add line</button>
+      <div class="grid2" style="margin-top:14px">
+        <div class="f"><label>Default margin %</label><input id="defMargin" type="number" min="0" step="1" value="35"></div>
+        <div class="f" style="align-self:end"><button class="btn btn-ghost btn-sm" id="applyMargin" style="width:100%">Apply to all lines</button></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Charges &amp; tax</h3>
+      <div class="grid2">
+        <div class="f"><label>Shipping — charge</label><div class="money" data-cur="£"><input id="ship_charge" type="number" min="0" step="0.01" value="0"></div></div>
+        <div class="f"><label>Shipping — your cost</label><div class="money" data-cur="£"><input id="ship_cost" type="number" min="0" step="0.01" value="0"></div></div>
+      </div>
+      <div class="grid2">
+        <div class="f"><label>VAT %</label><input id="vat" type="number" min="0" step="0.1" value="20"></div>
+        <div class="f" style="align-self:end"><label style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink)"><input type="checkbox" id="vatOn" checked style="width:auto"> Apply VAT</label></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Notes / terms</h3>
+      <div class="f"><textarea id="notes" rows="3">Lead time confirmed on order. Prices exclude import duty unless stated. 50% deposit to proceed, balance before dispatch.</textarea></div>
+    </div>
+
+    <div class="card">
+      <h3>Your details <span style="text-transform:none;font-weight:400;color:var(--ink-3)">(saved on this device)</span></h3>
+      <div class="f"><label>Business name</label><input id="b_name" value="Forgeline Ltd"></div>
+      <div class="f"><label>Details (address, email, web, VAT no.)</label><textarea id="b_det" rows="3">Manchester, United Kingdom
+hello@forgeline.app · forgeline.app
+VAT GB000000000</textarea></div>
+    </div>
+
+    <div class="profit">
+      <h3>Your margin (internal only)</h3>
+      <div class="row"><span>Total cost</span><b id="p_cost">£0</b></div>
+      <div class="row"><span>Customer price (ex VAT)</span><b id="p_sell">£0</b></div>
+      <div class="big"><div><div class="l">Profit</div><div class="m4" id="p_marginpct">0% margin</div></div><div class="v" id="p_profit">£0</div></div>
+    </div>
+  </div>
+
+  <!-- ============ PREVIEW / DOCUMENT ============ -->
+  <div class="preview">
+    <div class="doc" id="doc"></div>
+  </div>
+</div>
+
+<script>
+  const $ = function(id){ return document.getElementById(id); };
+  const LS = 'fg_quote_v1';
+
+  function todayISO(){ var d=new Date(); var z=d.getTimezoneOffset()*60000; return new Date(d-z).toISOString().slice(0,10); }
+  function fmt(cur, n){ return cur + (Number(n)||0).toLocaleString('en-GB',{ minimumFractionDigits:2, maximumFractionDigits:2 }); }
+  function addDays(iso, days){ var d=new Date(iso+'T00:00:00'); d.setDate(d.getDate()+(parseInt(days,10)||0)); return d.toLocaleDateString('en-GB',{ day:'numeric', month:'short', year:'numeric' }); }
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[m]; }); }
+
+  // ---- Line items ----
+  function lineRow(desc, qty, cost, margin){
+    var div = document.createElement('div'); div.className = 'linewrap';
+    div.innerHTML = '<div class="line">'
+      + '<input class="d" placeholder="e.g. CNC aluminium bracket, anodised" value="'+esc(desc||'')+'">'
+      + '<input class="q" type="number" min="0" step="1" value="'+(qty!=null?qty:1)+'">'
+      + '<div class="money" data-cur="" style="grid-column:auto"><input class="c" type="number" min="0" step="0.01" value="'+(cost!=null?cost:'')+'"></div>'
+      + '<input class="m" type="number" min="0" step="1" value="'+(margin!=null?margin:$("defMargin").value)+'">'
+      + '<button class="rm" title="Remove">×</button>'
+      + '</div><div class="computed" data-computed></div>';
+    div.querySelector('.rm').addEventListener('click', function(){ div.remove(); render(); });
+    return div;
+  }
+  function addLine(desc, qty, cost, margin){ $('lines').appendChild(lineRow(desc, qty, cost, margin)); }
+
+  $('addLine').addEventListener('click', function(){ addLine('', 1, '', $('defMargin').value); render(); });
+  $('applyMargin').addEventListener('click', function(){
+    var m = $('defMargin').value;
+    Array.prototype.forEach.call(document.querySelectorAll('#lines .m'), function(i){ i.value = m; });
+    render();
+  });
+
+  function readLines(){
+    return Array.prototype.map.call(document.querySelectorAll('#lines .linewrap'), function(w){
+      return {
+        desc: w.querySelector('.d').value,
+        qty: parseFloat(w.querySelector('.q').value)||0,
+        cost: parseFloat(w.querySelector('.c').value)||0,
+        margin: parseFloat(w.querySelector('.m').value)||0,
+        el: w
+      };
+    });
+  }
+
+  function render(){
+    var cur = $('q_cur').value;
+    document.querySelectorAll('.money[data-cur]').forEach(function(m){ if (m.parentElement && m.parentElement.classList.contains('f')) m.setAttribute('data-cur', cur); });
+    var lines = readLines();
+    var rows = '', subtotal = 0, totalCost = 0;
+    lines.forEach(function(l, i){
+      var unit = l.cost * (1 + l.margin/100);
+      var lineTotal = unit * l.qty;
+      subtotal += lineTotal; totalCost += l.cost * l.qty;
+      if (l.el){ var c = l.el.querySelector('[data-computed]'); if (c) c.textContent = l.desc||l.cost ? ('→ ' + fmt(cur, unit) + ' each · ' + fmt(cur, lineTotal) + ' line') : ''; }
+      if (l.qty>0 || l.desc){
+        rows += '<tr><td><span class="d">'+(esc(l.desc)||'<span style="color:#A1A1AA">Item '+(i+1)+'</span>')+'</span></td>'
+          + '<td class="r">'+l.qty+'</td>'
+          + '<td class="r">'+fmt(cur, unit)+'</td>'
+          + '<td class="r">'+fmt(cur, lineTotal)+'</td></tr>';
+      }
+    });
+    if (!rows) rows = '<tr><td colspan="4" style="color:#A1A1AA;padding:18px 10px">Add a line item to begin…</td></tr>';
+
+    var shipCharge = parseFloat($('ship_charge').value)||0;
+    var shipCost = parseFloat($('ship_cost').value)||0;
+    var preVat = subtotal + shipCharge;
+    var vatOn = $('vatOn').checked;
+    var vatRate = parseFloat($('vat').value)||0;
+    var vatAmt = vatOn ? preVat * vatRate/100 : 0;
+    var grand = preVat + vatAmt;
+
+    // internal profit
+    var costAll = totalCost + shipCost;
+    var sellExVat = preVat;
+    var profit = sellExVat - costAll;
+    var marginPct = sellExVat>0 ? (profit/sellExVat*100) : 0;
+    $('p_cost').textContent = fmt(cur, costAll);
+    $('p_sell').textContent = fmt(cur, sellExVat);
+    $('p_profit').textContent = fmt(cur, profit);
+    $('p_marginpct').textContent = marginPct.toFixed(0) + '% margin';
+
+    // totals block
+    var totals = '<div class="tr"><span>Subtotal</span><span>'+fmt(cur, subtotal)+'</span></div>';
+    if (shipCharge>0) totals += '<div class="tr"><span>Shipping</span><span>'+fmt(cur, shipCharge)+'</span></div>';
+    if (vatOn) totals += '<div class="tr"><span>VAT ('+vatRate+'%)</span><span>'+fmt(cur, vatAmt)+'</span></div>';
+    totals += '<div class="tr grand"><span>Total</span><span>'+fmt(cur, grand)+'</span></div>';
+
+    // customer block
+    var who = esc($('c_company').value) || esc($('c_name').value) || 'Customer';
+    var det = [];
+    if ($('c_company').value && $('c_name').value) det.push(esc($('c_name').value));
+    if ($('c_email').value) det.push(esc($('c_email').value));
+    if ($('c_phone').value) det.push(esc($('c_phone').value));
+    if ($('c_addr').value) det.push(esc($('c_addr').value));
+
+    var dateISO = $('q_date').value || todayISO();
+    var dateNice = new Date(dateISO+'T00:00:00').toLocaleDateString('en-GB',{ day:'numeric', month:'short', year:'numeric' });
+
+    $('doc').innerHTML =
+        '<div class="doc-top">'
+      +   '<div><div class="logo"><span class="logo-dot"></span> '+esc($('b_name').value||'Forgeline')+'</div>'
+      +     '<div class="from">'+esc($('b_det').value)+'</div></div>'
+      +   '<div class="qbox"><div class="qt">Quotation</div>'
+      +     '<div class="meta"><b>No.</b> '+(esc($('q_no').value)||'—')+'<br><b>Date</b> '+dateNice+'<br><b>Valid until</b> '+addDays(dateISO, $('q_valid').value)+'</div></div>'
+      + '</div>'
+      + '<div class="billto"><div class="h">Quote for</div><div class="who">'+who+'</div><div class="det">'+det.join('\n')+'</div></div>'
+      + '<table><thead><tr><th>Description</th><th class="r">Qty</th><th class="r">Unit price</th><th class="r">Amount</th></tr></thead><tbody>'+rows+'</tbody></table>'
+      + '<div class="totals"><div class="tt">'+totals+'</div></div>'
+      + ($('notes').value ? '<div class="notes">'+esc($('notes').value)+'</div>' : '')
+      + '<div class="foot">Thank you for the opportunity to quote. We look forward to working with you.</div>';
+
+    save();
+  }
+
+  // ---- persistence (everything except customer + lines is remembered) ----
+  function save(){
+    var data = { b_name:$('b_name').value, b_det:$('b_det').value, defMargin:$('defMargin').value, vat:$('vat').value, vatOn:$('vatOn').checked, cur:$('q_cur').value, valid:$('q_valid').value, notes:$('notes').value };
+    try { localStorage.setItem(LS, JSON.stringify(data)); } catch(e){}
+  }
+  function load(){
+    try {
+      var d = JSON.parse(localStorage.getItem(LS)||'{}');
+      if (d.b_name) $('b_name').value = d.b_name;
+      if (d.b_det) $('b_det').value = d.b_det;
+      if (d.defMargin) $('defMargin').value = d.defMargin;
+      if (d.vat) $('vat').value = d.vat;
+      if (typeof d.vatOn==='boolean') $('vatOn').checked = d.vatOn;
+      if (d.cur) $('q_cur').value = d.cur;
+      if (d.valid) $('q_valid').value = d.valid;
+      if (d.notes) $('notes').value = d.notes;
+    } catch(e){}
+  }
+
+  $('printBtn').addEventListener('click', function(){ window.print(); });
+  $('resetBtn').addEventListener('click', function(){
+    if (!confirm('Clear this quote? Your business details and defaults are kept.')) return;
+    ['c_name','c_company','c_email','c_phone','c_addr','q_no'].forEach(function(i){ $(i).value=''; });
+    $('lines').innerHTML=''; addLine('',1,'',$('defMargin').value); render();
+  });
+
+  // live update on any input
+  document.addEventListener('input', function(e){ if (e.target.closest('.builder')) render(); });
+
+  // init
+  load();
+  $('q_date').value = todayISO();
+  $('q_no').value = 'FG-Q' + new Date().toISOString().slice(2,10).replace(/-/g,'');
+  addLine('', 1, '', $('defMargin').value);
+  render();
+</script>
+</body>
+</html>
