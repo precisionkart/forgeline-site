@@ -244,6 +244,9 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 
   /* WHY */
   .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px;}
+  .why-grid.layout-2-3{grid-template-columns:repeat(6,1fr);}
+  .why-grid.layout-2-3 .why-card{grid-column:span 2;}
+  .why-grid.layout-2-3 .why-card.top{grid-column:span 3;}
   .why-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:32px;transition:transform .2s, box-shadow .2s;}
   .why-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
   .why-card.feature{background:linear-gradient(140deg, #FFF5F0 0%, #FFE4DA 100%);border-color:#FFD5C2;}
@@ -396,7 +399,8 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     .why-cta-inner{grid-template-columns:1fr;gap:28px;padding:36px 28px;}
     .process-inner{padding:56px 24px;}
     .dash-grid{grid-template-columns:1fr 1fr;}
-    .why-grid{grid-template-columns:1fr;}
+    .why-grid, .why-grid.layout-2-3{grid-template-columns:1fr;}
+    .why-grid.layout-2-3 .why-card, .why-grid.layout-2-3 .why-card.top{grid-column:auto;}
     .stats{grid-template-columns:1fr 1fr;}
     .stat-cell:nth-child(2){border-right:none;}
     .stat-cell:nth-child(1),.stat-cell:nth-child(2){border-bottom:1px solid var(--line);}
@@ -552,18 +556,18 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     <h2 class="sec-h">Global pricing. British standards. <span class="serif">Zero risk to you.</span></h2>
     <p class="sec-sub">Cheaper manufacturing usually means giving up control. Not with Forgeline. Our British engineers check every part before it's made, our trusted factories build it, and we stand behind whatever ships. You get the quality you'd expect from home and the savings you wouldn't — with one team answerable for both.</p>
 
-    <div class="why-grid">
-      <div class="why-card feature">
+    <div class="why-grid layout-2-3">
+      <div class="why-card feature top">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
         <h3>40–60% below UK pricing</h3>
         <p>The same part, to the same drawing, built through our partner network for a fraction of UK or EU cost. For most teams that's a positive number on the bottom line.</p>
         <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Fixed-price quote in 24 hours</span></div>
       </div>
-      <div class="why-card">
-        <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-        <h3>A British engineer on every part</h3>
-        <p>Every quote, design review and QC report passes a UK-based mechanical engineer. We catch problems before metal is cut, not after parts land on your bench.</p>
-        <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Named engineer, GMT/CET hours</span></div>
+      <div class="why-card top">
+        <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <h3>Communication is everything</h3>
+        <p>We pride ourselves on customer service. One named engineer keeps you updated at every step, with photos and honest timelines. Transparency throughout is our main focus — the best relationships are built on it.</p>
+        <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> A straight answer, usually within hours</span></div>
       </div>
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
@@ -576,12 +580,6 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
         <h3>Right first time, or your money back</h3>
         <p>If a part doesn't meet the agreed spec, we remake it free, on a priority turnaround. And if we still can't get it right, you get a full refund. Your contract is with Forgeline Ltd in the UK — the risk is ours, never yours.</p>
         <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Free remake or full refund, guaranteed</span></div>
-      </div>
-      <div class="why-card">
-        <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
-        <h3>Communication is everything</h3>
-        <p>We pride ourselves on customer service. One named engineer keeps you updated at every step, with photos and honest timelines. Transparency throughout is our main focus — the best relationships are built on it.</p>
-        <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> A straight answer, usually within hours</span></div>
       </div>
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
