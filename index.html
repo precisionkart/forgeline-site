@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>Forgeline — British-managed product development and manufacturing</title>
 <meta name="description" content="Forgeline is a British-managed product development and manufacturing company. From CAD to packaging, our UK engineering team handles every step — built through trusted, vetted partner factories. UK contract, significant savings.">
 <meta property="og:title" content="Forgeline — the product you'd build in Britain, for a fraction of the price">
@@ -344,7 +344,9 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   .mobile-cta{
     display:none;
     position:fixed;bottom:0;left:0;right:0;z-index:60;
-    padding:12px 16px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);
+    padding:12px 16px;
+    padding-bottom:calc(12px + env(safe-area-inset-bottom));
+    background:rgba(255,255,255,.95);backdrop-filter:blur(12px);
     border-top:1px solid var(--line);
     gap:10px;
   }
@@ -411,7 +413,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     .foot-grid{grid-template-columns:1fr 1fr;}
     .mobile-cta{display:flex;}
     .wa-float{display:none;}
-    body{padding-bottom:72px;}
+    body{padding-bottom:calc(80px + env(safe-area-inset-bottom));}
     .nav-cta-desktop{display:none;}
     .cookie{left:12px;right:12px;bottom:80px;max-width:none;}
   }
@@ -481,8 +483,8 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   <div class="container hero-grid">
     <div class="hero-copy">
       <span class="pill"><span class="tag">NEW</span> Quotes back in 24 hours, by a real engineer (not AI)</span>
-      <h1 class="hero-h">British engineering quality, <span class="serif">without the British price.</span></h1>
-      <p class="hero-sub"><b style="color:var(--ink);font-weight:600;">Your manufacturing partner at every stage.</b><br>From initial prototypes and sample runs to full production and packaging, we help bring products to market through our trusted engineering and manufacturing network.</p>
+      <h1 class="hero-h">British engineering. <span class="serif">Global manufacturing.</span></h1>
+      <p class="hero-sub">From prototype to production, we combine British engineering expertise with a trusted global manufacturing network to deliver precision parts, assemblies and finished products without the complexity.</p>
       <div class="hero-cta">
         <a href="#quote" class="btn btn-brand">Request Quote →</a>
         <a href="#process" class="btn btn-white">See how it works →</a>
@@ -907,10 +909,12 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 </div>
 
 <script>
-  // ========= Funnel config =========
-  // Your own simple funnel: a Google Apps Script web app that appends each
-  // lead to a Google Sheet (see /funnel/README.md). Paste its /exec URL here.
-  const FUNNEL_ENDPOINT = 'YOUR_FUNNEL_WEBHOOK_URL';
+  // ========= Lead database (Supabase) =========
+  // Leads insert straight into your own database and appear live in the
+  // dashboard at /admin.html. Both values are safe to expose in the browser.
+  // Setup steps: /supabase/README.md
+  const SUPABASE_URL = 'YOUR_SUPABASE_URL';            // e.g. https://abcd1234.supabase.co
+  const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';  // public "anon" key
 
   // ========= Attribution capture (UTMs, click IDs, referrer) =========
   // Captured on first landing and kept for the whole visit, so the lead that
@@ -944,20 +948,23 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 
     const formData = new FormData(form);
 
-    // ----- 1) Send the lead to our own funnel (fire-and-forget) -----
-    // Clean JSON, no file. no-cors keeps it simple — we don't need the response.
-    if (FUNNEL_ENDPOINT && FUNNEL_ENDPOINT.indexOf('http') === 0) {
+    // ----- 1) Insert the lead into our own database (fire-and-forget) -----
+    // Appears live in /admin.html. We never block the user on this call.
+    if (SUPABASE_URL.indexOf('http') === 0) {
       const lead = Object.fromEntries(formData.entries());
       delete lead.cadfile; delete lead.botcheck; delete lead.access_key;
       delete lead.subject; delete lead.from_name;
       lead.status = 'New';
-      lead.submitted_at = new Date().toISOString();
-      fetch(FUNNEL_ENDPOINT, {
+      fetch(SUPABASE_URL.replace(/\/$/, '') + '/rest/v1/leads', {
         method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
         body: JSON.stringify(lead)
-      }).catch(function(){ /* never block the user on the funnel call */ });
+      }).catch(function(){ /* never block the user on the DB call */ });
     }
 
     // ----- 2) Send file + email via the relay (this drives success/redirect) -----
