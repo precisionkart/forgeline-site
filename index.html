@@ -400,6 +400,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     .cases-grid{grid-template-columns:1fr;gap:16px;}
     .why-cta-inner{grid-template-columns:1fr;gap:28px;padding:36px 28px;}
     .process-inner{padding:56px 24px;}
+    #process .container{padding:0 16px;}
     .dash-grid{grid-template-columns:1fr 1fr;}
     .why-grid, .why-grid.layout-2-3{grid-template-columns:1fr;}
     .why-grid.layout-2-3 .why-card, .why-grid.layout-2-3 .why-card.top{grid-column:auto;}
@@ -415,22 +416,38 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     .cookie{left:12px;right:12px;bottom:80px;max-width:none;}
   }
   @media (max-width:560px){
-    .container{padding:0 18px;}
-    .section{padding:56px 0;}
+    .container{padding:0 20px;}
+    /* Consistent vertical rhythm: clear breaks BETWEEN sections... */
+    .section{padding:60px 0;}
+    .hero{padding:32px 0 8px;}
+    .quote-section{padding:60px 0;}
+    .logos{margin-top:44px;padding:22px 0;}
+    .hero-grid{gap:36px;}
+    /* ...and tighter gaps WITHIN a section (header → content) */
+    h2.sec-h{margin-top:14px;}
+    .sec-sub{margin-top:14px;}
+    .cap-grid, .cases-grid, .why-grid{margin-top:30px;}
+    .stats{margin-top:28px;}
+    .dash{margin-top:32px;}
+    .quote-points{margin-top:22px;}
+    /* Type */
     h1.hero-h{font-size:clamp(34px,8.5vw,46px);}
     h2.sec-h{font-size:clamp(28px,7.5vw,38px);}
     .hero-sub, .sec-sub{font-size:15.5px;}
+    /* Buttons */
     .hero-cta{gap:10px;}
     .hero-cta .btn{flex:1;justify-content:center;padding:13px 16px;font-size:14px;}
+    /* Card / panel padding */
     .why-card{padding:24px;}
     .why-cta-inner{padding:28px 22px;}
     .why-cta-stats{gap:22px 30px;}
     .case-body{padding:20px;}
-    .form-card{padding:22px;}
-    .quote-section .form-card{padding:22px;}
+    .form-card, .quote-section .form-card{padding:22px;}
+    .process-inner{padding:48px 22px;}
+    .dash{padding:16px;}
     .dash-grid{grid-template-columns:1fr;}
     .stats{grid-template-columns:1fr;}
-    .stat-cell{padding:26px;border-right:none;border-bottom:1px solid var(--line);}
+    .stat-cell{padding:24px 26px;border-right:none;border-bottom:1px solid var(--line);}
     .stat-cell:last-child{border-bottom:none;}
     .endcta{padding:48px 22px;}
     .endcta .row{flex-direction:column;}
