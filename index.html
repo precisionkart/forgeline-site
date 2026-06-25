@@ -58,7 +58,6 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  html,body{overflow-x:hidden;}
   body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;padding-bottom:64px;}
   a{color:inherit;text-decoration:none;}
   button{font:inherit;cursor:pointer;border:none;background:none;color:inherit;}
@@ -738,10 +737,27 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
               <input type="email" name="email" id="email" required placeholder="anya@yourcompany.com">
             </div>
           </div>
-          <div class="field">
-            <label for="company">Company</label>
-            <input type="text" name="company" id="company" placeholder="Pellet Robotics">
+          <div class="form-row">
+            <div class="field">
+              <label for="company">Company</label>
+              <input type="text" name="company" id="company" placeholder="Pellet Robotics">
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input type="tel" name="phone" id="phone" placeholder="+44 7700 900000">
+            </div>
           </div>
+
+          <!-- Attribution / funnel tracking (filled automatically) -->
+          <input type="hidden" name="utm_source" id="utm_source">
+          <input type="hidden" name="utm_medium" id="utm_medium">
+          <input type="hidden" name="utm_campaign" id="utm_campaign">
+          <input type="hidden" name="utm_term" id="utm_term">
+          <input type="hidden" name="utm_content" id="utm_content">
+          <input type="hidden" name="gclid" id="gclid">
+          <input type="hidden" name="fbclid" id="fbclid">
+          <input type="hidden" name="referrer" id="referrer">
+          <input type="hidden" name="page_url" id="page_url">
           <div class="form-row">
             <div class="field">
               <label for="process">What do you need made?</label>
@@ -874,6 +890,26 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 </div>
 
 <script>
+  // ========= Funnel config =========
+  // Your own simple funnel: a Google Apps Script web app that appends each
+  // lead to a Google Sheet (see /funnel/README.md). Paste its /exec URL here.
+  const FUNNEL_ENDPOINT = 'YOUR_FUNNEL_WEBHOOK_URL';
+
+  // ========= Attribution capture (UTMs, click IDs, referrer) =========
+  // Captured on first landing and kept for the whole visit, so the lead that
+  // reaches your funnel carries where it actually came from.
+  (function(){
+    const params = new URLSearchParams(location.search);
+    const keys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'];
+    let attr = {};
+    try { attr = JSON.parse(sessionStorage.getItem('fg_attr') || '{}'); } catch(e){}
+    keys.forEach(function(k){ const v = params.get(k); if (v) attr[k] = v; });
+    try { sessionStorage.setItem('fg_attr', JSON.stringify(attr)); } catch(e){}
+    keys.forEach(function(k){ const el = document.getElementById(k); if (el && attr[k]) el.value = attr[k]; });
+    const pu = document.getElementById('page_url'); if (pu) pu.value = location.href;
+    const rf = document.getElementById('referrer'); if (rf) rf.value = document.referrer || 'direct';
+  })();
+
   // ========= File name display =========
   document.getElementById('cadfile').addEventListener('change', function(e){
     const name = e.target.files[0]?.name;
@@ -890,6 +926,24 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     btnText.textContent = 'Sending…';
 
     const formData = new FormData(form);
+
+    // ----- 1) Send the lead to our own funnel (fire-and-forget) -----
+    // Clean JSON, no file. no-cors keeps it simple — we don't need the response.
+    if (FUNNEL_ENDPOINT && FUNNEL_ENDPOINT.indexOf('http') === 0) {
+      const lead = Object.fromEntries(formData.entries());
+      delete lead.cadfile; delete lead.botcheck; delete lead.access_key;
+      delete lead.subject; delete lead.from_name;
+      lead.status = 'New';
+      lead.submitted_at = new Date().toISOString();
+      fetch(FUNNEL_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(lead)
+      }).catch(function(){ /* never block the user on the funnel call */ });
+    }
+
+    // ----- 2) Send file + email via the relay (this drives success/redirect) -----
     try {
       const res = await fetch(form.action, { method:'POST', body: formData });
       const data = await res.json();
