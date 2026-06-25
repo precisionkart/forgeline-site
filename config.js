@@ -10,5 +10,5 @@
    to inserting new leads only). See supabase/README.md.
    ============================================================ */
 
-window.FG_SUPABASE_URL      = 'YOUR_SUPABASE_URL';      // e.g. https://abcd1234.supabase.co
-window.FG_SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // the long "anon / public" key
+window.FG_SUPABASE_URL      = 'https://tcxhpvyhiujsrsjgvguu.supabase.co';
+window.FG_SUPABASE_ANON_KEY = 'sb_publishable_hB01lUwseQdJK5jGm01PEA_cR0iPuuL';
