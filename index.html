@@ -58,6 +58,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
+  html,body{overflow-x:hidden;}
   body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;padding-bottom:64px;}
   a{color:inherit;text-decoration:none;}
   button{font:inherit;cursor:pointer;border:none;background:none;color:inherit;}
@@ -325,8 +326,8 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   .endcta p{margin:18px auto 0;max-width:520px;font-size:17px;opacity:.92;line-height:1.55;}
   .endcta .row{margin-top:32px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
   .endcta .btn-white{background:#fff;color:var(--ink);}
-  .endcta .btn-ghost-w{color:#fff;}
-  .endcta .btn-ghost-w:hover{background:rgba(255,255,255,.14);}
+  .endcta .btn-ghost-w{color:#fff;background:rgba(255,255,255,.1);}
+  .endcta .btn-ghost-w:hover{background:rgba(255,255,255,.2);}
 
   /* FOOTER */
   footer{padding:56px 0 24px;}
@@ -413,11 +414,26 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     .cookie{left:12px;right:12px;bottom:80px;max-width:none;}
   }
   @media (max-width:560px){
-    .section{padding:64px 0;}
+    .container{padding:0 18px;}
+    .section{padding:56px 0;}
+    h1.hero-h{font-size:clamp(34px,8.5vw,46px);}
+    h2.sec-h{font-size:clamp(28px,7.5vw,38px);}
+    .hero-sub, .sec-sub{font-size:15.5px;}
+    .hero-cta{gap:10px;}
+    .hero-cta .btn{flex:1;justify-content:center;padding:13px 16px;font-size:14px;}
+    .why-card{padding:24px;}
+    .why-cta-inner{padding:28px 22px;}
+    .why-cta-stats{gap:22px 30px;}
+    .case-body{padding:20px;}
+    .form-card{padding:22px;}
+    .quote-section .form-card{padding:22px;}
     .dash-grid{grid-template-columns:1fr;}
     .stats{grid-template-columns:1fr;}
-    .stat-cell{border-right:none;border-bottom:1px solid var(--line);}
+    .stat-cell{padding:26px;border-right:none;border-bottom:1px solid var(--line);}
     .stat-cell:last-child{border-bottom:none;}
+    .endcta{padding:48px 22px;}
+    .endcta .row{flex-direction:column;}
+    .endcta .row .btn{width:100%;}
     .foot-grid{grid-template-columns:1fr;gap:28px;}
     .foot-bottom{flex-direction:column;}
   }
@@ -496,7 +512,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     <div class="cap-grid">
       <article class="cap">
         <div class="cap-img" style="background-image:url('CAD.jpg');"><span class="badge">In-house, UK</span></div>
-        <div class="cap-body"><h3>Design &amp; DFM</h3><p>Bring us a sketch, a brief, or a CAD file. Our British engineers turn it into a manufacturable design — or refine yours to save you money on the build.</p><div class="cap-foot"><span>Engineers based in</span><b>Manchester, UK</b></div></div>
+        <div class="cap-body"><h3>Design &amp; DFM</h3><p>Bring us a sketch, a brief, or a CAD file. Our British engineers turn it into a manufacturable design, or refine yours to save you money on the build.</p><div class="cap-foot"><span>Engineers based in</span><b>Manchester, UK</b></div></div>
       </article>
       <article class="cap">
         <div class="cap-img" style="background-image:url('CNC.jpg');"><span class="badge">5-axis · ±0.01mm</span></div>
@@ -512,7 +528,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
       </article>
       <article class="cap">
         <div class="cap-img" style="background-image:url('3DPrint.jpg');"><span class="badge">SLA · SLS · FDM</span></div>
-        <div class="cap-body"><h3>3D Printing &amp; Prototyping</h3><p>Industrial-grade additive for functional prototypes and short runs. First parts in hand within days — ideal for design validation before tooling up.</p><div class="cap-foot"><span>Min. lead</span><b>48 hours</b></div></div>
+        <div class="cap-body"><h3>3D Printing &amp; Prototyping</h3><p>Industrial-grade additive for functional prototypes and short runs. First parts in hand within days, ideal for design validation before tooling up.</p><div class="cap-foot"><span>Min. lead</span><b>48 hours</b></div></div>
       </article>
       <article class="cap">
         <div class="cap-img" style="background-image:url('image3.jpg');background-position:center 92%;background-size:140%;"><span class="badge">Retail-ready</span></div>
@@ -554,7 +570,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   <div class="container">
     <span class="sec-eyebrow">Why Forgeline</span>
     <h2 class="sec-h">Global pricing. British standards. <span class="serif">Zero risk to you.</span></h2>
-    <p class="sec-sub">Cheaper manufacturing usually means giving up control. Not with Forgeline. Our British engineers check every part before it's made, our trusted factories build it, and we stand behind whatever ships. You get the quality you'd expect from home and the savings you wouldn't — with one team answerable for both.</p>
+    <p class="sec-sub">Cheaper manufacturing usually means giving up control. Not with Forgeline. Our British engineers check every part before it's made, our trusted factories build it, and we stand behind whatever ships. You get the quality you'd expect from home and the savings you wouldn't, with one team answerable for both.</p>
 
     <div class="why-grid layout-2-3">
       <div class="why-card feature top">
@@ -566,7 +582,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
       <div class="why-card top">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
         <h3>Communication is everything</h3>
-        <p>We pride ourselves on customer service. One named engineer keeps you updated at every step, with photos and honest timelines. Transparency throughout is our main focus — the best relationships are built on it.</p>
+        <p>We pride ourselves on customer service. One named engineer keeps you updated at every step, with photos and honest timelines. Transparency throughout is our main focus, and the best relationships are built on it.</p>
         <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> A straight answer, usually within hours</span></div>
       </div>
       <div class="why-card">
@@ -578,13 +594,13 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
         <h3>Right first time, or your money back</h3>
-        <p>If a part doesn't meet the agreed spec, we remake it free, on a priority turnaround. And if we still can't get it right, you get a full refund. Your contract is with Forgeline Ltd in the UK — the risk is ours, never yours.</p>
+        <p>If a part doesn't meet the agreed spec, we remake it free, on a priority turnaround. And if we still can't get it right, you get a full refund. Your contract is with Forgeline Ltd in the UK. The risk is ours, never yours.</p>
         <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Free remake or full refund, guaranteed</span></div>
       </div>
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
         <h3>Every order inspected</h3>
-        <p>Nothing ships on hope. Each batch is checked against your drawing before it leaves the floor, so what lands on your bench is what you actually ordered — first time.</p>
+        <p>Nothing ships on hope. Each batch is checked against your drawing before it leaves the floor, so what lands on your bench is what you actually ordered, first time.</p>
         <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> 100% inspected before shipping</span></div>
       </div>
     </div>
@@ -593,7 +609,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
       <div class="stat-cell"><div class="v">57%</div><div class="l">Typically saved vs UK manufacturing</div></div>
       <div class="stat-cell"><div class="v" id="partsCounter">357,321</div><div class="l">Parts manufactured and counting</div></div>
       <div class="stat-cell"><div class="v">100%</div><div class="l">Orders inspected before they ship</div></div>
-      <div class="stat-cell"><div class="v">1</div><div class="l">British project manager per account</div></div>
+      <div class="stat-cell"><div class="v">24hr</div><div class="l">From enquiry to fixed-price quote</div></div>
     </div>
 
     <div class="why-cta">
@@ -606,7 +622,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
         </div>
         <div class="why-cta-act">
           <h3>Find out what you'd save.</h3>
-          <p>Send a drawing or just a description — a British engineer replies within one working day.</p>
+          <p>Send a drawing or just a description, and a British engineer replies within one working day.</p>
           <a href="#quote" class="btn btn-brand">Request Quote →</a>
         </div>
       </div>
@@ -619,7 +635,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   <div class="container">
     <span class="sec-eyebrow">Case studies</span>
     <h2 class="sec-h">Real teams. Real parts. <span class="serif">Real savings.</span></h2>
-    <p class="sec-sub">A few of the products we've taken from brief to delivery — the problem, the number we saved them, and what the person who signed it off actually said.</p>
+    <p class="sec-sub">A few of the products we've taken from brief to delivery: the problem, the number we saved them, and what the person who signed it off actually said.</p>
 
     <div class="cases-grid">
       <!-- CASE 1 -->
@@ -701,7 +717,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     <div class="form-card">
       <div id="formView">
         <h3>Tell us what you're building</h3>
-        <p class="sub">Takes 60 seconds. Any stage — sketch to CAD.</p>
+        <p class="sub">Takes 60 seconds. Any stage, sketch to CAD.</p>
 
         <form id="quoteForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
           <!-- TODO: Replace with your Web3Forms access key from web3forms.com -->
@@ -795,7 +811,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   <div class="endcta">
     <div class="endcta-inner">
       <h2>Build it once, <span class="serif">with one team.</span></h2>
-      <p>From your first sketch to a packaged product on the shelf — managed in Britain, built through our trusted network. Send us a brief and find out what you'd save.</p>
+      <p>From your first sketch to a packaged product on the shelf, built through our trusted network. Send us a brief today and a British engineer will tell you exactly what you'd save, within one working day.</p>
       <div class="row">
         <a href="#quote" class="btn btn-white">Request Quote →</a>
         <a href="mailto:hi@forgeline.app" class="btn btn-ghost-w">Talk to a British engineer</a>
