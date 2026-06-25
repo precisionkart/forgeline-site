@@ -15,6 +15,8 @@ create table if not exists public.leads (
   notes         text,
   -- quote / job reference (also acts as the job number)
   quote_ref     text,
+  -- when to chase next (used by the Delayed / Follow-up stages)
+  follow_up_at  date,
   -- uploaded CAD/PDF file (stored in the cad-files bucket)
   file_url      text,
   file_name     text,

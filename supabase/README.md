@@ -63,7 +63,9 @@ backend that gives us a database + login.
 - Give each lead a **Quote / Job number** (the **Auto** button assigns the next
   `FG-####` in sequence) — it shows on the row so files and jobs stay traceable.
 - Move leads through your pipeline:
-  **New → Waiting for Quote → Quoted → Follow-up → Follow-up 2 → Follow-up 3 → Won → Lost.**
+  **New → Waiting for Quote → Quoted → Follow-up → Won → Lost.**
+  The **Follow-up** tab opens sub-tabs: Follow-up 1/2/3, **Decision** (needs a
+  won/lost call) and **Delayed** (snooze with a "chase on" date).
 - Filter by stage, search by name/company/email, add **private notes**, delete.
 - New leads arrive **live** with a flash + chime while you've got it open.
 - Rows show a 📎 when a file is attached and the quote ref once set, so the
