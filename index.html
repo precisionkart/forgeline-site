@@ -466,7 +466,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 <!-- NAV -->
 <div class="nav-wrap" id="navWrap">
   <div class="container nav">
-    <a href="/" class="logo"><span class="logo-dot"></span> Forgeline</a>
+    <a href="index.html" class="logo"><span class="logo-dot"></span> Forgeline</a>
     <nav class="nav-links">
       <a href="#capabilities">Services</a>
       <a href="#process">How it works</a>
@@ -825,7 +825,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
             <span id="btnText">Send quote request</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
-          <p class="consent">By submitting you agree to our <a href="/privacy.html">privacy policy</a>. We respond within one working day.</p>
+          <p class="consent">By submitting you agree to our <a href="privacy.html">privacy policy</a>. We respond within one working day.</p>
         </form>
 
         <div class="form-trust">
@@ -876,7 +876,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
       </div>
       <div>
         <h4>Legal</h4>
-        <ul><li><a href="/privacy.html">Privacy policy</a></li><li><a href="/terms.html">Terms</a></li></ul>
+        <ul><li><a href="privacy.html">Privacy policy</a></li><li><a href="terms.html">Terms</a></li></ul>
       </div>
     </div>
     <div class="foot-bottom">
@@ -902,7 +902,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 <!-- COOKIE BANNER -->
 <div class="cookie" id="cookieBanner">
   <h4>We use cookies</h4>
-  <p>We use essential cookies and, with your consent, analytics and ad pixels (Meta, Google) to improve the site. See our <a href="/privacy.html">privacy policy</a>.</p>
+  <p>We use essential cookies and, with your consent, analytics and ad pixels (Meta, Google) to improve the site. See our <a href="privacy.html">privacy policy</a>.</p>
   <div class="row">
     <button class="btn btn-ghost" onclick="cookieChoice('reject')">Reject</button>
     <button class="btn btn-dark" onclick="cookieChoice('accept')">Accept all</button>
@@ -995,7 +995,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     if (savedOk || emailOk) {
       if (typeof fbq !== 'undefined') fbq('track', 'Lead');
       if (typeof gtag !== 'undefined') gtag('event', 'conversion', { send_to: 'AW-XXXXXXXXX/YYYYYYY' });
-      window.location.href = '/thanks.html';
+      window.location.href = "thanks.html";
     } else {
       alert('Sorry — something went wrong. Please email us at hi@forgeline.app');
       btn.disabled = false;
