@@ -160,6 +160,7 @@
     </div>
     <button class="btn btn-dark" type="submit" id="loginBtn">Sign in</button>
     <div class="err" id="loginErr"></div>
+    <button class="btn btn-ghost" type="button" id="demoBtn" style="width:100%;margin-top:10px;">View demo (sample data)</button>
   </form>
 </div>
 
@@ -208,7 +209,20 @@
   const configured = SUPABASE_URL.indexOf('http') === 0 && SUPABASE_ANON_KEY.indexOf('YOUR_') !== 0;
 
   const $ = function(id){ return document.getElementById(id); };
-  let sb = null, all = [], filter = 'All', query = '';
+  let sb = null, all = [], filter = 'All', query = '', demo = false;
+
+  // ===== Demo mode: explore the dashboard with sample leads, no backend =====
+  function minsAgo(m){ return new Date(Date.now() - m*60000).toISOString(); }
+  function demoData(){
+    return [
+      { id:'d1', created_at:minsAgo(4), status:'New', name:'Anya Lindqvist', email:'anya@pelletrobotics.com', phone:'+44 7700 900111', company:'Pellet Robotics', process:'CNC milling', qty:'100 – 1,000', notes:'Need 250 aluminium chassis brackets, 6061-T6, ±0.05mm. Drawings attached. Hoping for first articles in 3 weeks.', internal_notes:'', utm_source:'google', utm_campaign:'cnc-uk', gclid:'abc123', referrer:'direct', page_url:'https://forgeline.app/' },
+      { id:'d2', created_at:minsAgo(38), status:'New', name:'Tom Whitfield', email:'tom@kestrel-ev.co.uk', phone:'+44 7700 900222', company:'Kestrel EV', process:'Sheet metal & fabrication', qty:'1,000 – 10,000', notes:'Battery enclosures, stainless, powder coated. Volume run for a new model launch.', internal_notes:'', utm_source:'meta', utm_campaign:'ev-retarget', fbclid:'xyz789', referrer:'https://www.facebook.com/', page_url:'https://forgeline.app/' },
+      { id:'d3', created_at:minsAgo(190), status:'Contacted', name:'Priya Nair', email:'priya@northforge.io', phone:'+44 7700 900333', company:'Northforge', process:'End-to-end product build', qty:'100 – 1,000', notes:'Concept for a consumer kitchen gadget, need DFM + production + packaging.', internal_notes:'Called 25/06 — sending NDA, follow up Friday.', utm_source:'', referrer:'https://www.linkedin.com/', page_url:'https://forgeline.app/' },
+      { id:'d4', created_at:minsAgo(1440), status:'Quoted', name:'Marcus Reed', email:'marcus@apexmotors.com', phone:'+44 7700 900444', company:'Apex Motorsport', process:'CNC turning', qty:'10 – 100', notes:'Titanium hub spacers, motorsport tolerance. Repeat-order potential.', internal_notes:'Quote sent £4,200. Awaiting PO. Chase 27/06.', utm_source:'google', utm_campaign:'motorsport', gclid:'ggg444', referrer:'direct', page_url:'https://forgeline.app/' },
+      { id:'d5', created_at:minsAgo(4320), status:'Won', name:'Sofia Marchetti', email:'sofia@lumen-design.eu', phone:'+44 7700 900555', company:'Lumen Design', process:'3D printing & prototyping', qty:'1 – 10 (prototype)', notes:'Functional prototypes for a lighting product. Fast turnaround needed.', internal_notes:'WON — first batch delivered, invoiced. Great client, ask for referral.', utm_source:'referral', referrer:'https://www.designweek.co.uk/', page_url:'https://forgeline.app/' },
+      { id:'d6', created_at:minsAgo(7200), status:'Lost', name:'David Okoro', email:'david@brightline.co', phone:'+44 7700 900666', company:'Brightline', process:'Packaging & presentation', qty:'10,000+', notes:'Retail packaging for an existing product line.', internal_notes:'Went with incumbent supplier on price. Revisit Q4.', utm_source:'', referrer:'direct', page_url:'https://forgeline.app/' }
+    ];
+  }
 
   if (!configured) {
     // Show the login but warn that nothing is wired yet.
@@ -241,7 +255,27 @@
     if (error){ $('loginErr').textContent = error.message; }
     btn.disabled = false; btn.textContent = 'Sign in';
   });
-  $('logoutBtn').addEventListener('click', function(){ sb.auth.signOut(); });
+  $('logoutBtn').addEventListener('click', function(){ if (demo){ demo=false; location.reload(); } else { sb.auth.signOut(); } });
+
+  // ===== Demo mode =====
+  $('demoBtn').addEventListener('click', function(){
+    demo = true;
+    all = demoData();
+    $('loginView').classList.add('hidden');
+    $('appView').classList.remove('hidden');
+    $('userEmail').textContent = 'demo mode';
+    $('configWarn').classList.add('hidden');
+    $('liveBadge').classList.add('on');
+    $('liveText').textContent = 'Demo';
+    render();
+    // simulate a fresh lead arriving after a few seconds
+    setTimeout(function(){
+      if (!demo) return;
+      const l = { id:'d-live', created_at:new Date().toISOString(), status:'New', name:'Hannah Clarke', email:'hannah@vertexlabs.com', phone:'+44 7700 900777', company:'Vertex Labs', process:'CNC milling', qty:'10 – 100', notes:'Just submitted from the website — precision mounting plates, quick prototype run.', internal_notes:'', utm_source:'google', utm_campaign:'cnc-uk', gclid:'live999', referrer:'direct', page_url:'https://forgeline.app/' };
+      all.unshift(l); render();
+      const el = document.querySelector('.lead[data-id="d-live"]'); if (el) el.classList.add('new-flash');
+    }, 6000);
+  });
 
   // ===== Load + render =====
   async function loadLeads(){
@@ -342,7 +376,7 @@
       const status = el.querySelector('[data-status]').value;
       const internal_notes = el.querySelector('[data-note]').value;
       save.disabled = true; save.textContent = 'Saving…';
-      const { error } = await sb.from('leads').update({ status:status, internal_notes:internal_notes }).eq('id', id);
+      const error = demo ? null : (await sb.from('leads').update({ status:status, internal_notes:internal_notes }).eq('id', id)).error;
       save.disabled = false; save.textContent = 'Save';
       if (!error){
         const local = all.find(function(x){ return x.id === id; });
@@ -355,7 +389,7 @@
     const del = el.querySelector('[data-del]');
     if (del) del.addEventListener('click', async function(){
       if (!confirm('Delete this lead permanently?')) return;
-      const { error } = await sb.from('leads').delete().eq('id', id);
+      const error = demo ? null : (await sb.from('leads').delete().eq('id', id)).error;
       if (!error){ all = all.filter(function(x){ return x.id !== id; }); render(); }
       else alert('Could not delete: ' + error.message);
     });
