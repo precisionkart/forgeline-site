@@ -73,6 +73,48 @@ alter publication supabase_realtime add table public.leads;
 
 
 -- ============================================================
+-- Orders (the delivery + payment side, managed in orders.html)
+-- ============================================================
+create table if not exists public.orders (
+  id            uuid primary key default gen_random_uuid(),
+  created_at    timestamptz not null default now(),
+  order_ref     text,                 -- order / job number (e.g. FG-0001)
+  status        text not null default 'Quote',
+  customer      text,
+  company       text,
+  email         text,
+  phone         text,
+  title         text,                 -- what the order is for
+  value         numeric default 0,    -- total order value
+  amount_paid   numeric default 0,    -- paid so far (balance = value - amount_paid)
+  payment_terms text,                 -- e.g. "50% upfront, 50% on delivery", "Net 30"
+  quote_url     text,
+  quote_name    text,
+  invoice_url   text,
+  invoice_name  text,
+  notes         text,
+  lead_id       uuid                  -- optional link back to the originating lead
+);
+
+create index if not exists orders_created_at_idx on public.orders (created_at desc);
+create index if not exists orders_status_idx on public.orders (status);
+
+-- Orders are internal only: every action requires a logged-in admin.
+alter table public.orders enable row level security;
+
+drop policy if exists "admins manage orders (select)" on public.orders;
+create policy "admins manage orders (select)" on public.orders for select to authenticated using (true);
+drop policy if exists "admins manage orders (insert)" on public.orders;
+create policy "admins manage orders (insert)" on public.orders for insert to authenticated with check (true);
+drop policy if exists "admins manage orders (update)" on public.orders;
+create policy "admins manage orders (update)" on public.orders for update to authenticated using (true) with check (true);
+drop policy if exists "admins manage orders (delete)" on public.orders;
+create policy "admins manage orders (delete)" on public.orders for delete to authenticated using (true);
+
+alter publication supabase_realtime add table public.orders;
+
+
+-- ============================================================
 -- File storage for uploaded CAD / PDF files
 -- ============================================================
 -- Create a public bucket named "cad-files".
@@ -80,11 +122,12 @@ insert into storage.buckets (id, name, public)
 values ('cad-files', 'cad-files', true)
 on conflict (id) do nothing;
 
--- The public website (anon) may upload files into this bucket only.
+-- The public website (anon) and logged-in admins may upload into this bucket.
+-- Admins use it for saved quotes/invoices from the orders page.
 drop policy if exists "public can upload cad files" on storage.objects;
 create policy "public can upload cad files"
   on storage.objects for insert
-  to anon
+  to anon, authenticated
   with check (bucket_id = 'cad-files');
 
 -- Anyone with the (unguessable) link can download — required for the
