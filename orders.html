@@ -165,6 +165,7 @@
     .search input{width:100%;} .search{flex:1;}
   }
 </style>
+<script src="config.js"></script>
 </head>
 <body>
 
@@ -250,9 +251,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-  // ===== Supabase config — same values as index.html / admin.html =====
-  const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-  const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+  // ===== Supabase config — set once in config.js =====
+  const SUPABASE_URL = window.FG_SUPABASE_URL || 'YOUR_SUPABASE_URL';
+  const SUPABASE_ANON_KEY = window.FG_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
 
   const STATUS_META = [
     { name:'Quote',         color:'#7C3AED', bg:'rgba(124,58,237,.12)' },

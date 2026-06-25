@@ -119,6 +119,7 @@
     @page{margin:16mm;}
   }
 </style>
+<script src="config.js"></script>
 </head>
 <body>
 
@@ -226,9 +227,9 @@ VAT GB000000000</textarea></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-  // Same Supabase keys as the other pages (lets the dropdown read your leads/orders)
-  const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-  const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+  // Supabase keys come from config.js (lets the dropdown read your leads/orders)
+  const SUPABASE_URL = window.FG_SUPABASE_URL || 'YOUR_SUPABASE_URL';
+  const SUPABASE_ANON_KEY = window.FG_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
   const configured = SUPABASE_URL.indexOf('http') === 0 && SUPABASE_ANON_KEY.indexOf('YOUR_') !== 0;
 
   const $ = function(id){ return document.getElementById(id); };

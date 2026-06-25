@@ -459,6 +459,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 </style>
+<script src="config.js"></script>
 </head>
 <body>
 
@@ -913,8 +914,8 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   // Leads insert straight into your own database and appear live in the
   // dashboard at /admin.html. Both values are safe to expose in the browser.
   // Setup steps: /supabase/README.md
-  const SUPABASE_URL = 'YOUR_SUPABASE_URL';            // e.g. https://abcd1234.supabase.co
-  const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';  // public "anon" key
+  const SUPABASE_URL = window.FG_SUPABASE_URL || 'YOUR_SUPABASE_URL';            // set in config.js
+  const SUPABASE_ANON_KEY = window.FG_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';  // set in config.js
 
   // ========= Attribution capture (UTMs, click IDs, referrer) =========
   // Captured on first landing and kept for the whole visit, so the lead that

@@ -175,6 +175,7 @@
     .search{flex:1;}
   }
 </style>
+<script src="config.js"></script>
 </head>
 <body>
 
@@ -246,9 +247,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-  // ===== Supabase config — same values as in index.html =====
-  const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-  const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+  // ===== Supabase config — set once in config.js =====
+  const SUPABASE_URL = window.FG_SUPABASE_URL || 'YOUR_SUPABASE_URL';
+  const SUPABASE_ANON_KEY = window.FG_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
 
   // Pipeline stages. Each status belongs to a top-level "group" (the main tabs).
   // The Follow-up group has sub-stages shown as sub-tabs.

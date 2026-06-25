@@ -33,9 +33,11 @@ backend that gives us a database + login.
    - Both are safe to expose in the browser — the security rules mean the anon
      key can only *insert* new leads, never read them.
 
-4. **Paste them into the site**
-   - In **`index.html`** set `SUPABASE_URL` and `SUPABASE_ANON_KEY`.
-   - In **`admin.html`** set the same two values at the top.
+4. **Paste them into the site — one file**
+   - Open **`config.js`** in the project root and set the two values:
+     `window.FG_SUPABASE_URL` and `window.FG_SUPABASE_ANON_KEY`.
+   - That's the only place — the website form, Leads, Orders and the Quote
+     maker all read from `config.js`.
    - Commit & push.
 
 5. **Create your login**
