@@ -948,12 +948,13 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     btnText.textContent = 'Sending…';
 
     const formData = new FormData(form);
+    let savedOk = false, emailOk = false;
 
-    // ----- 1) Insert the lead into our own database -----
+    // ----- 1) Save the lead to our database (this is the source of truth) -----
     // Appears live in /admin.html. Uploads the CAD file to storage first so the
-    // dashboard has a download link. Runs alongside the email relay below.
+    // dashboard has a download link.
     if (SUPABASE_URL.indexOf('http') === 0) {
-      (async function(){
+      try {
         const base = SUPABASE_URL.replace(/\/$/, '');
         const auth = { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY };
         const lead = Object.fromEntries(formData.entries());
@@ -961,46 +962,41 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
         delete lead.subject; delete lead.from_name;
         lead.status = 'New';
 
-        // Upload the file (if any) to the cad-files bucket.
         const file = formData.get('cadfile');
         if (file && file.size) {
           const safe = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
           const path = Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '-' + safe;
           try {
             const up = await fetch(base + '/storage/v1/object/cad-files/' + encodeURIComponent(path), {
-              method: 'POST',
-              headers: Object.assign({ 'Content-Type': file.type || 'application/octet-stream' }, auth),
-              body: file
+              method: 'POST', headers: Object.assign({ 'Content-Type': file.type || 'application/octet-stream' }, auth), body: file
             });
-            if (up.ok) {
-              lead.file_url = base + '/storage/v1/object/public/cad-files/' + encodeURIComponent(path);
-              lead.file_name = file.name;
-            }
-          } catch(e){ /* file optional — carry on without it */ }
+            if (up.ok) { lead.file_url = base + '/storage/v1/object/public/cad-files/' + encodeURIComponent(path); lead.file_name = file.name; }
+          } catch(e){ /* file optional */ }
         }
 
-        fetch(base + '/rest/v1/leads', {
-          method: 'POST',
-          headers: Object.assign({ 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, auth),
-          body: JSON.stringify(lead)
-        }).catch(function(){});
-      })();
+        const ins = await fetch(base + '/rest/v1/leads', {
+          method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, auth), body: JSON.stringify(lead)
+        });
+        savedOk = ins.ok;
+      } catch(e){ savedOk = false; }
     }
 
-    // ----- 2) Send file + email via the relay (this drives success/redirect) -----
-    try {
-      const res = await fetch(form.action, { method:'POST', body: formData });
-      const data = await res.json();
-      if (data.success) {
-        // Track conversion
-        if (typeof fbq !== 'undefined') fbq('track', 'Lead');
-        if (typeof gtag !== 'undefined') gtag('event', 'conversion', { send_to: 'AW-XXXXXXXXX/YYYYYYY' });
-        // Redirect to thank you page (better for ad attribution)
-        window.location.href = '/thanks.html';
-      } else {
-        throw new Error(data.message || 'Submission failed');
-      }
-    } catch(err) {
+    // ----- 2) Email + CAD attachment via the relay (optional, if a key is set) -----
+    const web3Key = (form.querySelector('[name=access_key]') || {}).value || '';
+    if (web3Key && web3Key.indexOf('YOUR_') !== 0) {
+      try {
+        const res = await fetch(form.action, { method:'POST', body: formData });
+        const data = await res.json();
+        emailOk = !!data.success;
+      } catch(e){ emailOk = false; }
+    }
+
+    // ----- 3) Decide outcome — success if the lead reached us either way -----
+    if (savedOk || emailOk) {
+      if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+      if (typeof gtag !== 'undefined') gtag('event', 'conversion', { send_to: 'AW-XXXXXXXXX/YYYYYYY' });
+      window.location.href = '/thanks.html';
+    } else {
       alert('Sorry — something went wrong. Please email us at hi@forgeline.app');
       btn.disabled = false;
       btnText.textContent = 'Send quote request';

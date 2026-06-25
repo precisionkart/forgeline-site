@@ -284,7 +284,7 @@
   }
 
   if (!configured){ $('loginErr').textContent = 'Not configured yet — add your Supabase keys.'; }
-  else { sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); init(); }
+  else { sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth:{ persistSession:true, autoRefreshToken:true, storageKey:'fg-auth' } }); init(); }
 
   async function init(){
     const { data:{ session } } = await sb.auth.getSession();

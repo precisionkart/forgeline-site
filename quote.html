@@ -402,7 +402,7 @@ VAT GB000000000</textarea></div>
   async function loadContacts(){
     try {
       if (configured && window.supabase){
-        var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth:{ persistSession:true, autoRefreshToken:true, storageKey:'fg-auth' } });
         var s = await sb.auth.getSession();
         if (s.data.session){
           var res = await Promise.all([
