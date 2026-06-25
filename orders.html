@@ -250,6 +250,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="auth.js"></script>
 <script>
   // ===== Supabase config — set once in config.js =====
   const SUPABASE_URL = window.FG_SUPABASE_URL || 'YOUR_SUPABASE_URL';
@@ -284,12 +285,11 @@
   }
 
   if (!configured){ $('loginErr').textContent = 'Not configured yet — add your Supabase keys.'; }
-  else { sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth:{ persistSession:true, autoRefreshToken:false, detectSessionInUrl:false, storageKey:'fg-auth', lock:function(n,t,fn){ return fn(); } } }); init(); }
+  else { sb = window.FGAuth.client(); init(); }
 
   async function init(){
-    const { data:{ session } } = await sb.auth.getSession();
+    const session = await window.FGAuth.restore();
     if (session) showApp(session); else showLogin();
-    sb.auth.onAuthStateChange(function(_e, s){ if (s) showApp(s); else showLogin(); });
   }
   function showLogin(){ $('loginView').classList.remove('hidden'); $('appView').classList.add('hidden'); }
   function showApp(session){
@@ -301,11 +301,12 @@
   $('loginForm').addEventListener('submit', async function(e){
     e.preventDefault(); if (!configured) return;
     const btn = $('loginBtn'); btn.disabled = true; btn.textContent = 'Signing in…'; $('loginErr').textContent = '';
-    const { error } = await sb.auth.signInWithPassword({ email:$('email').value.trim(), password:$('password').value });
-    if (error) $('loginErr').textContent = error.message;
+    const res = await window.FGAuth.signIn($('email').value.trim(), $('password').value);
+    if (res.error) $('loginErr').textContent = res.error.message;
+    else showApp(res.data.session);
     btn.disabled = false; btn.textContent = 'Sign in';
   });
-  $('logoutBtn').addEventListener('click', function(){ if (demo){ demo=false; location.reload(); } else sb.auth.signOut(); });
+  $('logoutBtn').addEventListener('click', function(){ if (demo){ demo=false; location.reload(); } else window.FGAuth.signOut().then(function(){ showLogin(); }); });
 
   $('demoBtn').addEventListener('click', function(){
     demo = true; all = demoData();

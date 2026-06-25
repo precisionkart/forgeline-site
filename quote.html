@@ -226,6 +226,7 @@ VAT GB000000000</textarea></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="auth.js"></script>
 <script>
   // Supabase keys come from config.js (lets the dropdown read your leads/orders)
   const SUPABASE_URL = window.FG_SUPABASE_URL || 'YOUR_SUPABASE_URL';
@@ -401,10 +402,10 @@ VAT GB000000000</textarea></div>
   }
   async function loadContacts(){
     try {
-      if (configured && window.supabase){
-        var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth:{ persistSession:true, autoRefreshToken:false, detectSessionInUrl:false, storageKey:'fg-auth', lock:function(n,t,fn){ return fn(); } } });
-        var s = await sb.auth.getSession();
-        if (s.data.session){
+      if (window.FGAuth && window.FGAuth.configured){
+        var sb = window.FGAuth.client();
+        var session = await window.FGAuth.restore();
+        if (session){
           var res = await Promise.all([
             sb.from('leads').select('name,company,email,phone').order('created_at',{ ascending:false }),
             sb.from('orders').select('customer,company,email,phone').order('created_at',{ ascending:false })
