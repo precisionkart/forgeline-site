@@ -1,0 +1,3 @@
+# Force a single canonical origin so the login session is shared everywhere.
+# (www and non-www are different "sites" to a browser → separate logins.)
+https://www.forgelinecnc.com/*  https://forgelinecnc.com/:splat  301!

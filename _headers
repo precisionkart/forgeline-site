@@ -1,0 +1,25 @@
+# Cloudflare Pages — always serve the freshest HTML, config and app code.
+# (Large images/fonts can still cache; only the code is revalidated.)
+
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+/admin
+  Cache-Control: no-cache
+/admin.html
+  Cache-Control: no-cache
+/orders
+  Cache-Control: no-cache
+/orders.html
+  Cache-Control: no-cache
+/quote
+  Cache-Control: no-cache
+/quote.html
+  Cache-Control: no-cache
+/thanks
+  Cache-Control: no-cache
+/thanks.html
+  Cache-Control: no-cache
+/config.js
+  Cache-Control: no-cache
