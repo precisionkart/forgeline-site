@@ -15,30 +15,31 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- ============ META PIXEL ============ -->
-<!-- TODO: Replace YOUR_PIXEL_ID with your actual Meta Pixel ID -->
-<script>
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', 'YOUR_PIXEL_ID');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
-
-<!-- ============ GOOGLE TAG (GA4 + Google Ads) ============ -->
-<!-- TODO: Replace G-XXXXXXXXXX with your GA4 ID, and AW-XXXXXXXXX with your Google Ads ID -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<!-- ============ GOOGLE TAG (GA4 + Google Ads) + Consent Mode v2 ============ -->
+<!-- TODO: replace G-XXXXXXXXXX (GA4) and AW-XXXXXXXXX (Google Ads) with your IDs -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  // Consent Mode v2 — deny ad/analytics storage until the visitor accepts (UK/EU).
+  gtag('consent', 'default', {
+    ad_storage: 'denied', analytics_storage: 'denied',
+    ad_user_data: 'denied', ad_personalization: 'denied',
+    wait_for_update: 500
+  });
+  // Returning visitors who already accepted keep their consent.
+  try {
+    if (localStorage.getItem('cookie_consent') === 'accept') {
+      gtag('consent', 'update', {
+        ad_storage: 'granted', analytics_storage: 'granted',
+        ad_user_data: 'granted', ad_personalization: 'granted'
+      });
+    }
+  } catch(e){}
   gtag('js', new Date());
   gtag('config', 'G-XXXXXXXXXX');
   gtag('config', 'AW-XXXXXXXXX');
 </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 
 <style>
   :root{
@@ -918,7 +919,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
       <p>From your first sketch to a packaged product on the shelf, built through our trusted network. Send us a brief today and a British engineer will tell you exactly what you'd save, within one working day.</p>
       <div class="row">
         <a href="#quote" class="btn btn-white">Request Quote →</a>
-        <a href="mailto:hi@forgeline.app" class="btn btn-ghost-w">Talk to a British engineer</a>
+        <a href="https://wa.me/971585434376" target="_blank" rel="noopener" class="btn btn-ghost-w">Talk to a British engineer</a>
       </div>
     </div>
   </div>
@@ -938,7 +939,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
       </div>
       <div>
         <h4>Company</h4>
-        <ul><li><a href="#why">Why Forgeline</a></li><li><a href="#process">How it works</a></li><li><a href="mailto:hi@forgeline.app">Contact</a></li></ul>
+        <ul><li><a href="#why">Why Forgeline</a></li><li><a href="#process">How it works</a></li><li><a href="https://wa.me/971585434376" target="_blank" rel="noopener">Contact</a></li></ul>
       </div>
       <div>
         <h4>Legal</h4>
@@ -947,7 +948,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     </div>
     <div class="foot-bottom">
       <span>© 2026 Forgeline Ltd. Registered in England &amp; Wales.</span>
-      <span>hi@forgeline.app · Manchester, UK</span>
+      <span>Manchester, UK</span>
     </div>
   </div>
 </footer>
@@ -955,13 +956,13 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 <!-- STICKY MOBILE CTA -->
 <div class="mobile-cta">
   <a href="#quote" class="btn btn-brand">Request Quote →</a>
-  <a href="https://wa.me/447000000000?text=Hi%20Forgeline%2C%20I%27d%20like%20a%20CNC%20quote" target="_blank" rel="noopener" class="btn btn-wa" aria-label="WhatsApp us">
+  <a href="https://wa.me/971585434376?text=Hi%20Forgeline%2C%20I%27d%20like%20a%20CNC%20quote" target="_blank" rel="noopener" class="btn btn-wa" aria-label="WhatsApp us">
     <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 0C7.2 0 0 7.2 0 16c0 2.8.8 5.5 2.2 7.9L0 32l8.3-2.2C10.6 31.2 13.3 32 16 32c8.8 0 16-7.2 16-16S24.8 0 16 0zm0 29.3c-2.5 0-5-.7-7.1-1.9l-.5-.3-4.9 1.3 1.3-4.8-.3-.5C3.4 21 2.7 18.5 2.7 16 2.7 8.7 8.7 2.7 16 2.7S29.3 8.7 29.3 16 23.3 29.3 16 29.3zm7.3-9.9c-.4-.2-2.4-1.2-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.6-.2.2-.5.3-.9.1-.4-.2-1.7-.6-3.2-2-1.2-1.1-2-2.4-2.2-2.8-.2-.4 0-.6.2-.8.2-.2.4-.5.6-.7.2-.2.3-.4.4-.7.1-.3.1-.5 0-.7-.1-.2-.9-2.2-1.3-3-.3-.8-.7-.7-.9-.7h-.8c-.3 0-.7.1-1.1.5-.4.4-1.5 1.4-1.5 3.5s1.5 4.1 1.7 4.4c.2.3 3 4.6 7.3 6.4 1 .4 1.8.7 2.4.9 1 .3 1.9.3 2.7.2.8-.1 2.4-1 2.8-2 .3-1 .3-1.8.2-2-.1-.2-.4-.3-.8-.5z"/></svg>
   </a>
 </div>
 
 <!-- WHATSAPP FLOAT (desktop) -->
-<a href="https://wa.me/447000000000?text=Hi%20Forgeline%2C%20I%27d%20like%20a%20CNC%20quote" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp us">
+<a href="https://wa.me/971585434376?text=Hi%20Forgeline%2C%20I%27d%20like%20a%20CNC%20quote" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp us">
   <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 0C7.2 0 0 7.2 0 16c0 2.8.8 5.5 2.2 7.9L0 32l8.3-2.2C10.6 31.2 13.3 32 16 32c8.8 0 16-7.2 16-16S24.8 0 16 0zm0 29.3c-2.5 0-5-.7-7.1-1.9l-.5-.3-4.9 1.3 1.3-4.8-.3-.5C3.4 21 2.7 18.5 2.7 16 2.7 8.7 8.7 2.7 16 2.7S29.3 8.7 29.3 16 23.3 29.3 16 29.3zm7.3-9.9c-.4-.2-2.4-1.2-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.6-.2.2-.5.3-.9.1-.4-.2-1.7-.6-3.2-2-1.2-1.1-2-2.4-2.2-2.8-.2-.4 0-.6.2-.8.2-.2.4-.5.6-.7.2-.2.3-.4.4-.7.1-.3.1-.5 0-.7-.1-.2-.9-2.2-1.3-3-.3-.8-.7-.7-.9-.7h-.8c-.3 0-.7.1-1.1.5-.4.4-1.5 1.4-1.5 3.5s1.5 4.1 1.7 4.4c.2.3 3 4.6 7.3 6.4 1 .4 1.8.7 2.4.9 1 .3 1.9.3 2.7.2.8-.1 2.4-1 2.8-2 .3-1 .3-1.8.2-2-.1-.2-.4-.3-.8-.5z"/></svg>
 </a>
 
@@ -1088,24 +1089,25 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     }
 
     // ----- 3) Decide outcome — success if the lead reached us either way -----
+    // (The Google Ads conversion fires once on thanks.html, not here.)
     if (savedOk || emailOk) {
-      if (typeof fbq !== 'undefined') fbq('track', 'Lead');
-      if (typeof gtag !== 'undefined') gtag('event', 'conversion', { send_to: 'AW-XXXXXXXXX/YYYYYYY' });
       window.location.href = "thanks.html";
     } else {
-      alert('Sorry — something went wrong. Please email us at hi@forgeline.app');
+      alert('Sorry — something went wrong. Please message us on WhatsApp and we’ll sort it.');
       btn.disabled = false;
       btnText.textContent = 'Send quote request';
     }
   });
 
-  // ========= Cookie banner =========
+  // ========= Cookie banner (Consent Mode v2) =========
   function cookieChoice(choice){
     localStorage.setItem('cookie_consent', choice);
     document.getElementById('cookieBanner').classList.remove('show');
-    if (choice === 'reject') {
-      // Note: for full compliance, you'd block pixel loading until accept.
-      // For simplicity here we leave pixels loaded but record the choice.
+    if (typeof gtag === 'function'){
+      var v = (choice === 'accept') ? 'granted' : 'denied';
+      gtag('consent', 'update', {
+        ad_storage: v, analytics_storage: v, ad_user_data: v, ad_personalization: v
+      });
     }
   }
   if (!localStorage.getItem('cookie_consent')) {
