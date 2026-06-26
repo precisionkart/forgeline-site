@@ -4,6 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>Forgeline — British-managed product development and manufacturing</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="favicon.svg">
 <meta name="description" content="Forgeline is a British-managed product development and manufacturing company. From CAD to packaging, our UK engineering team handles every step — built through trusted, vetted partner factories. UK contract, significant savings.">
 <meta property="og:title" content="Forgeline — the product you'd build in Britain, for a fraction of the price">
 <meta property="og:description" content="British engineering, factory-built. Design, prototype, manufacture, finish and package — under one roof, at a fraction of UK cost.">
@@ -249,6 +251,16 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   .section.band .why-card{background:var(--bg);}
   .section.band .stats{background:var(--bg);}
 
+  /* Design-section CTA */
+  .design-cta{margin-top:36px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+    background:linear-gradient(135deg,#FFF5F0,#FFE4DA);border:1px solid #FFD5C2;border-radius:var(--radius-lg);padding:24px 30px;}
+  .design-cta b{display:block;font-size:19px;font-weight:600;letter-spacing:-0.015em;}
+  .design-cta span{display:block;margin-top:4px;font-size:14.5px;color:var(--ink-2);}
+  .design-cta .btn{flex-shrink:0;padding:14px 22px;font-size:15px;}
+
+  /* Breathing room around the dark process band */
+  #process{padding:24px 0;}
+
   /* WHY */
   .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px;}
   .why-grid.three{grid-template-columns:repeat(3,1fr);}
@@ -366,9 +378,17 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     width:56px;height:56px;border-radius:50%;background:#25D366;
     display:flex;align-items:center;justify-content:center;
     box-shadow:0 8px 24px rgba(37,211,102,.4);
-    transition:transform .2s;
+    transition:transform .2s, box-shadow .2s;
+    animation:waBob 3.2s ease-in-out infinite;
   }
-  .wa-float:hover{transform:scale(1.08);}
+  /* soft pulsing ring to draw the eye */
+  .wa-float:before{
+    content:"";position:absolute;inset:0;border-radius:50%;
+    background:#25D366;z-index:-1;animation:waPing 2.6s ease-out infinite;
+  }
+  @keyframes waBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  @keyframes waPing{0%{transform:scale(1);opacity:.45;}70%,100%{transform:scale(1.9);opacity:0;}}
+  .wa-float:hover{transform:scale(1.1);animation-play-state:paused;box-shadow:0 12px 30px rgba(37,211,102,.5);}
   .wa-float svg{width:28px;height:28px;color:#fff;}
 
   /* COOKIE BANNER */
@@ -598,13 +618,13 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   <div class="container">
     <span class="sec-eyebrow">In-house design team</span>
     <h2 class="sec-h">No drawings? <span class="serif">We'll create them.</span></h2>
-    <p class="sec-sub">You don't need a finished CAD file to get started. Our own in-house design team turns ideas, sketches and even physical parts into production-ready models — so the engineering is handled before anything is made.</p>
+    <p class="sec-sub">You don't need a finished CAD file to get started. Our own in-house design team turns ideas, sketches and even physical parts into production-ready models, so the engineering is handled before anything is made.</p>
 
     <div class="why-grid">
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
         <h3>Reverse engineering</h3>
-        <p>Bring us a worn, legacy or one-off part with no drawings. We measure it, recreate it in CAD, and improve it where it helps — ready to remanufacture.</p>
+        <p>Bring us a worn, legacy or one-off part with no drawings. We measure it, recreate it in CAD, and improve it where it helps, ready to remanufacture.</p>
       </div>
       <div class="why-card">
         <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 012-2h2M17 3h2a2 2 0 012 2v2M21 17v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2"/><circle cx="12" cy="12" r="3"/></svg></div>
@@ -622,7 +642,13 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
         <p>Prove form, fit and function with rapid prototypes and design iterations before you commit to tooling or a production run.</p>
       </div>
     </div>
-    <div style="text-align:center;margin-top:34px;"><a href="#quote" class="btn btn-brand">Get your quote →</a></div>
+    <div class="design-cta">
+      <div>
+        <b>No CAD? No problem.</b>
+        <span>Send a sketch, a photo or even the physical part, and we'll take it from there.</span>
+      </div>
+      <a href="#quote" class="btn btn-brand">Get your quote →</a>
+    </div>
   </div>
 </section>
 
