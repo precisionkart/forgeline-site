@@ -554,11 +554,11 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 
   <div class="container">
     <form id="quickForm" class="quick-form" novalidate>
-      <div class="qf-head"><b>Start your quote</b><span>Fixed price in 24 hours, by a real engineer.</span></div>
+      <div class="qf-head"><b>Start your quote</b><span>Add files &amp; quantity on the next step.</span></div>
       <input type="text" name="name" id="qf_name" placeholder="Your name" required>
       <input type="email" name="email" id="qf_email" placeholder="Work email" required>
       <input type="text" name="need" id="qf_need" placeholder="What do you need made?">
-      <button type="submit" class="btn btn-brand" id="qf_btn">Get my quote →</button>
+      <button type="submit" class="btn btn-brand" id="qf_btn">Start my quote →</button>
     </form>
   </div>
 
@@ -997,36 +997,26 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     return attr;
   };
 
-  // ========= Hero quick-start form =========
+  // ========= Hero quick-start form (step 1) =========
+  // Low-friction start: carry name/email/need into the full form below, where
+  // they add quantity, service and files, then submit once = one clean lead.
   const quickForm = document.getElementById('quickForm');
-  if (quickForm) quickForm.addEventListener('submit', async function(e){
+  if (quickForm) quickForm.addEventListener('submit', function(e){
     e.preventDefault();
     const name = document.getElementById('qf_name').value.trim();
     const email = document.getElementById('qf_email').value.trim();
-    if (!name || !email){ alert('Please add your name and work email.'); return; }
-    const btn = document.getElementById('qf_btn'); btn.disabled = true; btn.textContent = 'Sending…';
-    const lead = Object.assign({
-      name: name, email: email, notes: document.getElementById('qf_need').value.trim(), status: 'New'
-    }, window.fgAttr());
-    let savedOk = false;
-    if (SUPABASE_URL.indexOf('http') === 0){
-      try {
-        const ins = await fetch(SUPABASE_URL.replace(/\/$/, '') + '/rest/v1/leads', {
-          method:'POST',
-          headers:{ 'apikey':SUPABASE_ANON_KEY, 'Authorization':'Bearer '+SUPABASE_ANON_KEY, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
-          body: JSON.stringify(lead)
-        });
-        savedOk = ins.ok;
-      } catch(err){ savedOk = false; }
-    }
-    if (savedOk){
-      if (typeof fbq !== 'undefined') fbq('track','Lead');
-      if (typeof gtag !== 'undefined') gtag('event','conversion',{ send_to:'AW-XXXXXXXXX/YYYYYYY' });
-      window.location.href = 'thanks.html';
-    } else {
-      btn.disabled = false; btn.textContent = 'Get my quote →';
-      alert('Sorry — something went wrong. Please use the full form below, or email hi@forgeline.app');
-    }
+    const need = document.getElementById('qf_need').value.trim();
+    if (!name || !email){ alert('Please add your name and work email to start.'); return; }
+    // Pre-fill the full quote form
+    const set = function(id, v){ const el = document.getElementById(id); if (el && v) el.value = v; };
+    set('name', name); set('email', email); set('notes', need);
+    // Take them to the full form to finish (quantity + files)
+    const quote = document.getElementById('quote');
+    if (quote) quote.scrollIntoView({ behavior:'smooth', block:'start' });
+    setTimeout(function(){
+      const next = document.getElementById('company') || document.getElementById('process');
+      if (next) next.focus({ preventScroll:true });
+    }, 650);
   });
 
   // ========= File name display =========
