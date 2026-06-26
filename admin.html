@@ -180,7 +180,7 @@
 <body>
 
 <!-- ============ LOGIN ============ -->
-<div class="login" id="loginView">
+<div class="login hidden" id="loginView">
   <form class="login-card" id="loginForm">
     <div class="logo"><span class="logo-dot"></span> Forgeline</div>
     <h1>Lead dashboard</h1>
@@ -296,8 +296,13 @@
   if (!configured) {
     // Show the login but warn that nothing is wired yet.
     $('loginErr').textContent = 'Dashboard not configured yet — add your Supabase keys.';
+    showLogin();
   } else {
     sb = window.FGAuth.client();
+    // Optimistic: if a saved session exists, show the app shell right away so
+    // there's no flash of the login screen while we restore it.
+    if (localStorage.getItem('fg-session')) { $('loginView').classList.add('hidden'); $('appView').classList.remove('hidden'); }
+    else { showLogin(); }
     init();
   }
 

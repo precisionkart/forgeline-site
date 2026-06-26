@@ -170,7 +170,7 @@
 <body>
 
 <!-- LOGIN -->
-<div class="login" id="loginView">
+<div class="login hidden" id="loginView">
   <form class="login-card" id="loginForm">
     <div class="logo"><span class="logo-dot"></span> Forgeline</div>
     <h1>Orders</h1>
@@ -284,8 +284,13 @@
     ];
   }
 
-  if (!configured){ $('loginErr').textContent = 'Not configured yet — add your Supabase keys.'; }
-  else { sb = window.FGAuth.client(); init(); }
+  if (!configured){ $('loginErr').textContent = 'Not configured yet — add your Supabase keys.'; showLogin(); }
+  else {
+    sb = window.FGAuth.client();
+    if (localStorage.getItem('fg-session')) { $('loginView').classList.add('hidden'); $('appView').classList.remove('hidden'); }
+    else { showLogin(); }
+    init();
+  }
 
   async function init(){
     const session = await window.FGAuth.restore();
