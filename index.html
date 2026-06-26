@@ -197,11 +197,22 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   .form-trust span:before{content:"✓";color:var(--brand);font-weight:700;}
 
   /* LOGOS */
-  .logos{margin-top:72px;padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-  .logos-row{display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
-  .logos-row .label{font-size:13px;color:var(--ink-3);}
-  .logos-row .brand{display:inline-flex;align-items:center;gap:9px;font-weight:600;color:var(--ink-2);font-size:14px;letter-spacing:-0.01em;}
-  .logos-row .brand svg{width:19px;height:19px;color:var(--brand);}
+  /* Hero quick-start quote form */
+  .quick-form{margin-top:30px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);padding:15px 18px;}
+  .quick-form .qf-head{display:flex;flex-direction:column;margin-right:4px;}
+  .quick-form .qf-head b{font-size:15px;font-weight:600;letter-spacing:-0.01em;}
+  .quick-form .qf-head span{font-size:12px;color:var(--ink-2);margin-top:1px;}
+  .quick-form input{flex:1;min-width:150px;font-size:14px;padding:12px 14px;background:#FAFAF7;border:1px solid var(--line);border-radius:var(--radius-sm);transition:border .15s,box-shadow .15s,background .15s;}
+  .quick-form input:focus{outline:none;border-color:var(--brand);background:#fff;box-shadow:0 0 0 3px rgba(255,91,46,.12);}
+  .quick-form .btn{padding:13px 20px;font-size:14px;white-space:nowrap;}
+  @media(max-width:760px){.quick-form{flex-direction:column;align-items:stretch;}.quick-form .qf-head{margin:0 0 2px;}.quick-form input,.quick-form .btn{width:100%;}}
+
+  .logos{margin-top:28px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .logos-row{display:flex;align-items:center;justify-content:center;gap:14px 26px;flex-wrap:wrap;}
+  .logos-row .label{font-size:11px;color:var(--ink-3);letter-spacing:.02em;}
+  .logos-row .brand{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--ink-3);font-size:11px;letter-spacing:.01em;}
+  .logos-row .brand svg{width:14px;height:14px;color:var(--ink-3);}
 
   /* SECTIONS */
   .section{padding:96px 0;}
@@ -212,6 +223,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
 
   /* CAPS */
   .cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+  .cap-grid.cols-4{grid-template-columns:repeat(4,1fr);gap:16px;}
+  .cap-grid.cols-4 .cap-img{height:150px;}
+  .cap-grid.cols-4 .cap-body{padding:2px 18px 20px;}
+  .cap-grid.cols-4 .cap-body h3{font-size:17px;}
   .cap{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;transition:transform .25s, box-shadow .25s;}
   .cap:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
   .cap-img{height:180px;border-radius:var(--radius-md);margin:12px;background-size:cover;background-position:center;position:relative;}
@@ -425,6 +440,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     .hero-float.savings{left:0;top:-14px;}
     .hero-float.qc{right:0;bottom:-14px;}
     .cap-grid{grid-template-columns:1fr;gap:16px;}
+    .cap-grid.cols-4{grid-template-columns:1fr 1fr;gap:14px;}
     .cases-grid{grid-template-columns:1fr;gap:16px;}
     .why-cta-inner{grid-template-columns:1fr;gap:28px;padding:36px 28px;}
     .process-inner{padding:56px 24px;}
@@ -537,6 +553,16 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
   </div>
 
   <div class="container">
+    <form id="quickForm" class="quick-form" novalidate>
+      <div class="qf-head"><b>Start your quote</b><span>Fixed price in 24 hours, by a real engineer.</span></div>
+      <input type="text" name="name" id="qf_name" placeholder="Your name" required>
+      <input type="email" name="email" id="qf_email" placeholder="Work email" required>
+      <input type="text" name="need" id="qf_need" placeholder="What do you need made?">
+      <button type="submit" class="btn btn-brand" id="qf_btn">Get my quote →</button>
+    </form>
+  </div>
+
+  <div class="container">
     <div class="logos">
       <div class="logos-row">
         <span class="label">Trusted by teams building in</span>
@@ -557,11 +583,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     <h2 class="sec-h">From prototype to production, <span class="serif">under one roof.</span></h2>
     <p class="sec-sub">Design, prototype, manufacture, finish, assemble, package. We don't hand you off to five suppliers, one British team manages the whole journey.</p>
 
-    <div class="cap-grid">
-      <article class="cap">
-        <div class="cap-img" style="background-image:url('CAD.jpg');"><span class="badge">In-house, UK</span></div>
-        <div class="cap-body"><h3>Design &amp; DFM</h3><p>Bring us a sketch, a brief, or a CAD file. Our British engineers turn it into a manufacturable design, or refine yours to save you money on the build.</p><div class="cap-foot"><span>Engineers based in</span><b>Manchester, UK</b></div></div>
-      </article>
+    <div class="cap-grid cols-4">
       <article class="cap">
         <div class="cap-img" style="background-image:url('CNC.jpg');"><span class="badge">5-axis · ±0.01mm</span></div>
         <div class="cap-body"><h3>CNC Milling &amp; Turning</h3><p>3, 4 and 5-axis milling and live-tool turning. Aluminium, steel, titanium, brass, engineering plastics. Production runs from 10 to 10,000+.</p><div class="cap-foot"><span>Tolerance</span><b>±0.01 mm</b></div></div>
@@ -569,10 +591,6 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
       <article class="cap">
         <div class="cap-img" style="background-image:url('SheetMetal.jpg');"><span class="badge">Fibre laser</span></div>
         <div class="cap-body"><h3>Sheet Metal &amp; Fabrication</h3><p>Laser cutting, press-brake bending, welding. Mild steel, stainless, aluminium up to 12mm. Powder coat and finishing in-line.</p><div class="cap-foot"><span>Thickness</span><b>0.5 – 12 mm</b></div></div>
-      </article>
-      <article class="cap">
-        <div class="cap-img" style="background-image:url('image4.jpg');"><span class="badge">QC verified</span></div>
-        <div class="cap-body"><h3>Anodising &amp; Finish</h3><p>Anodising, plating, painting, bead blast, powder coat and passivation. Protective, durable finishes applied in-line.</p><div class="cap-foot"><span>Inspection</span><b>100% pre-ship</b></div></div>
       </article>
       <article class="cap">
         <div class="cap-img" style="background-image:url('3DPrint.jpg');"><span class="badge">SLA · SLS · FDM</span></div>
@@ -970,6 +988,46 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></nos
     const pu = document.getElementById('page_url'); if (pu) pu.value = location.href;
     const rf = document.getElementById('referrer'); if (rf) rf.value = document.referrer || 'direct';
   })();
+  // Attribution available to any form on the page.
+  window.fgAttr = function(){
+    let attr = {};
+    try { attr = JSON.parse(sessionStorage.getItem('fg_attr') || '{}'); } catch(e){}
+    attr.referrer = document.referrer || 'direct';
+    attr.page_url = location.href;
+    return attr;
+  };
+
+  // ========= Hero quick-start form =========
+  const quickForm = document.getElementById('quickForm');
+  if (quickForm) quickForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const name = document.getElementById('qf_name').value.trim();
+    const email = document.getElementById('qf_email').value.trim();
+    if (!name || !email){ alert('Please add your name and work email.'); return; }
+    const btn = document.getElementById('qf_btn'); btn.disabled = true; btn.textContent = 'Sending…';
+    const lead = Object.assign({
+      name: name, email: email, notes: document.getElementById('qf_need').value.trim(), status: 'New'
+    }, window.fgAttr());
+    let savedOk = false;
+    if (SUPABASE_URL.indexOf('http') === 0){
+      try {
+        const ins = await fetch(SUPABASE_URL.replace(/\/$/, '') + '/rest/v1/leads', {
+          method:'POST',
+          headers:{ 'apikey':SUPABASE_ANON_KEY, 'Authorization':'Bearer '+SUPABASE_ANON_KEY, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
+          body: JSON.stringify(lead)
+        });
+        savedOk = ins.ok;
+      } catch(err){ savedOk = false; }
+    }
+    if (savedOk){
+      if (typeof fbq !== 'undefined') fbq('track','Lead');
+      if (typeof gtag !== 'undefined') gtag('event','conversion',{ send_to:'AW-XXXXXXXXX/YYYYYYY' });
+      window.location.href = 'thanks.html';
+    } else {
+      btn.disabled = false; btn.textContent = 'Get my quote →';
+      alert('Sorry — something went wrong. Please use the full form below, or email hi@forgeline.app');
+    }
+  });
 
   // ========= File name display =========
   document.getElementById('cadfile').addEventListener('change', function(e){
