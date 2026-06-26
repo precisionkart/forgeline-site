@@ -68,6 +68,34 @@ create policy "admins can delete leads"
   to authenticated
   using (true);
 
+-- Auto-assign a sequential job number (FG-0001, FG-0002, …) to every lead on
+-- insert — so website leads and dashboard leads all get numbered automatically.
+create sequence if not exists public.leads_ref_seq start 1;
+
+create or replace function public.set_lead_quote_ref()
+returns trigger as $$
+begin
+  if new.quote_ref is null or new.quote_ref = '' then
+    new.quote_ref := 'FG-' || lpad(nextval('public.leads_ref_seq')::text, 4, '0');
+  end if;
+  return new;
+end;
+$$ language plpgsql;
+
+drop trigger if exists trg_lead_quote_ref on public.leads;
+create trigger trg_lead_quote_ref
+  before insert on public.leads
+  for each row execute function public.set_lead_quote_ref();
+
+-- Backfill any existing leads that don't have a number yet (oldest first).
+do $$
+declare r record;
+begin
+  for r in select id from public.leads where quote_ref is null or quote_ref = '' order by created_at asc loop
+    update public.leads set quote_ref = 'FG-' || lpad(nextval('public.leads_ref_seq')::text, 4, '0') where id = r.id;
+  end loop;
+end $$;
+
 -- Let the dashboard receive live inserts over Realtime.
 alter publication supabase_realtime add table public.leads;
 

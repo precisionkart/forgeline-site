@@ -120,6 +120,7 @@
   .lead .whencol{text-align:right;}
   .lead .when{font-size:11.5px;color:var(--ink-3);white-space:nowrap;}
   .muted{color:var(--ink-3);}
+  .ref-readonly{font-family:ui-monospace,monospace;font-size:15px;font-weight:700;letter-spacing:.02em;color:var(--ink);background:var(--line-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:9px 13px;display:inline-block;}
   .ref-row{display:flex;gap:8px;align-items:center;}
   .ref-row input{flex:1;background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);padding:9px 12px;font-size:13px;font-family:ui-monospace,monospace;transition:border .15s,box-shadow .15s;}
   .ref-row input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(255,91,46,.1);}
@@ -489,7 +490,7 @@
       +         (l.page_url?'<br>Landed on '+esc(l.page_url):'')+'</div></div>'
       +     '<div>'
       +       '<h4>Quote / Job no.</h4>'
-      +       '<div class="ref-row"><input type="text" data-ref value="'+esc(l.quote_ref||'')+'" placeholder="e.g. FG-0001"><button class="btn btn-ghost btn-sm" type="button" data-autoref>Auto</button></div>'
+      +       '<div class="ref-readonly">'+(l.quote_ref?esc(l.quote_ref):'<span class="muted">assigning…</span>')+'</div>'
       +       '<h4 style="margin-top:14px">Private notes</h4><textarea data-note placeholder="Sent to manufacturer, quote back Tue, called customer…">'+esc(l.internal_notes||'')+'</textarea>'
       +       '<div class="detail-actions">'
       +         '<span class="status-sel">Status<select data-status>'+statusOptions(l.status)+'</select></span>'
@@ -508,21 +509,18 @@
   function wireRow(el){
     const id = el.getAttribute('data-id');
     el.querySelector('.lead-main').addEventListener('click', function(){ el.classList.toggle('open'); });
-    const autoref = el.querySelector('[data-autoref]');
-    if (autoref) autoref.addEventListener('click', function(){ el.querySelector('[data-ref]').value = nextQuoteRef(); });
     const save = el.querySelector('[data-save]');
     if (save) save.addEventListener('click', async function(){
       const status = el.querySelector('[data-status]').value;
       const internal_notes = el.querySelector('[data-note]').value;
-      const quote_ref = el.querySelector('[data-ref]').value.trim();
       const follow_up_at = el.querySelector('[data-followdate]').value || null;
-      const patch = { status:status, internal_notes:internal_notes, quote_ref:quote_ref, follow_up_at:follow_up_at };
+      const patch = { status:status, internal_notes:internal_notes, follow_up_at:follow_up_at };
       save.disabled = true; save.textContent = 'Saving…';
       const error = demo ? null : (await sb.from('leads').update(patch).eq('id', id)).error;
       save.disabled = false; save.textContent = 'Save';
       if (!error){
         const local = all.find(function(x){ return x.id === id; });
-        if (local){ local.status = status; local.internal_notes = internal_notes; local.quote_ref = quote_ref; local.follow_up_at = follow_up_at; }
+        if (local){ local.status = status; local.internal_notes = internal_notes; local.follow_up_at = follow_up_at; }
         const badge = el.querySelector('.badge'); badge.setAttribute('style', statusStyle(status)); badge.textContent = status;
         const s = el.querySelector('[data-saved]'); s.classList.add('show'); setTimeout(function(){ s.classList.remove('show'); }, 1500);
         render();
