@@ -37,8 +37,8 @@ fbq('track', 'Lead');
     min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;overflow:hidden;}
   .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;}
 
-  .card{position:relative;width:100%;max-width:430px;background:#fff;border:1px solid var(--line);
-    border-radius:26px;padding:34px 30px 26px;box-shadow:0 4px 12px rgba(10,10,10,.05),0 18px 50px rgba(10,10,10,.09);
+  .card{position:relative;width:100%;max-width:410px;background:#fff;border:1px solid var(--line);
+    border-radius:24px;padding:28px 26px 22px;box-shadow:0 4px 12px rgba(10,10,10,.05),0 18px 50px rgba(10,10,10,.09);
     animation:rise .6s cubic-bezier(.2,.7,.2,1) both;overflow:hidden;}
   .card:before{content:"";position:absolute;top:-40%;left:50%;width:340px;height:340px;transform:translateX(-50%);
     background:radial-gradient(circle,rgba(255,91,46,.16),transparent 62%);pointer-events:none;animation:glow 4s ease-in-out infinite;}
@@ -56,14 +56,14 @@ fbq('track', 'Lead');
   @keyframes draw{to{stroke-dashoffset:0}}
   .pill{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.09em;color:var(--brand);
     background:#FFE9E1;padding:4px 9px;border-radius:999px;}
-  .top h1{margin-top:7px;font-size:22px;font-weight:600;letter-spacing:-0.02em;line-height:1.12;}
+  .top h1{font-size:23px;font-weight:600;letter-spacing:-0.02em;line-height:1.1;}
   .top h1 .serif{color:var(--brand);}
 
   .sub{position:relative;margin-top:14px;font-size:13.5px;color:var(--ink2);line-height:1.5;}
 
   /* Tracker */
   .track{position:relative;margin-top:20px;}
-  .track .row{position:relative;display:flex;gap:13px;padding:11px 0;opacity:0;animation:slide .5s ease forwards;}
+  .track .row{position:relative;display:flex;gap:13px;padding:8px 0;opacity:0;animation:slide .5s ease forwards;}
   .track .row:nth-child(1){animation-delay:.65s}
   .track .row:nth-child(2){animation-delay:.8s}
   .track .row:nth-child(3){animation-delay:.95s}
@@ -112,28 +112,22 @@ fbq('track', 'Lead');
     <div class="top">
       <div class="check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
       <div>
-        <span class="pill">QUOTE REQUEST LOGGED</span>
-        <h1>You're in the queue, <span class="serif">front of the line.</span></h1>
+        <h1>You're <span class="serif">in the queue.</span></h1>
       </div>
     </div>
 
-    <p class="sub">A British engineer is already on it. You'll get a fixed-price quote, real lead time, and the exact shop building your part.</p>
+    <p class="sub">A British engineer is on it — fixed price, real lead time, and the shop building your part.</p>
 
     <div class="track">
       <div class="line"></div>
-      <div class="row done"><span class="dot"></span><div><b>Request received</b><span id="recv">moments ago</span></div></div>
-      <div class="row active"><span class="dot"></span><div><b>Engineer reviewing</b><span>checking DFM &amp; costing your part</span></div></div>
-      <div class="row upcoming"><span class="dot"></span><div><b>Your written quote</b><span>with three lead-time options</span></div></div>
+      <div class="row done"><span class="dot"></span><div><b>Request received</b><span id="recv">just now</span></div></div>
+      <div class="row active"><span class="dot"></span><div><b>Engineer reviewing</b><span>DFM &amp; costing</span></div></div>
+      <div class="row upcoming"><span class="dot"></span><div><b>Written quote sent</b><span>3 lead-time options</span></div></div>
     </div>
 
     <div class="eta">
       <div class="bar"><i></i></div>
-      <div class="lab"><span>Reviewing now</span><span><b>Quote back &lt; 24 hrs</b></span></div>
-    </div>
-
-    <div class="ref">
-      <span class="k">Your reference</span>
-      <span class="v" id="ref">FG-Q——</span>
+      <div class="lab"><span>Ref <b id="ref">FG-Q——</b></span><span><b>Quote back &lt; 24 hrs</b></span></div>
     </div>
 
     <div class="actions">
