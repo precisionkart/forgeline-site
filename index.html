@@ -240,11 +240,30 @@
   .quick-form .btn{padding:13px 20px;font-size:14px;white-space:nowrap;}
   @media(max-width:760px){.quick-form{flex-direction:column;align-items:stretch;}.quick-form .qf-head{margin:0 0 2px;}.quick-form input,.quick-form .btn{width:100%;}}
 
-  .logos{margin-top:28px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-  .logos-row{display:flex;align-items:center;justify-content:center;gap:14px 26px;flex-wrap:wrap;}
-  .logos-row .label{font-size:11px;color:var(--ink-3);letter-spacing:.02em;}
-  .logos-row .brand{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--ink-3);font-size:11px;letter-spacing:.01em;}
-  .logos-row .brand svg{width:14px;height:14px;color:var(--ink-3);}
+  /* FAQ */
+  .faq-wrap{max-width:780px;margin:0 auto;}
+  .faq-list{margin-top:36px;display:grid;gap:12px;}
+  .faq{background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);overflow:hidden;transition:box-shadow .2s,border-color .2s;}
+  .faq[open]{box-shadow:var(--shadow-sm);border-color:var(--line-2);}
+  .faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 22px;font-size:16px;font-weight:600;letter-spacing:-0.01em;color:var(--ink);}
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary:hover{color:var(--brand);}
+  .faq-x{position:relative;width:16px;height:16px;flex-shrink:0;}
+  .faq-x:before,.faq-x:after{content:"";position:absolute;background:var(--brand);border-radius:2px;transition:transform .2s;}
+  .faq-x:before{top:7px;left:0;width:16px;height:2px;}
+  .faq-x:after{left:7px;top:0;width:2px;height:16px;}
+  .faq[open] .faq-x:after{transform:scaleY(0);}
+  .faq-a{padding:0 22px 20px;font-size:14.5px;color:var(--ink-2);line-height:1.6;}
+  .faq[open] summary{color:var(--brand);}
+
+  /* Infinite-scroll trust strip */
+  .trust-strip{margin-top:30px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
+  .trust-track{display:flex;width:max-content;animation:trustscroll 40s linear infinite;}
+  .trust-strip:hover .trust-track{animation-play-state:paused;}
+  .trust-item{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;font-size:13px;font-weight:600;color:var(--ink-2);white-space:nowrap;}
+  .trust-item svg{width:15px;height:15px;color:var(--brand);flex-shrink:0;}
+  @keyframes trustscroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
   /* SECTIONS */
   .section{padding:96px 0;border-top:1px solid var(--line);}
@@ -558,6 +577,7 @@
       <a href="#design">Design</a>
       <a href="#cases">Case studies</a>
       <a href="#why">Why us</a>
+      <a href="#faq">FAQs</a>
     </nav>
     <div class="nav-cta-desktop">
       <a href="#quote" class="btn btn-dark">Request Quote →</a>
@@ -573,7 +593,6 @@
       <h1 class="hero-h">British engineering. <span class="serif">Global manufacturing.</span></h1>
       <p class="hero-sub">Precision parts, assemblies and finished products. British-engineered, globally manufactured, without the complexity.</p>
       <div class="hero-cta">
-        <a href="#quote" class="btn btn-brand">Request Quote →</a>
         <a href="#process" class="btn btn-white">See how it works →</a>
       </div>
     </div>
@@ -605,16 +624,26 @@
     </form>
   </div>
 
-  <div class="container">
-    <div class="logos">
-      <div class="logos-row">
-        <span class="label">Trusted by teams building in</span>
-        <span class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 21V4M5 4c3-1.5 5 1.5 8 0s5-1.5 5-1.5v9s-2 1.5-5 0-5 1.5-8 0"/></svg> MOTORSPORT</span>
-        <span class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17h14M6 17l-1-5 2-5h10l2 5-1 5M7.5 12h9"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg> EV / MOBILITY</span>
-        <span class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V8l7 4V8l7 4V6l4 2v13z"/></svg> INDUSTRIAL</span>
-        <span class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4M9 4h6M9 14h.01M15 14h.01"/></svg> ROBOTICS</span>
-        <span class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 01-8 0"/></svg> eCOMMERCE</span>
-      </div>
+  <!-- Infinite-scroll trust strip -->
+  <div class="trust-strip" id="trustStrip">
+    <div class="trust-track">
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> ISO 9001 verified factories</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> NDA before anything moves</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> 100% inspected before shipping</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> UK-law contract with Forgeline Ltd</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Fixed-price quote in 24 hours</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> 40–60% below UK pricing</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Named British engineer on every job</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Free remake or full refund</span>
+      <!-- duplicate set for a seamless loop -->
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> ISO 9001 verified factories</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> NDA before anything moves</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> 100% inspected before shipping</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> UK-law contract with Forgeline Ltd</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Fixed-price quote in 24 hours</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> 40–60% below UK pricing</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Named British engineer on every job</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Free remake or full refund</span>
     </div>
   </div>
 </section>
@@ -821,6 +850,36 @@
     </div>
   </div>
 </section>
+
+<!-- FAQ -->
+<section class="section band" id="faq">
+  <div class="container faq-wrap">
+    <span class="sec-eyebrow">FAQs</span>
+    <h2 class="sec-h">Questions, <span class="serif">answered.</span></h2>
+    <div class="faq-list">
+      <details class="faq"><summary>How fast will I get my quote?<span class="faq-x"></span></summary><div class="faq-a">A real British engineer reviews every request and replies within one working day with a fixed-price quote, a realistic lead time, and the name of the shop making your part. No instant-quote algorithms, no chatbots.</div></details>
+      <details class="faq"><summary>Is there a minimum order quantity?<span class="faq-x"></span></summary><div class="faq-a">No minimum for prototypes — we'll happily make a single part. We also run full production from tens to 10,000+ units, so you can start small and scale with the same team.</div></details>
+      <details class="faq"><summary>Is my design and IP protected?<span class="faq-x"></span></summary><div class="faq-a">Yes. Everything moves under a UK-law NDA before any work begins. Your drawings and files are shared only with the vetted factory making your part, and nothing else.</div></details>
+      <details class="faq"><summary>What processes and materials do you offer?<span class="faq-x"></span></summary><div class="faq-a">CNC milling &amp; turning, sheet metal &amp; fabrication, 3D printing, finishing and packaging — plus in-house design. Aluminium, steel, stainless, titanium, brass and engineering plastics, with tolerances to ±0.01 mm.</div></details>
+      <details class="faq"><summary>I don't have CAD files — can you still help?<span class="faq-x"></span></summary><div class="faq-a">Absolutely. Our in-house design team can reverse-engineer an existing part, 3D-scan complex geometry, or build a production-ready model from a sketch, photo or brief.</div></details>
+      <details class="faq"><summary>How much can I save versus UK manufacturing?<span class="faq-x"></span></summary><div class="faq-a">Typically 40–60% on the same part, to the same drawing, to the same tolerance — through our vetted global partner network, with a British engineer holding the quality and the contract.</div></details>
+      <details class="faq"><summary>What if a part fails inspection?<span class="faq-x"></span></summary><div class="faq-a">We remake it free, on a priority turnaround. And if we still can't get it right, you get a full refund. Your contract is with Forgeline Ltd in the UK, so the risk is ours, never yours.</div></details>
+      <details class="faq"><summary>Do you handle shipping, duty and VAT?<span class="faq-x"></span></summary><div class="faq-a">Yes — DDP delivery to your door or warehouse, with duty and VAT handled. One fixed-price invoice in GBP or EUR, no surprises on arrival.</div></details>
+    </div>
+  </div>
+</section>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How fast will I get my quote?","acceptedAnswer":{"@type":"Answer","text":"A real British engineer reviews every request and replies within one working day with a fixed-price quote, a realistic lead time, and the name of the shop making your part."}},
+{"@type":"Question","name":"Is there a minimum order quantity?","acceptedAnswer":{"@type":"Answer","text":"No minimum for prototypes — we will make a single part. We also run full production from tens to 10,000+ units."}},
+{"@type":"Question","name":"Is my design and IP protected?","acceptedAnswer":{"@type":"Answer","text":"Yes. Everything moves under a UK-law NDA before any work begins. Your files are shared only with the vetted factory making your part."}},
+{"@type":"Question","name":"What processes and materials do you offer?","acceptedAnswer":{"@type":"Answer","text":"CNC milling and turning, sheet metal and fabrication, 3D printing, finishing and packaging, plus in-house design. Aluminium, steel, stainless, titanium, brass and engineering plastics, tolerances to ±0.01 mm."}},
+{"@type":"Question","name":"I don't have CAD files — can you still help?","acceptedAnswer":{"@type":"Answer","text":"Yes. Our in-house design team can reverse-engineer an existing part, 3D-scan complex geometry, or build a production-ready model from a sketch, photo or brief."}},
+{"@type":"Question","name":"How much can I save versus UK manufacturing?","acceptedAnswer":{"@type":"Answer","text":"Typically 40–60% on the same part, to the same drawing and tolerance, through our vetted global partner network."}},
+{"@type":"Question","name":"What if a part fails inspection?","acceptedAnswer":{"@type":"Answer","text":"We remake it free on a priority turnaround, and if we still cannot get it right, you get a full refund. Your contract is with Forgeline Ltd in the UK."}},
+{"@type":"Question","name":"Do you handle shipping, duty and VAT?","acceptedAnswer":{"@type":"Answer","text":"Yes — DDP delivery to your door or warehouse with duty and VAT handled. One fixed-price invoice in GBP or EUR."}}
+]}
+</script>
 
 <!-- QUOTE -->
 <section class="quote-section" id="quote">
