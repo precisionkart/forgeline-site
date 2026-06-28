@@ -470,11 +470,17 @@
   @media (max-width:560px){
     .container{padding:0 20px;}
     /* Consistent vertical rhythm: clear breaks BETWEEN sections... */
-    .section{padding:60px 0;}
-    .hero{padding:32px 0 8px;}
-    .quote-section{padding:60px 0;}
-    .logos{margin-top:44px;padding:22px 0;}
-    .hero-grid{gap:36px;}
+    .section{padding:52px 0;}
+    .hero{padding:28px 0 8px;}
+    .quote-section{padding:52px 0;}
+    .logos{margin-top:30px;padding:18px 0;}
+    .hero-grid{gap:0;}
+    /* Mobile: drop the decorative image block so the form is high & the page
+       is short — action-first. The 57% hook lives in the stats below. */
+    .hero-visual{display:none;}
+    .hero-sub{margin-top:16px;}
+    .hero-cta{margin-top:22px;}
+    .quick-form{margin-top:22px;}
     /* ...and tighter gaps WITHIN a section (header → content) */
     h2.sec-h{margin-top:14px;}
     .sec-sub{margin-top:14px;}
@@ -487,8 +493,9 @@
     h2.sec-h{font-size:clamp(28px,7.5vw,38px);}
     .hero-sub, .sec-sub{font-size:15.5px;}
     /* Buttons */
-    .hero-cta{gap:10px;}
-    .hero-cta .btn{flex:1;justify-content:center;padding:13px 16px;font-size:14px;}
+    .hero-cta{gap:10px;flex-direction:column;}
+    .hero-cta .btn{width:100%;flex:none;justify-content:center;padding:14px 16px;font-size:15px;}
+    .hero-cta .btn-brand{display:none;} /* quick form below is the primary action */
     /* Card / panel padding */
     .why-card{padding:24px;}
     .why-cta-inner{padding:28px 22px;}
@@ -498,9 +505,11 @@
     .process-inner{padding:48px 22px;}
     .dash{padding:16px;}
     .dash-grid{grid-template-columns:1fr;}
-    .stats{grid-template-columns:1fr;}
-    .stat-cell{padding:24px 26px;border-right:none;border-bottom:1px solid var(--line);}
-    .stat-cell:last-child{border-bottom:none;}
+    .stats{grid-template-columns:1fr 1fr;}
+    .stat-cell{padding:20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
+    .stat-cell:nth-child(2n){border-right:none;}
+    .stat-cell:nth-last-child(-n+2){border-bottom:none;}
+    .stat-cell .v{font-size:32px;}
     .endcta{padding:48px 22px;}
     .endcta .row{flex-direction:column;}
     .endcta .row .btn{width:100%;}
@@ -536,7 +545,7 @@
     <div class="hero-copy">
       <span class="pill"><span class="tag">NEW</span> Quotes back in 24 hours, by a real engineer (not AI)</span>
       <h1 class="hero-h">British engineering. <span class="serif">Global manufacturing.</span></h1>
-      <p class="hero-sub">From prototype to production, we combine British engineering expertise with a trusted global manufacturing network to deliver precision parts, assemblies and finished products without the complexity.</p>
+      <p class="hero-sub">Precision parts, assemblies and finished products. British-engineered, globally manufactured, without the complexity.</p>
       <div class="hero-cta">
         <a href="#quote" class="btn btn-brand">Request Quote →</a>
         <a href="#process" class="btn btn-white">See how it works →</a>
