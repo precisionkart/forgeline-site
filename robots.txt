@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /orders
+Disallow: /orders.html
+Disallow: /quote
+Disallow: /quote.html
+Disallow: /thanks
+Disallow: /thanks.html
+
+Sitemap: https://forgelinecnc.com/sitemap.xml
