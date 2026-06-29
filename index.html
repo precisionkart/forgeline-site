@@ -256,6 +256,35 @@
   .faq-a{padding:0 22px 20px;font-size:14.5px;color:var(--ink-2);line-height:1.6;}
   .faq[open] summary{color:var(--brand);}
 
+  /* Burger + mobile menu */
+  .burger{display:none;width:42px;height:42px;border-radius:11px;align-items:center;justify-content:center;flex-direction:column;gap:5px;background:transparent;cursor:pointer;margin-left:4px;}
+  .burger span{width:20px;height:2px;background:var(--ink);border-radius:2px;transition:transform .3s ease,opacity .2s ease;}
+  .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .burger.open span:nth-child(2){opacity:0;}
+  .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .menu-backdrop{position:fixed;inset:0;background:rgba(10,10,10,.42);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;z-index:90;backdrop-filter:blur(2px);}
+  .menu-backdrop.show{opacity:1;visibility:visible;}
+  .mobile-menu{position:fixed;top:0;right:0;height:100%;width:min(80%,330px);background:#fff;z-index:91;
+    box-shadow:-24px 0 70px rgba(10,10,10,.2);transform:translateX(105%);transition:transform .4s cubic-bezier(.4,0,.2,1);
+    display:flex;flex-direction:column;justify-content:center;gap:6px;padding:32px 32px calc(32px + env(safe-area-inset-bottom));}
+  .mobile-menu.show{transform:translateX(0);}
+  .mobile-menu nav{display:flex;flex-direction:column;}
+  .mobile-menu nav a{font-size:21px;font-weight:600;letter-spacing:-0.02em;color:var(--ink);padding:13px 0;border-bottom:1px solid var(--line-2);transition:color .15s,padding-left .15s;}
+  .mobile-menu nav a:hover,.mobile-menu nav a:active{color:var(--brand);padding-left:6px;}
+  .mobile-menu .btn{margin-top:26px;width:100%;padding:15px;font-size:16px;}
+
+  /* Why — compact row */
+  .why-compact{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px;}
+  .wc{display:flex;gap:13px;align-items:flex-start;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-md);padding:18px;}
+  .wc-ico{width:38px;height:38px;border-radius:11px;background:var(--brand-2);color:var(--brand);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .wc-ico svg{width:18px;height:18px;}
+  .wc b{display:block;font-size:15px;font-weight:600;letter-spacing:-0.01em;}
+  .wc span{display:block;margin-top:3px;font-size:13px;color:var(--ink-2);line-height:1.45;}
+
+  /* Mobile-only "See how it works" under the form + carousel dots (hidden on desktop) */
+  .see-how-mobile{display:none;}
+  .carousel-dots{display:none;}
+
   /* Infinite-scroll trust strip */
   .trust-strip{margin-top:30px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;
     -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
@@ -488,6 +517,7 @@
   /* RESPONSIVE */
   @media (max-width:980px){
     .nav-links{display:none;}
+    .burger{display:flex;}
     .hero{padding:40px 0 24px;}
     .hero-grid{grid-template-columns:1fr;gap:48px;}
     .hero-float.savings{left:0;top:-14px;}
@@ -520,12 +550,27 @@
     .quote-section{padding:52px 0;}
     .logos{margin-top:30px;padding:18px 0;}
     .hero-grid{gap:0;}
-    /* Mobile: drop the decorative image block so the form is high & the page
-       is short — action-first. The 57% hook lives in the stats below. */
-    .hero-visual{display:none;}
     .hero-sub{margin-top:16px;}
-    .hero-cta{margin-top:22px;}
-    .quick-form{margin-top:22px;}
+    .quick-form{margin-top:18px;}
+    /* Hero images: compact auto-sliding carousel under the headline */
+    .hero-visual{display:block;position:relative;margin-top:20px;}
+    .hero-visual-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-radius:var(--radius-md);}
+    .hero-visual-grid::-webkit-scrollbar{display:none;}
+    .hero-photo{flex:0 0 100%!important;min-height:200px!important;grid-row:auto!important;scroll-snap-align:center;border-radius:var(--radius-md);}
+    .hero-float.qc{display:none;}
+    .hero-float.savings{position:absolute;left:10px;bottom:10px;top:auto;right:auto;}
+    /* CTA: hide the in-copy one, show "See how it works" below the form */
+    .hero-cta{display:none;}
+    .see-how-mobile{display:inline-flex;width:100%;justify-content:center;margin-top:12px;}
+    /* Services + Case studies: one-card auto-sliding carousels */
+    .cap-grid.cols-4, .cases-grid{display:flex!important;grid-template-columns:none!important;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;}
+    .cap-grid.cols-4::-webkit-scrollbar, .cases-grid::-webkit-scrollbar{display:none;}
+    .cap-grid.cols-4 > .cap, .cases-grid > .case{flex:0 0 85%;scroll-snap-align:center;}
+    .carousel-dots{display:flex;justify-content:center;gap:7px;margin-top:16px;}
+    .carousel-dots button{width:7px;height:7px;border-radius:50%;background:var(--line);border:none;padding:0;cursor:pointer;transition:background .2s,width .2s;}
+    .carousel-dots button.active{background:var(--brand);width:18px;border-radius:4px;}
+    /* Why compact: single column */
+    .why-compact{grid-template-columns:1fr;gap:12px;margin-top:26px;}
     /* ...and tighter gaps WITHIN a section (header → content) */
     h2.sec-h{margin-top:14px;}
     .sec-sub{margin-top:14px;}
@@ -582,14 +627,29 @@
     <div class="nav-cta-desktop">
       <a href="#quote" class="btn btn-dark">Request Quote →</a>
     </div>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </div>
+
+<!-- MOBILE MENU -->
+<div class="menu-backdrop" id="menuBackdrop"></div>
+<aside class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <nav>
+    <a href="#capabilities">Services</a>
+    <a href="#process">How it works</a>
+    <a href="#design">Design</a>
+    <a href="#cases">Case studies</a>
+    <a href="#why">Why us</a>
+    <a href="#faq">FAQs</a>
+  </nav>
+  <a href="#quote" class="btn btn-brand">Request a quote →</a>
+</aside>
 
 <!-- HERO -->
 <section class="hero">
   <div class="container hero-grid">
     <div class="hero-copy">
-      <span class="pill"><span class="tag">NEW</span> Quotes back in 24 hours, by a real engineer (not AI)</span>
+      <span class="pill"><span class="tag">NEW</span> Quote back in 24 hours. Real engineer, no AI.</span>
       <h1 class="hero-h">British engineering. <span class="serif">Global manufacturing.</span></h1>
       <p class="hero-sub">Precision parts, assemblies and finished products. British-engineered, globally manufactured, without the complexity.</p>
       <div class="hero-cta">
@@ -598,7 +658,7 @@
     </div>
 
     <div class="hero-visual">
-      <div class="hero-visual-grid">
+      <div class="hero-visual-grid" data-carousel data-interval="3500">
         <div class="hero-photo tall" style="background-image:url('hero1.jpg');"></div>
         <div class="hero-photo short" style="background-image:url('hero2.jpg');"></div>
         <div class="hero-photo short" style="background-image:url('hero3.jpg');"></div>
@@ -622,6 +682,7 @@
       <input type="text" name="need" id="qf_need" placeholder="What do you need made?">
       <button type="submit" class="btn btn-brand" id="qf_btn">Start my quote →</button>
     </form>
+    <a href="#process" class="btn btn-white see-how-mobile">See how it works →</a>
   </div>
 
   <!-- Infinite-scroll trust strip -->
@@ -655,7 +716,7 @@
     <h2 class="sec-h">From prototype to production, <span class="serif">under one roof.</span></h2>
     <p class="sec-sub">Design, prototype, manufacture, finish, assemble, package. We don't hand you off to five suppliers, one British team manages the whole journey.</p>
 
-    <div class="cap-grid cols-4">
+    <div class="cap-grid cols-4" data-carousel data-interval="4000">
       <article class="cap">
         <div class="cap-img" style="background-image:url('CNC.jpg');"><span class="badge">5-axis · ±0.01mm</span></div>
         <div class="cap-body"><h3>CNC Milling &amp; Turning</h3><p>3, 4 and 5-axis milling and live-tool turning. Aluminium, steel, titanium, brass, engineering plastics. Production runs from 10 to 10,000+.</p><div class="cap-foot"><span>Tolerance</span><b>±0.01 mm</b></div></div>
@@ -752,7 +813,7 @@
     <h2 class="sec-h">Real teams. Real parts. <span class="serif">Real savings.</span></h2>
     <p class="sec-sub">A few of the products we've taken from brief to delivery: the problem, the number we saved them, and what the person who signed it off actually said.</p>
 
-    <div class="cases-grid">
+    <div class="cases-grid" data-carousel data-interval="4500">
       <!-- CASE 1 -->
       <article class="case">
         <div class="case-img" style="background-image:url('_DSC7197.jpg');background-position:center 50%;"><span class="badge">Motorsport</span></div>
@@ -813,73 +874,6 @@
     </div>
   </div>
 </section>
-
-<!-- WHY -->
-<section class="section band" id="why">
-  <div class="container">
-    <span class="sec-eyebrow">Why Forgeline</span>
-    <h2 class="sec-h">Global pricing. British standards. <span class="serif">Zero risk to you.</span></h2>
-    <p class="sec-sub">Cheaper manufacturing usually means giving up control. Not with Forgeline. Our engineers check every part before it's made, our trusted factories build it, and we stand behind whatever ships. The quality you'd expect from home, the savings you wouldn't.</p>
-
-    <div class="why-grid three">
-      <div class="why-card feature">
-        <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
-        <h3>40–60% below UK pricing</h3>
-        <p>The same part, to the same drawing, built through our partner network for a fraction of UK or EU cost. For most teams that's a positive number on the bottom line.</p>
-        <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Fixed-price quote in 24 hours</span></div>
-      </div>
-      <div class="why-card">
-        <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
-        <h3>Right first time, or your money back</h3>
-        <p>If a part doesn't meet the agreed spec, we remake it free, on a priority turnaround. And if we still can't get it right, you get a full refund. The risk is ours, never yours.</p>
-        <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Free remake or full refund, guaranteed</span></div>
-      </div>
-      <div class="why-card">
-        <div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
-        <h3>Communication is everything</h3>
-        <p>We pride ourselves on customer service. One named engineer keeps you updated at every step, with photos and honest timelines. That transparency is our main focus.</p>
-        <div class="why-proof"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> A straight answer, usually within hours</span></div>
-      </div>
-    </div>
-
-    <div class="stats">
-      <div class="stat-cell"><div class="v">57%</div><div class="l">Typically saved vs UK manufacturing</div></div>
-      <div class="stat-cell"><div class="v" id="partsCounter">357,321</div><div class="l">Parts manufactured and counting</div></div>
-      <div class="stat-cell"><div class="v">100%</div><div class="l">Orders inspected before they ship</div></div>
-      <div class="stat-cell"><div class="v">24hr</div><div class="l">From enquiry to fixed-price quote</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="section band" id="faq">
-  <div class="container faq-wrap">
-    <span class="sec-eyebrow">FAQs</span>
-    <h2 class="sec-h">Questions, <span class="serif">answered.</span></h2>
-    <div class="faq-list">
-      <details class="faq"><summary>How fast will I get my quote?<span class="faq-x"></span></summary><div class="faq-a">A real British engineer reviews every request and replies within one working day with a fixed-price quote, a realistic lead time, and the name of the shop making your part. No instant-quote algorithms, no chatbots.</div></details>
-      <details class="faq"><summary>Is there a minimum order quantity?<span class="faq-x"></span></summary><div class="faq-a">No minimum for prototypes — we'll happily make a single part. We also run full production from tens to 10,000+ units, so you can start small and scale with the same team.</div></details>
-      <details class="faq"><summary>Is my design and IP protected?<span class="faq-x"></span></summary><div class="faq-a">Yes. Everything moves under a UK-law NDA before any work begins. Your drawings and files are shared only with the vetted factory making your part, and nothing else.</div></details>
-      <details class="faq"><summary>What processes and materials do you offer?<span class="faq-x"></span></summary><div class="faq-a">CNC milling &amp; turning, sheet metal &amp; fabrication, 3D printing, finishing and packaging — plus in-house design. Aluminium, steel, stainless, titanium, brass and engineering plastics, with tolerances to ±0.01 mm.</div></details>
-      <details class="faq"><summary>I don't have CAD files — can you still help?<span class="faq-x"></span></summary><div class="faq-a">Absolutely. Our in-house design team can reverse-engineer an existing part, 3D-scan complex geometry, or build a production-ready model from a sketch, photo or brief.</div></details>
-      <details class="faq"><summary>How much can I save versus UK manufacturing?<span class="faq-x"></span></summary><div class="faq-a">Typically 40–60% on the same part, to the same drawing, to the same tolerance — through our vetted global partner network, with a British engineer holding the quality and the contract.</div></details>
-      <details class="faq"><summary>What if a part fails inspection?<span class="faq-x"></span></summary><div class="faq-a">We remake it free, on a priority turnaround. And if we still can't get it right, you get a full refund. Your contract is with Forgeline Ltd in the UK, so the risk is ours, never yours.</div></details>
-      <details class="faq"><summary>Do you handle shipping, duty and VAT?<span class="faq-x"></span></summary><div class="faq-a">Yes — DDP delivery to your door or warehouse, with duty and VAT handled. One fixed-price invoice in GBP or EUR, no surprises on arrival.</div></details>
-    </div>
-  </div>
-</section>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"How fast will I get my quote?","acceptedAnswer":{"@type":"Answer","text":"A real British engineer reviews every request and replies within one working day with a fixed-price quote, a realistic lead time, and the name of the shop making your part."}},
-{"@type":"Question","name":"Is there a minimum order quantity?","acceptedAnswer":{"@type":"Answer","text":"No minimum for prototypes — we will make a single part. We also run full production from tens to 10,000+ units."}},
-{"@type":"Question","name":"Is my design and IP protected?","acceptedAnswer":{"@type":"Answer","text":"Yes. Everything moves under a UK-law NDA before any work begins. Your files are shared only with the vetted factory making your part."}},
-{"@type":"Question","name":"What processes and materials do you offer?","acceptedAnswer":{"@type":"Answer","text":"CNC milling and turning, sheet metal and fabrication, 3D printing, finishing and packaging, plus in-house design. Aluminium, steel, stainless, titanium, brass and engineering plastics, tolerances to ±0.01 mm."}},
-{"@type":"Question","name":"I don't have CAD files — can you still help?","acceptedAnswer":{"@type":"Answer","text":"Yes. Our in-house design team can reverse-engineer an existing part, 3D-scan complex geometry, or build a production-ready model from a sketch, photo or brief."}},
-{"@type":"Question","name":"How much can I save versus UK manufacturing?","acceptedAnswer":{"@type":"Answer","text":"Typically 40–60% on the same part, to the same drawing and tolerance, through our vetted global partner network."}},
-{"@type":"Question","name":"What if a part fails inspection?","acceptedAnswer":{"@type":"Answer","text":"We remake it free on a priority turnaround, and if we still cannot get it right, you get a full refund. Your contract is with Forgeline Ltd in the UK."}},
-{"@type":"Question","name":"Do you handle shipping, duty and VAT?","acceptedAnswer":{"@type":"Answer","text":"Yes — DDP delivery to your door or warehouse with duty and VAT handled. One fixed-price invoice in GBP or EUR."}}
-]}
-</script>
 
 <!-- QUOTE -->
 <section class="quote-section" id="quote">
@@ -1004,6 +998,55 @@
     </div>
   </div>
 </section>
+
+<!-- WHY (compact) -->
+<section class="section band" id="why">
+  <div class="container">
+    <span class="sec-eyebrow">Why Forgeline</span>
+    <h2 class="sec-h">Global pricing. British standards. <span class="serif">Zero risk to you.</span></h2>
+    <div class="why-compact">
+      <div class="wc"><span class="wc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span><div><b>40–60% below UK pricing</b><span>Same part, same drawing, a fraction of UK or EU cost.</span></div></div>
+      <div class="wc"><span class="wc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></span><div><b>Right first time, or money back</b><span>Free remake on priority, or a full refund. Risk is ours.</span></div></div>
+      <div class="wc"><span class="wc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span><div><b>One named British engineer</b><span>Updates, photos and honest timelines at every step.</span></div></div>
+    </div>
+    <div class="stats">
+      <div class="stat-cell"><div class="v">57%</div><div class="l">Typically saved vs UK manufacturing</div></div>
+      <div class="stat-cell"><div class="v" id="partsCounter">357,321</div><div class="l">Parts manufactured and counting</div></div>
+      <div class="stat-cell"><div class="v">100%</div><div class="l">Orders inspected before they ship</div></div>
+      <div class="stat-cell"><div class="v">24hr</div><div class="l">From enquiry to fixed-price quote</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section band" id="faq">
+  <div class="container faq-wrap">
+    <span class="sec-eyebrow">FAQs</span>
+    <h2 class="sec-h">Questions, <span class="serif">answered.</span></h2>
+    <div class="faq-list">
+      <details class="faq"><summary>How fast will I get my quote?<span class="faq-x"></span></summary><div class="faq-a">A real British engineer reviews every request and replies within one working day with a fixed-price quote, a realistic lead time, and the name of the shop making your part. No instant-quote algorithms, no chatbots.</div></details>
+      <details class="faq"><summary>Is there a minimum order quantity?<span class="faq-x"></span></summary><div class="faq-a">No minimum for prototypes, we'll happily make a single part. We also run full production from tens to 10,000+ units, so you can start small and scale with the same team.</div></details>
+      <details class="faq"><summary>Is my design and IP protected?<span class="faq-x"></span></summary><div class="faq-a">Yes. Everything moves under a UK-law NDA before any work begins. Your drawings and files are shared only with the vetted factory making your part, and nothing else.</div></details>
+      <details class="faq"><summary>What processes and materials do you offer?<span class="faq-x"></span></summary><div class="faq-a">CNC milling &amp; turning, sheet metal &amp; fabrication, 3D printing, finishing and packaging, plus in-house design. Aluminium, steel, stainless, titanium, brass and engineering plastics, with tolerances to ±0.01 mm.</div></details>
+      <details class="faq"><summary>I don't have CAD files, can you still help?<span class="faq-x"></span></summary><div class="faq-a">Absolutely. Our in-house design team can reverse-engineer an existing part, 3D-scan complex geometry, or build a production-ready model from a sketch, photo or brief.</div></details>
+      <details class="faq"><summary>How much can I save versus UK manufacturing?<span class="faq-x"></span></summary><div class="faq-a">Typically 40–60% on the same part, to the same drawing and tolerance, through our vetted global partner network, with a British engineer holding the quality and the contract.</div></details>
+      <details class="faq"><summary>What if a part fails inspection?<span class="faq-x"></span></summary><div class="faq-a">We remake it free, on a priority turnaround. And if we still can't get it right, you get a full refund. Your contract is with Forgeline Ltd in the UK, so the risk is ours, never yours.</div></details>
+      <details class="faq"><summary>Do you handle shipping, duty and VAT?<span class="faq-x"></span></summary><div class="faq-a">Yes, DDP delivery to your door or warehouse, with duty and VAT handled. One fixed-price invoice in GBP or EUR, no surprises on arrival.</div></details>
+    </div>
+  </div>
+</section>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How fast will I get my quote?","acceptedAnswer":{"@type":"Answer","text":"A real British engineer reviews every request and replies within one working day with a fixed-price quote, a realistic lead time, and the name of the shop making your part."}},
+{"@type":"Question","name":"Is there a minimum order quantity?","acceptedAnswer":{"@type":"Answer","text":"No minimum for prototypes, we will make a single part. We also run full production from tens to 10,000+ units."}},
+{"@type":"Question","name":"Is my design and IP protected?","acceptedAnswer":{"@type":"Answer","text":"Yes. Everything moves under a UK-law NDA before any work begins. Your files are shared only with the vetted factory making your part."}},
+{"@type":"Question","name":"What processes and materials do you offer?","acceptedAnswer":{"@type":"Answer","text":"CNC milling and turning, sheet metal and fabrication, 3D printing, finishing and packaging, plus in-house design."}},
+{"@type":"Question","name":"I do not have CAD files, can you still help?","acceptedAnswer":{"@type":"Answer","text":"Yes. Our in-house design team can reverse-engineer an existing part, 3D-scan complex geometry, or build a production-ready model from a sketch, photo or brief."}},
+{"@type":"Question","name":"How much can I save versus UK manufacturing?","acceptedAnswer":{"@type":"Answer","text":"Typically 40-60% on the same part, to the same drawing and tolerance, through our vetted global partner network."}},
+{"@type":"Question","name":"What if a part fails inspection?","acceptedAnswer":{"@type":"Answer","text":"We remake it free on a priority turnaround, and if we still cannot get it right, you get a full refund. Your contract is with Forgeline Ltd in the UK."}},
+{"@type":"Question","name":"Do you handle shipping, duty and VAT?","acceptedAnswer":{"@type":"Answer","text":"Yes, DDP delivery to your door or warehouse with duty and VAT handled. One fixed-price invoice in GBP or EUR."}}
+]}
+</script>
 
 <!-- CTA -->
 <section style="padding-bottom:80px;">
@@ -1243,6 +1286,48 @@
     }
     render();
     setInterval(render, 30000);        // re-check every 30s so it ticks live
+  })();
+
+  /* ---- Mobile burger menu ---- */
+  (function(){
+    var burger = document.getElementById('burger'), menu = document.getElementById('mobileMenu'), bd = document.getElementById('menuBackdrop');
+    if (!burger || !menu || !bd) return;
+    function open(){ menu.classList.add('show'); bd.classList.add('show'); burger.classList.add('open'); burger.setAttribute('aria-expanded','true'); menu.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+    function close(){ menu.classList.remove('show'); bd.classList.remove('show'); burger.classList.remove('open'); burger.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+    burger.addEventListener('click', function(){ menu.classList.contains('show') ? close() : open(); });
+    bd.addEventListener('click', close);
+    Array.prototype.forEach.call(menu.querySelectorAll('a'), function(a){ a.addEventListener('click', close); });
+    document.addEventListener('keydown', function(e){ if (e.key==='Escape') close(); });
+  })();
+
+  /* ---- Mobile auto-sliding carousels (hero images, services, cases) ---- */
+  (function(){
+    var mq = window.matchMedia('(max-width:560px)');
+    Array.prototype.forEach.call(document.querySelectorAll('[data-carousel]'), function(el){
+      var dots=null, timer=null, idx=0, active=false, st=null;
+      var noDots = el.hasAttribute('data-nodots');
+      function slides(){ return el.children; }
+      function center(i){ var c=slides()[i]; if(!c) return; el.scrollTo({ left: c.offsetLeft - (el.clientWidth - c.clientWidth)/2, behavior:'smooth' }); }
+      function update(){ if (dots) Array.prototype.forEach.call(dots.children, function(b,i){ b.classList.toggle('active', i===idx); }); }
+      function go(i,user){ idx=(i+slides().length)%slides().length; center(idx); update(); if(user) reset(); }
+      function next(){ go(idx+1); }
+      function start(){ timer=setInterval(next, parseInt(el.getAttribute('data-interval'),10)||4000); }
+      function reset(){ clearInterval(timer); start(); }
+      function buildDots(){
+        if (noDots) return;
+        dots=document.createElement('div'); dots.className='carousel-dots';
+        for (var i=0;i<slides().length;i++){ (function(i){ var b=document.createElement('button'); b.setAttribute('aria-label','Slide '+(i+1)); b.addEventListener('click',function(){ go(i,true); }); dots.appendChild(b); })(i); }
+        el.parentNode.insertBefore(dots, el.nextSibling); update();
+      }
+      el.addEventListener('scroll', function(){ clearTimeout(st); st=setTimeout(function(){ var mid=el.scrollLeft + el.clientWidth/2, best=0, bd2=1e9; Array.prototype.forEach.call(slides(), function(s,i){ var d=Math.abs((s.offsetLeft + s.clientWidth/2) - mid); if(d<bd2){bd2=d;best=i;} }); idx=best; update(); }, 120); });
+      el.addEventListener('pointerdown', function(){ clearInterval(timer); });
+      el.addEventListener('pointerup', function(){ reset(); });
+      function enable(){ if(active) return; active=true; idx=0; buildDots(); start(); }
+      function disable(){ if(!active) return; active=false; clearInterval(timer); if(dots){ dots.remove(); dots=null; } el.scrollTo({left:0}); }
+      function check(){ mq.matches ? enable() : disable(); }
+      mq.addEventListener ? mq.addEventListener('change', check) : mq.addListener(check);
+      check();
+    });
   })();
 </script>
 
