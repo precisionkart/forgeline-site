@@ -1,0 +1,3 @@
+name = "forgeline-telegram-notify"
+main = "telegram-notify.js"
+compatibility_date = "2025-01-01"

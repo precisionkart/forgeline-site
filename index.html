@@ -1167,6 +1167,7 @@
 
   // ========= Form submit handling =========
   const form = document.getElementById('quoteForm');
+  const TELEGRAM_WORKER_URL = 'https://forgeline-telegram-notify.dylan-pmx.workers.dev';
   form.addEventListener('submit', async function(e){
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
@@ -1176,6 +1177,24 @@
 
     const formData = new FormData(form);
     let savedOk = false, emailOk = false;
+
+    // ----- 0) Fire an instant Telegram alert in parallel (don't block on it) -----
+    if (TELEGRAM_WORKER_URL.indexOf('PLACEHOLDER') === -1) {
+      const telegramPayload = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        company: formData.get('company'),
+        process: formData.get('process'),
+        qty: formData.get('qty'),
+        notes: formData.get('notes'),
+        cadfile: formData.get('cadfile') ? formData.get('cadfile').name : null,
+      };
+      fetch(TELEGRAM_WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(telegramPayload),
+      }).catch(function(err){ console.warn('Telegram notification failed:', err); });
+    }
 
     // ----- 1) Save the lead to our database (this is the source of truth) -----
     // Appears live in /admin.html. Uploads the CAD file to storage first so the
