@@ -275,7 +275,7 @@
 
   /* Why — compact row */
   .why-compact{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px;}
-  .wc{display:flex;gap:13px;align-items:flex-start;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-md);padding:18px;}
+  .wc{display:flex;gap:13px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-md);padding:18px;}
   .wc-ico{width:38px;height:38px;border-radius:11px;background:var(--brand-2);color:var(--brand);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .wc-ico svg{width:18px;height:18px;}
   .wc b{display:block;font-size:15px;font-weight:600;letter-spacing:-0.01em;}
@@ -297,7 +297,7 @@
   /* SECTIONS */
   .section{padding:96px 0;border-top:1px solid var(--line);}
   #capabilities{border-top:none;padding-bottom:0;}
-  .sec-divider{height:1px;background:var(--line);width:75%;max-width:900px;margin:64px auto;}
+  .sec-divider{height:1px;background:var(--line);width:75%;max-width:900px;margin:26px auto;}
   .sec-eyebrow{display:inline-block;background:var(--brand-2);color:var(--brand);font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:6px 12px;border-radius:var(--radius-pill);}
   h2.sec-h{font-size:clamp(34px,4vw,52px);font-weight:600;letter-spacing:-0.03em;line-height:1.05;margin-top:18px;max-width:760px;}
   h2.sec-h .serif{color:var(--brand);}
@@ -649,7 +649,7 @@
 <section class="hero">
   <div class="container hero-grid">
     <div class="hero-copy">
-      <span class="pill"><span class="tag">NEW</span> Quote back in 24 hours. Real engineer, no AI.</span>
+      <span class="pill"><span class="tag">NEW</span> Quote back in 24 hours. No AI.</span>
       <h1 class="hero-h">British engineering.<br><span class="serif">Global manufacturing.</span></h1>
       <p class="hero-sub">Precision parts, assemblies and finished products. British-engineered, globally manufactured, without the complexity.</p>
       <div class="hero-cta">
@@ -1006,8 +1006,8 @@
     <h2 class="sec-h">Global pricing. British standards. <span class="serif">Zero risk to you.</span></h2>
     <div class="why-compact">
       <div class="wc"><span class="wc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span><div><b>40–60% below UK pricing</b><span>Same part, same drawing, a fraction of UK or EU cost.</span></div></div>
-      <div class="wc"><span class="wc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></span><div><b>Right first time, or money back</b><span>Free remake on priority, or a full refund. Risk is ours.</span></div></div>
-      <div class="wc"><span class="wc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span><div><b>One named British engineer</b><span>Updates, photos and honest timelines at every step.</span></div></div>
+      <div class="wc"><span class="wc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/><path d="M9 12l2 2 4-4"/></svg></span><div><b>Right first time, or money back</b><span>Free remake on priority, or a full refund. Risk is ours.</span></div></div>
+      <div class="wc"><span class="wc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><div><b>One named British engineer</b><span>Updates, photos and honest timelines at every step.</span></div></div>
     </div>
     <div class="stats">
       <div class="stat-cell"><div class="v">57%</div><div class="l">Typically saved vs UK manufacturing</div></div>
@@ -1309,19 +1309,22 @@
       function slides(){ return el.children; }
       function center(i){ var c=slides()[i]; if(!c) return; el.scrollTo({ left: c.offsetLeft - (el.clientWidth - c.clientWidth)/2, behavior:'smooth' }); }
       function update(){ if (dots) Array.prototype.forEach.call(dots.children, function(b,i){ b.classList.toggle('active', i===idx); }); }
-      function go(i,user){ idx=(i+slides().length)%slides().length; center(idx); update(); if(user) reset(); }
+      function go(i,user){ idx=(i+slides().length)%slides().length; center(idx); update(); if(user && active) start(); }
       function next(){ go(idx+1); }
-      function start(){ timer=setInterval(next, parseInt(el.getAttribute('data-interval'),10)||4000); }
-      function reset(){ clearInterval(timer); start(); }
+      function start(){ clearInterval(timer); timer=setInterval(next, parseInt(el.getAttribute('data-interval'),10)||4000); }
       function buildDots(){
         if (noDots) return;
         dots=document.createElement('div'); dots.className='carousel-dots';
         for (var i=0;i<slides().length;i++){ (function(i){ var b=document.createElement('button'); b.setAttribute('aria-label','Slide '+(i+1)); b.addEventListener('click',function(){ go(i,true); }); dots.appendChild(b); })(i); }
         el.parentNode.insertBefore(dots, el.nextSibling); update();
       }
-      el.addEventListener('scroll', function(){ clearTimeout(st); st=setTimeout(function(){ var mid=el.scrollLeft + el.clientWidth/2, best=0, bd2=1e9; Array.prototype.forEach.call(slides(), function(s,i){ var d=Math.abs((s.offsetLeft + s.clientWidth/2) - mid); if(d<bd2){bd2=d;best=i;} }); idx=best; update(); }, 120); });
+      // After any scroll settles (manual swipe or auto), sync the index and
+      // (re)start the timer so auto-advance always resumes.
+      el.addEventListener('scroll', function(){ clearTimeout(st); st=setTimeout(function(){ var mid=el.scrollLeft + el.clientWidth/2, best=0, bd2=1e9; Array.prototype.forEach.call(slides(), function(s,i){ var d=Math.abs((s.offsetLeft + s.clientWidth/2) - mid); if(d<bd2){bd2=d;best=i;} }); idx=best; update(); if(active) start(); }, 160); });
+      // Pause while the finger is down; the scroll-settle above resumes it.
       el.addEventListener('pointerdown', function(){ clearInterval(timer); });
-      el.addEventListener('pointerup', function(){ reset(); });
+      el.addEventListener('mouseenter', function(){ clearInterval(timer); });
+      el.addEventListener('mouseleave', function(){ if(active) start(); });
       function enable(){ if(active) return; active=true; idx=0; buildDots(); start(); }
       function disable(){ if(!active) return; active=false; clearInterval(timer); if(dots){ dots.remove(); dots=null; } el.scrollTo({left:0}); }
       function check(){ mq.matches ? enable() : disable(); }
