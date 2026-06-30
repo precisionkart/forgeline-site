@@ -1178,7 +1178,9 @@
     const formData = new FormData(form);
     let savedOk = false, emailOk = false;
 
-    // ----- 0) Fire an instant Telegram alert in parallel (don't block on it) -----
+    // ----- 0) Fire the Telegram alert in parallel. keepalive lets it survive
+    // the redirect, and we await it (step 3) before navigating away. -----
+    let telegramPromise = Promise.resolve();
     if (TELEGRAM_WORKER_URL.indexOf('PLACEHOLDER') === -1) {
       const telegramPayload = {
         name: formData.get('name'),
@@ -1189,17 +1191,19 @@
         notes: formData.get('notes'),
         cadfile: formData.get('cadfile') ? formData.get('cadfile').name : null,
       };
-      fetch(TELEGRAM_WORKER_URL, {
+      telegramPromise = fetch(TELEGRAM_WORKER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(telegramPayload),
-      }).catch(function(err){ console.warn('Telegram notification failed:', err); });
+        keepalive: true,
+      }).catch(function(err){ console.warn('Telegram notification failed:', err); return null; });
     }
 
-    // ----- 1) Save the lead to our database (this is the source of truth) -----
+    // ----- 1) Save the lead to Supabase (the source of truth) — runs in parallel.
     // Appears live in /admin.html. Uploads the CAD file to storage first so the
-    // dashboard has a download link.
-    if (SUPABASE_URL.indexOf('http') === 0) {
+    // dashboard has a download link. -----
+    const supabasePromise = (async function(){
+      if (SUPABASE_URL.indexOf('http') !== 0) return false;
       try {
         const base = SUPABASE_URL.replace(/\/$/, '');
         const auth = { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY };
@@ -1223,23 +1227,32 @@
         const ins = await fetch(base + '/rest/v1/leads', {
           method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, auth), body: JSON.stringify(lead)
         });
-        savedOk = ins.ok;
-      } catch(e){ savedOk = false; }
-    }
+        return ins.ok;
+      } catch(e){ return false; }
+    })();
 
-    // ----- 2) Email + CAD attachment via the relay (optional, if a key is set) -----
+    // ----- 2) Email + CAD via Web3Forms — best-effort, only if a key is set -----
     const web3Key = (form.querySelector('[name=access_key]') || {}).value || '';
-    if (web3Key && web3Key.indexOf('YOUR_') !== 0) {
-      try {
-        const res = await fetch(form.action, { method:'POST', body: formData });
-        const data = await res.json();
-        emailOk = !!data.success;
-      } catch(e){ emailOk = false; }
-    }
+    const web3Configured = !!(web3Key && web3Key.indexOf('YOUR_') !== 0);
+    const web3Promise = web3Configured
+      ? fetch(form.action, { method: 'POST', body: formData, keepalive: true })
+          .then(function(r){ return r.json(); })
+          .then(function(d){ return !!(d && d.success); })
+          .catch(function(){ return false; })
+      : Promise.resolve(false);
 
-    // ----- 3) Decide outcome — success if the lead reached us either way -----
-    // (The Google Ads conversion fires once on thanks.html, not here.)
-    if (savedOk || emailOk) {
+    // ----- 3) Await all three in parallel so none are cancelled by the redirect -----
+    const results = await Promise.allSettled([supabasePromise, telegramPromise, web3Promise]);
+    savedOk = results[0].status === 'fulfilled' && results[0].value === true;
+    emailOk = results[2].status === 'fulfilled' && results[2].value === true;
+    // Telegram + Web3Forms are best-effort notifications: warn, never block.
+    if (results[1].status === 'rejected' || (results[1].status === 'fulfilled' && results[1].value === null)) console.warn('Telegram alert may not have been delivered.');
+    if (web3Configured && !emailOk) console.warn('Web3Forms email may not have been delivered.');
+
+    // ----- 4) Redirect ONLY if Supabase saved the lead (source of truth). -----
+    // The Google Ads conversion fires on thanks.html, which is only reached here,
+    // so it is gated on the Supabase save too.
+    if (savedOk) {
       window.location.href = "thanks.html";
     } else {
       alert('Sorry — something went wrong. Please message us on WhatsApp and we’ll sort it.');
